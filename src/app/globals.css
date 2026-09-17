@@ -149,6 +149,23 @@ button {
   }
 }
 
+/* ---------- Header entrance ---------- */
+
+@keyframes header-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-header-reveal {
+  animation: header-reveal 0.9s var(--ease-cinematic) 1.5s backwards;
+}
+
 /* ---------- Page transitions (View Transitions API) ---------- */
 
 ::view-transition-old(root) {

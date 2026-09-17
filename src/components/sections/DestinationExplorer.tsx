@@ -2,56 +2,137 @@
 
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { PlaceholderMedia } from "@/components/ui/PlaceholderMedia";
-import { SectionIntro } from "@/components/ui/SectionIntro";
 import { TransitionLink } from "@/components/layout/TransitionLink";
 import { DESTINATIONS } from "@/data/destinations";
 import { PROPERTIES } from "@/data/properties";
+import { cx } from "@/lib/utils";
+import { prefersReducedMotion } from "@/lib/motion";
 
-/** 05 — Destinations. An index list swaps a large preview image on hover/focus, in place of a literal map embed. */
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
+/**
+ * 05 — Destinations. Destination names run huge and full-width; hovering
+ * (or, on touch, a first tap) crossfades a full-bleed background photo in
+ * behind the whole scene and flips the text to run over it, in place of a
+ * literal map embed. A second tap/click on the active item navigates.
+ */
 export function DestinationExplorer() {
   const [active, setActive] = useState(0);
-  const previewRef = useRef<HTMLDivElement>(null);
+  const [engaged, setEngaged] = useState(false);
+  const bgRefs = useRef<HTMLDivElement[]>([]);
+  const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!previewRef.current) return;
-    gsap.fromTo(previewRef.current, { opacity: 0.3 }, { opacity: 1, duration: 0.5, ease: "sine.out" });
-  }, [active]);
+    const root = rootRef.current;
+    if (!root || prefersReducedMotion()) return;
+    const ctx = gsap.context(() => {
+      gsap.from("[data-dest-reveal]", {
+        opacity: 0,
+        y: 24,
+        duration: 1,
+        ease: "power3.out",
+        stagger: 0.08,
+        scrollTrigger: { trigger: root, start: "top 75%" },
+      });
+    }, root);
+    return () => ctx.revert();
+  }, []);
 
-  const destination = DESTINATIONS[active];
-  const relatedProperty = PROPERTIES.find((p) => p.destinationSlug === destination?.slug);
+  function focusOn(i: number) {
+    if (i === active && engaged) return;
+    const prev = bgRefs.current[active];
+    const next = bgRefs.current[i];
+    setActive(i);
+    setEngaged(true);
+    if (prev && prev !== next) gsap.to(prev, { opacity: 0, duration: 0.6, ease: "power2.out" });
+    if (next) gsap.to(next, { opacity: 1, duration: 0.6, ease: "power2.out" });
+  }
+
+  function release() {
+    setEngaged(false);
+    const current = bgRefs.current[active];
+    if (current) gsap.to(current, { opacity: 0, duration: 0.6, ease: "power2.out" });
+  }
+
+  function handleTapNavigate(e: React.MouseEvent, i: number) {
+    const isTouch = typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches;
+    if (isTouch && !(i === active && engaged)) {
+      e.preventDefault();
+      focusOn(i);
+    }
+  }
 
   return (
-    <section data-header-theme="dark" className="section-pad container-edge bg-ivory text-charcoal">
-      <SectionIntro index="05" label="Destinations" heading="Where will you disappear to next?" />
+    <section
+      ref={rootRef}
+      data-header-theme={engaged ? "light" : "dark"}
+      data-scene="6"
+      className="relative overflow-hidden bg-ivory text-charcoal"
+      onMouseLeave={release}
+    >
+      <div className="pointer-events-none absolute inset-0 z-0">
+        {DESTINATIONS.map((d, i) => (
+          <div
+            key={d.id}
+            ref={(el) => {
+              if (el) bgRefs.current[i] = el;
+            }}
+            className="absolute inset-0 opacity-0"
+          >
+            <PlaceholderMedia media={d.heroImage} className="absolute inset-0" />
+            <div className="absolute inset-0 bg-warm-black/55" />
+          </div>
+        ))}
+      </div>
 
-      <div className="mt-16 grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-20">
-        <ul className="flex flex-col divide-y divide-charcoal/10 border-t border-charcoal/10">
-          {DESTINATIONS.map((d, i) => (
-            <li key={d.id}>
-              <TransitionLink
-                href={relatedProperty && i === active ? `/stays/${relatedProperty.slug}` : `/destinations/${d.slug}`}
-                onMouseEnter={() => setActive(i)}
-                onFocus={() => setActive(i)}
-                className={`flex items-baseline justify-between py-6 transition-colors duration-300 ${
-                  i === active ? "text-charcoal" : "text-charcoal/40"
-                }`}
-              >
-                <span className="text-display-sm">{d.name}</span>
-                <span className="text-eyebrow">{d.region}</span>
-              </TransitionLink>
-            </li>
-          ))}
+      <div
+        className={cx(
+          "section-pad container-edge relative z-10 transition-colors duration-500",
+          engaged ? "text-ivory" : "text-charcoal"
+        )}
+      >
+        <p
+          data-dest-reveal
+          className={cx("text-eyebrow flex items-center gap-3", engaged ? "text-ivory/70" : "text-charcoal/55")}
+        >
+          <span>05</span>
+          <span className="h-px w-8 bg-current/50" />
+          <span>Destinations</span>
+        </p>
+        <h2 data-dest-reveal className="text-display-lg mt-6">
+          Where will you disappear to next?
+        </h2>
+
+        <ul data-dest-reveal className="mt-16 flex flex-col border-t border-current/10">
+          {DESTINATIONS.map((d, i) => {
+            const relatedProperty = PROPERTIES.find((p) => p.destinationSlug === d.slug);
+            const href = i === active && engaged && relatedProperty ? `/stays/${relatedProperty.slug}` : `/destinations/${d.slug}`;
+            const isActive = i === active && engaged;
+            return (
+              <li key={d.id} className="border-b border-current/10">
+                <TransitionLink
+                  href={href}
+                  onMouseEnter={() => focusOn(i)}
+                  onFocus={() => focusOn(i)}
+                  onClick={(e) => handleTapNavigate(e, i)}
+                  data-cursor="EXPLORE"
+                  className="flex flex-col items-start justify-between gap-2 py-8 transition-opacity duration-300 md:flex-row md:items-baseline md:py-10"
+                  style={{ opacity: engaged && !isActive ? 0.35 : 1 }}
+                >
+                  <span className="text-display-lg leading-none md:text-[7.5vw]">{d.name}</span>
+                  <span className="text-eyebrow opacity-60">{d.region}</span>
+                </TransitionLink>
+                {isActive && (
+                  <p className="max-w-md pb-8 text-body-lg opacity-90 md:pb-10">{d.description}</p>
+                )}
+              </li>
+            );
+          })}
         </ul>
-
-        <div ref={previewRef} className="relative aspect-[4/5] w-full overflow-hidden">
-          {destination && <PlaceholderMedia media={destination.heroImage} className="absolute inset-0" />}
-          {destination && (
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-warm-black/70 to-transparent p-8 text-ivory">
-              <p className="text-body-lg max-w-sm">{destination.description}</p>
-            </div>
-          )}
-        </div>
       </div>
     </section>
   );

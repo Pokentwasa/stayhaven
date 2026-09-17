@@ -6,6 +6,8 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Cursor } from "@/components/ui/Cursor";
 import { GrainOverlay } from "@/components/ui/GrainOverlay";
+import { ScrollProgress } from "@/components/ui/ScrollProgress";
+import { LoadingScreen } from "@/components/layout/LoadingScreen";
 import { BookingProvider } from "@/components/booking/BookingContext";
 import { BookingPanel } from "@/components/booking/BookingPanel";
 import { SITE } from "@/data/site";
@@ -55,8 +57,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
         <BookingProvider>
           <SmoothScrollProvider>
+            <LoadingScreen />
             <Cursor />
             <GrainOverlay />
+            <ScrollProgress />
             <Header />
             <main id="main-content">{children}</main>
             <Footer />

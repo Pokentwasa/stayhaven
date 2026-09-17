@@ -46,7 +46,7 @@ export function Header() {
   return (
     <header
       className={cx(
-        "fixed inset-x-0 top-0 z-50 transition-[background-color,backdrop-filter] duration-500",
+        "animate-header-reveal fixed inset-x-0 top-0 z-50 transition-[background-color,backdrop-filter] duration-500",
         solid ? "bg-ivory/90 backdrop-blur-md" : "bg-transparent"
       )}
     >
