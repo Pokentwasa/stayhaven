@@ -11,10 +11,17 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-/** 02 — The House. Architecture and interior facts, staggered editorial imagery — not an icon grid. */
+/** 03 — The House. The architecture is the hero: plain headline, small stats, staggered editorial imagery — not an icon grid. */
 export function TheHouse({ property }: { property: Property }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const [imgA, imgB, imgC] = property.storyImages;
+
+  const stats = [
+    { label: "Bedrooms", value: property.bedrooms },
+    { label: "Bathrooms", value: property.bathrooms },
+    { label: "Guests", value: property.guests },
+    { label: "Levels", value: 3 },
+  ];
 
   useEffect(() => {
     const root = rootRef.current;
@@ -40,14 +47,25 @@ export function TheHouse({ property }: { property: Property }) {
       className="section-pad-b container-edge bg-ivory text-charcoal"
     >
       <p className="text-eyebrow mb-12 flex items-center gap-3 text-charcoal/50">
-        <span>02</span>
+        <span>03</span>
         <span className="h-px w-8 bg-current/50" />
         <span>The House</span>
       </p>
 
       <div className="grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-20">
         <div className="flex flex-col gap-6">
-          <h2 className="text-display-sm">{property.houseHeading}</h2>
+          <h2 className="text-display-lg">{property.houseHeading}</h2>
+          <p className="text-eyebrow text-charcoal/55">{property.houseStatement}</p>
+
+          <div className="mt-2 grid grid-cols-4 gap-4 border-y border-charcoal/15 py-6">
+            {stats.map((stat) => (
+              <div key={stat.label} className="flex flex-col gap-1">
+                <span className="text-display-sm">{stat.value}</span>
+                <span className="text-stat text-charcoal/50">{stat.label}</span>
+              </div>
+            ))}
+          </div>
+
           <p className="text-body-lg text-charcoal/70">{property.houseDescription}</p>
           <ul className="mt-4 grid grid-cols-1 gap-x-8 gap-y-2 text-sm uppercase tracking-widest text-charcoal/55 sm:grid-cols-2">
             {property.houseFacts.map((fact) => (

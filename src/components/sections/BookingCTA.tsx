@@ -58,7 +58,7 @@ export function BookingCTA() {
       id="book"
       ref={rootRef}
       data-header-theme="light"
-      data-scene="13"
+      data-scene="12"
       className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden bg-warm-black text-ivory"
     >
       <div data-finale-bg className="absolute inset-0 opacity-30">
@@ -69,7 +69,7 @@ export function BookingCTA() {
       <div className="section-pad container-edge relative z-10 mx-auto flex w-full max-w-3xl flex-col items-center gap-14 text-center">
         <div data-finale className="flex flex-col items-center gap-6">
           <p className="text-eyebrow opacity-60">{property.name}</p>
-          <h2 className="text-display-xl">Your stay awaits.</h2>
+          <h2 className="text-display-xl">Find your time here.</h2>
           {property.booking.priceFrom && (
             <p className="text-eyebrow opacity-70">
               From {property.booking.currency} {property.booking.priceFrom} / night
@@ -126,7 +126,6 @@ export function BookingCTA() {
           type="submit"
           form="booking-cta-form"
           data-finale
-          data-cursor="BOOK"
           className="w-full max-w-sm bg-ivory py-5 text-eyebrow text-warm-black transition-opacity duration-300 hover:opacity-90"
         >
           Check Availability

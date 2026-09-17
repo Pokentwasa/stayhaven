@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { PlaceholderMedia } from "@/components/ui/PlaceholderMedia";
@@ -12,176 +12,88 @@ if (typeof window !== "undefined") {
 }
 
 /**
- * 05 — Outside. Hot tub, fire pit, outdoor dining, deck & patio: one
- * definitive pinned crossfade sequence on desktop, the same stage driven by
- * tapping a label on touch/mobile — the shared interaction language used
- * elsewhere on the site.
+ * 06 — Outside. A fixed, deliberate composition (large hot tub, a small
+ * fire pit detail, a wide deck shot) rather than a pinned scroll-driven
+ * slideshow — simple reveal-on-scroll only.
  */
 export function Outside({ property }: { property: Property }) {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const labelRefs = useRef<HTMLButtonElement[]>([]);
-  const imageRefs = useRef<HTMLDivElement[]>([]);
-  const descRefs = useRef<HTMLParagraphElement[]>([]);
-  const [active, setActive] = useState(0);
-
-  const features = property.outdoorFeatures;
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [hotTub, firePit, outdoorDining, deckPatio] = property.outdoorFeatures;
 
   useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-
-    const labels = labelRefs.current;
-    const images = imageRefs.current;
-    const descs = descRefs.current;
-
-    function setLabelEmphasis(index: number) {
-      labels.forEach((label, i) => {
-        label.style.opacity = i === index ? "1" : "0.35";
+    const root = rootRef.current;
+    if (!root || prefersReducedMotion()) return;
+    const ctx = gsap.context(() => {
+      gsap.utils.toArray<HTMLElement>("[data-outside-reveal]").forEach((el, i) => {
+        gsap.fromTo(
+          el,
+          { clipPath: "inset(0 0 100% 0)" },
+          {
+            clipPath: "inset(0 0 0% 0)",
+            duration: 1,
+            ease: "power3.out",
+            delay: (i % 2) * 0.08,
+            scrollTrigger: { trigger: el, start: "top 88%" },
+          }
+        );
       });
-    }
-
-    if (prefersReducedMotion()) {
-      setLabelEmphasis(0);
-      return;
-    }
-
-    const mm = gsap.matchMedia();
-
-    mm.add("(min-width: 768px)", () => {
-      gsap.set(images.slice(1), { opacity: 0, scale: 1.06 });
-      gsap.set(descs.slice(1), { opacity: 0, y: 16 });
-      setLabelEmphasis(0);
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: `+=${(features.length - 1) * 100}%`,
-          scrub: 0.9,
-          pin: true,
-          onUpdate: (self) => {
-            const i = Math.min(features.length - 1, Math.round(self.progress * (features.length - 1)));
-            setActive((prev) => (prev === i ? prev : i));
-            setLabelEmphasis(i);
-          },
-        },
+      gsap.from("[data-outside-text]", {
+        opacity: 0,
+        y: 16,
+        duration: 0.8,
+        ease: "power2.out",
+        stagger: 0.08,
+        scrollTrigger: { trigger: root, start: "top 75%" },
       });
-
-      features.forEach((_, i) => {
-        if (i === 0) return;
-        const seg = i - 1;
-        tl.to(images[i - 1]!, { opacity: 0, scale: 0.96, ease: "power1.inOut", duration: 1 }, seg)
-          .to(images[i]!, { opacity: 1, scale: 1, ease: "power2.out", duration: 1 }, seg + 0.15)
-          .to(descs[i - 1]!, { opacity: 0, y: -12, ease: "power1.in", duration: 0.55 }, seg)
-          .to(descs[i]!, { opacity: 1, y: 0, ease: "power2.out", duration: 0.7 }, seg + 0.4);
-      });
-
-      return () => tl.scrollTrigger?.kill();
-    });
-
-    mm.add("(max-width: 767px)", () => {
-      gsap.set(images.slice(1), { opacity: 0 });
-      gsap.set(descs.slice(1), { opacity: 0, y: 12 });
-      setLabelEmphasis(0);
-      return () => undefined;
-    });
-
-    return () => mm.revert();
-  }, [features]);
-
-  function focusOn(i: number) {
-    const isDesktopPin = typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches;
-    if (isDesktopPin || i === active) return;
-
-    const images = imageRefs.current;
-    const descs = descRefs.current;
-    gsap.to(images[active]!, { opacity: 0, duration: 0.6, ease: "power1.inOut" });
-    gsap.to(images[i]!, { opacity: 1, duration: 0.6, ease: "power2.out" });
-    gsap.to(descs[active]!, { opacity: 0, y: -8, duration: 0.4, ease: "power1.in" });
-    gsap.to(descs[i]!, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out", delay: 0.15 });
-    labelRefs.current.forEach((label, li) => {
-      label.style.opacity = li === i ? "1" : "0.35";
-    });
-    setActive(i);
-  }
+    }, root);
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section
-      id="outside"
-      ref={sectionRef}
-      data-header-theme="dark"
-      data-scene="6"
-      className="relative overflow-hidden bg-ivory text-charcoal"
-    >
-      <div className="container-edge section-pad-t pb-10 md:pb-0">
-        <p className="text-eyebrow flex items-center gap-3 text-charcoal/50">
-          <span>05</span>
+    <section id="outside" ref={rootRef} data-header-theme="dark" data-scene="6" className="section-pad bg-ivory text-charcoal">
+      <div className="container-edge mb-12">
+        <p data-outside-text className="text-eyebrow mb-6 flex items-center gap-3 text-charcoal/50">
+          <span>06</span>
           <span className="h-px w-8 bg-current/50" />
           <span>Outside</span>
         </p>
-        <h2 className="text-display-lg mt-6 max-w-2xl">{property.outdoorHeading}</h2>
-        <p className="text-body-lg mt-6 max-w-xl text-charcoal/70">{property.outdoorStatement}</p>
+        <h2 data-outside-text className="text-display-lg max-w-2xl">
+          {property.outdoorHeading}
+        </h2>
+        <p data-outside-text className="text-body-lg mt-6 max-w-xl text-charcoal/70">
+          {property.outdoorStatement}
+        </p>
       </div>
 
-      <div className="relative mt-10 md:mt-16 md:h-[85svh]">
-        <div className="container-edge grid grid-cols-1 gap-8 md:h-full md:grid-cols-[minmax(0,300px)_1fr] md:items-center md:gap-16">
-          <div className="no-scrollbar flex flex-row gap-8 overflow-x-auto pb-2 md:flex-col md:gap-10 md:overflow-visible md:pb-0">
-            {features.map((feature, i) => (
-              <button
-                type="button"
-                key={feature.id}
-                ref={(el) => {
-                  if (el) labelRefs.current[i] = el;
-                }}
-                onClick={() => focusOn(i)}
-                data-cursor="EXPLORE"
-                className="flex shrink-0 items-baseline gap-4 text-left transition-opacity duration-500"
-              >
-                <span className="text-eyebrow text-charcoal/50">{String(i + 1).padStart(2, "0")}</span>
-                <span className="text-display-sm">{feature.title}</span>
-              </button>
-            ))}
+      <div className="container-edge grid grid-cols-1 gap-4 sm:grid-cols-3">
+        {hotTub && (
+          <div data-outside-reveal className="relative aspect-[4/3] overflow-hidden sm:col-span-2 sm:row-span-2 sm:aspect-auto">
+            <PlaceholderMedia media={hotTub.image} className="absolute inset-0" />
+            <div className="absolute inset-0 bg-gradient-to-t from-warm-black/60 via-transparent to-transparent" />
+            <p className="absolute bottom-5 left-5 text-eyebrow text-ivory">{hotTub.title}</p>
           </div>
-
-          <div className="relative aspect-[4/3] w-full overflow-hidden md:aspect-auto md:h-[70vh]">
-            {features.map((feature, i) => (
-              <div
-                key={feature.id}
-                ref={(el) => {
-                  if (el) imageRefs.current[i] = el;
-                }}
-                className="absolute inset-0"
-              >
-                <PlaceholderMedia media={feature.image} className="absolute inset-0" />
-                <div className="absolute inset-0 bg-gradient-to-t from-warm-black/70 via-warm-black/5 to-transparent" />
-              </div>
-            ))}
-            <div className="absolute inset-x-0 bottom-0 z-10 p-6 md:p-10">
-              {features.map((feature, i) => (
-                <p
-                  key={feature.id}
-                  ref={(el) => {
-                    if (el) descRefs.current[i] = el;
-                  }}
-                  className="text-body-lg absolute max-w-md text-ivory"
-                >
-                  {feature.description}
-                </p>
-              ))}
-            </div>
+        )}
+        {firePit && (
+          <div data-outside-reveal className="relative aspect-square overflow-hidden">
+            <PlaceholderMedia media={firePit.image} className="absolute inset-0" />
+            <div className="absolute inset-0 bg-gradient-to-t from-warm-black/60 via-transparent to-transparent" />
+            <p className="absolute bottom-4 left-4 text-eyebrow text-ivory">{firePit.title}</p>
           </div>
-        </div>
-
-        <div className="pointer-events-none absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 gap-3 md:flex">
-          {features.map((_, i) => (
-            <span
-              key={i}
-              className={`h-1 w-8 rounded-full transition-colors duration-500 ${
-                i === active ? "bg-charcoal" : "bg-charcoal/20"
-              }`}
-            />
-          ))}
-        </div>
+        )}
+        {outdoorDining && (
+          <div data-outside-reveal className="relative aspect-square overflow-hidden">
+            <PlaceholderMedia media={outdoorDining.image} className="absolute inset-0" />
+            <div className="absolute inset-0 bg-gradient-to-t from-warm-black/60 via-transparent to-transparent" />
+            <p className="absolute bottom-4 left-4 text-eyebrow text-ivory">{outdoorDining.title}</p>
+          </div>
+        )}
+        {deckPatio && (
+          <div data-outside-reveal className="relative aspect-[21/9] overflow-hidden sm:col-span-3">
+            <PlaceholderMedia media={deckPatio.image} className="absolute inset-0" />
+            <div className="absolute inset-0 bg-gradient-to-t from-warm-black/60 via-transparent to-transparent" />
+            <p className="absolute bottom-5 left-5 text-eyebrow text-ivory">{deckPatio.title}</p>
+          </div>
+        )}
       </div>
     </section>
   );

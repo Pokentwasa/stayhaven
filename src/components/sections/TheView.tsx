@@ -12,11 +12,10 @@ if (typeof window !== "undefined") {
 }
 
 /**
- * 03 — The View. The major cinematic section: Hood Canal is Salt+Haven's
- * strongest selling point, so it gets a full-bleed image, an oversized pale
- * heading peeking behind it, and an asymmetric editorial pair beneath.
- * Copy is careful never to imply direct beach access — a road sits between
- * the property and the waterline.
+ * 04 — The View. A full-bleed waterfront photograph, then a plain,
+ * light-background text block — headline, statement, and the factual
+ * no-direct-beach-access note kept visible, not buried or overlaid on a
+ * darkened image.
  */
 export function TheView({ property }: { property: Property }) {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -31,7 +30,7 @@ export function TheView({ property }: { property: Property }) {
         if (media) {
           gsap.fromTo(
             media,
-            { scale: 1.15 },
+            { scale: 1.1 },
             {
               scale: 1,
               ease: "power2.out",
@@ -42,64 +41,63 @@ export function TheView({ property }: { property: Property }) {
       });
       gsap.from("[data-view-text]", {
         opacity: 0,
-        y: 24,
-        duration: 1,
-        ease: "power3.out",
-        stagger: 0.08,
-        scrollTrigger: { trigger: root, start: "top 70%" },
+        y: 16,
+        duration: 0.8,
+        ease: "power2.out",
+        stagger: 0.06,
+        scrollTrigger: { trigger: root, start: "top 75%" },
       });
     }, root);
     return () => ctx.revert();
   }, []);
 
   return (
-    <section
-      id="the-view"
-      ref={rootRef}
-      data-header-theme="light"
-      data-scene="4"
-      className="relative overflow-hidden bg-warm-black text-ivory"
-    >
+    <section id="the-view" ref={rootRef} data-header-theme="dark" data-scene="4" className="bg-ivory text-charcoal">
+      <div className="container-edge section-pad-t pb-10">
+        <p data-view-text className="text-eyebrow flex items-center gap-3 text-charcoal/50">
+          <span>04</span>
+          <span className="h-px w-8 bg-current/50" />
+          <span>The View</span>
+        </p>
+      </div>
+
       {imgA && (
-        <div data-view-reveal className="relative h-[85svh] w-full overflow-hidden">
+        <div data-view-reveal className="relative h-[60svh] w-full overflow-hidden md:h-[75svh]">
           <div data-view-media className="absolute inset-0">
             <PlaceholderMedia media={imgA} className="absolute inset-0" />
-          </div>
-          <div className="absolute inset-0 bg-gradient-to-t from-warm-black via-warm-black/10 to-warm-black/40" />
-          <div className="container-edge relative z-10 flex h-full flex-col justify-end pb-20">
-            <p data-view-text className="text-eyebrow flex items-center gap-3 opacity-70">
-              <span>03</span>
-              <span className="h-px w-8 bg-current/50" />
-              <span>The View</span>
-            </p>
-            <h2 data-view-text className="text-display-xl mt-6 max-w-4xl">
-              {property.viewHeading}
-            </h2>
           </div>
         </div>
       )}
 
-      <div className="section-pad container-edge grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-16">
-        <div data-view-text className="flex flex-col gap-6">
-          <p className="text-body-lg opacity-85">{property.viewStatement}</p>
-          <p className="text-body-lg opacity-70">{property.viewDescription}</p>
+      <div className="section-pad container-edge grid grid-cols-1 gap-12 md:grid-cols-12">
+        <h2 data-view-text className="text-display-lg md:col-span-7">
+          {property.viewHeading}
+        </h2>
+        <div className="flex flex-col gap-6 md:col-span-5">
+          <p data-view-text className="text-body-lg text-charcoal/80">
+            {property.viewStatement}
+          </p>
+          <div data-view-text className="border-l-2 border-charcoal/20 pl-4">
+            <p className="text-stat text-charcoal/60">{property.viewDescription}</p>
+          </div>
         </div>
-        <div className="grid grid-cols-2 gap-6">
-          {imgB && (
-            <div data-view-reveal className="relative col-span-2 aspect-[16/9] overflow-hidden sm:col-span-1">
-              <div data-view-media className="absolute inset-0">
-                <PlaceholderMedia media={imgB} className="absolute inset-0" />
-              </div>
+      </div>
+
+      <div className="container-edge section-pad-b grid grid-cols-2 gap-4">
+        {imgB && (
+          <div data-view-reveal className="relative aspect-[4/3] overflow-hidden">
+            <div data-view-media className="absolute inset-0">
+              <PlaceholderMedia media={imgB} className="absolute inset-0" />
             </div>
-          )}
-          {imgC && (
-            <div data-view-reveal className="relative col-span-2 aspect-[16/9] overflow-hidden sm:col-span-1 sm:mt-10">
-              <div data-view-media className="absolute inset-0">
-                <PlaceholderMedia media={imgC} className="absolute inset-0" />
-              </div>
+          </div>
+        )}
+        {imgC && (
+          <div data-view-reveal className="relative aspect-[4/3] overflow-hidden sm:mt-10">
+            <div data-view-media className="absolute inset-0">
+              <PlaceholderMedia media={imgC} className="absolute inset-0" />
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </section>
   );

@@ -55,15 +55,15 @@ export function Amenities({ property }: { property: Property }) {
   }, [modalOpen]);
 
   return (
-    <section id="amenities" ref={rootRef} data-header-theme="dark" data-scene="9" className="section-pad container-edge bg-ivory text-charcoal">
+    <section id="amenities" ref={rootRef} data-header-theme="dark" data-scene="8" className="section-pad container-edge bg-ivory text-charcoal">
       <div className="mb-12 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="text-eyebrow mb-6 flex items-center gap-3 text-charcoal/50">
             <span>08</span>
             <span className="h-px w-8 bg-current/50" />
-            <span>Amenities</span>
+            <span>Details</span>
           </p>
-          <h2 className="text-display-lg">Everything you need. Nothing you don&rsquo;t.</h2>
+          <h2 className="text-display-lg">The basics, covered.</h2>
         </div>
         <button
           type="button"

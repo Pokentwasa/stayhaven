@@ -4,8 +4,6 @@ import "./globals.css";
 import { SmoothScrollProvider } from "@/components/layout/SmoothScrollProvider";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { Cursor } from "@/components/ui/Cursor";
-import { GrainOverlay } from "@/components/ui/GrainOverlay";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { LoadingScreen } from "@/components/layout/LoadingScreen";
 import { BookingProvider } from "@/components/booking/BookingContext";
@@ -104,8 +102,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <BookingProvider>
           <SmoothScrollProvider>
             <LoadingScreen />
-            <Cursor />
-            <GrainOverlay />
             <ScrollProgress />
             <Header />
             <main id="main-content">{children}</main>

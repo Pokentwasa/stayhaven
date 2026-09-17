@@ -5,30 +5,34 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { PlaceholderMedia } from "@/components/ui/PlaceholderMedia";
 import { GALLERY_CATEGORY_SECTIONS } from "@/data/types";
-import type { GalleryImage, Property } from "@/data/types";
-import { cx } from "@/lib/utils";
+import type { GalleryCategory, GalleryImage, Property } from "@/data/types";
 import { prefersReducedMotion } from "@/lib/motion";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const PREVIEW_LAYOUT = [
-  { h: "h-[62vh]", w: "w-[36vw]" },
-  { h: "h-[44vh]", w: "w-[52vw]" },
-  { h: "h-[52vh]", w: "w-[42vw]" },
-  { h: "h-[30vh]", w: "w-[22vw]" },
-  { h: "h-[62vh]", w: "w-[36vw]" },
-] as const;
+/**
+ * A fixed, deliberate composition rather than a repeating strip: one large
+ * image, two smaller ones, a wide landscape, a portrait detail, a wide
+ * atmospheric shot. Each entry names the category + index to pull from.
+ */
+const PREVIEW_PICKS: { category: GalleryCategory; index: number; span: string }[] = [
+  { category: "exterior", index: 3, span: "col-span-4 row-span-2 aspect-[4/5] sm:aspect-auto" },
+  { category: "greatRoom", index: 1, span: "col-span-2 aspect-[4/3]" },
+  { category: "kitchenDining", index: 0, span: "col-span-2 aspect-[4/3]" },
+  { category: "hoodCanal", index: 1, span: "col-span-4 aspect-[21/9] sm:col-span-6" },
+  { category: "kingBedroom", index: 0, span: "col-span-2 aspect-[3/4]" },
+  { category: "sunsetAtmospheric", index: 0, span: "col-span-4 aspect-[16/9]" },
+];
 
 /**
- * 10 — Gallery. A curated preview strip (drag interaction, matching the
- * site's established horizontal-strip pattern) with a "View All 53 Photos"
- * trigger opening the full grouped gallery + lightbox viewer.
+ * 10 — Gallery. A curated, architectural composition (not a chaotic
+ * masonry or an infinite drag strip) with a "View All Photos" trigger
+ * opening the full grouped gallery + lightbox viewer.
  */
 export function Gallery({ property }: { property: Property }) {
   const rootRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
   const [viewerOpen, setViewerOpen] = useState(false);
 
   const groups = useMemo(
@@ -44,9 +48,12 @@ export function Gallery({ property }: { property: Property }) {
 
   const preview = useMemo(
     () =>
-      GALLERY_CATEGORY_SECTIONS.flatMap(
-        (section) => property.gallery.find((img) => section.categories.includes(img.category)) ?? []
-      ).slice(0, 15) as GalleryImage[],
+      PREVIEW_PICKS.map((pick) => ({
+        pick,
+        image: property.gallery.filter((img) => img.category === pick.category)[pick.index],
+      })).filter((entry): entry is { pick: (typeof PREVIEW_PICKS)[number]; image: NonNullable<typeof entry.image> } =>
+        Boolean(entry.image)
+      ),
     [property.gallery]
   );
 
@@ -66,48 +73,13 @@ export function Gallery({ property }: { property: Property }) {
     return () => ctx.revert();
   }, []);
 
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-
-    let isDown = false;
-    let startX = 0;
-    let startScroll = 0;
-
-    function onDown(e: PointerEvent) {
-      if (e.pointerType === "touch") return;
-      isDown = true;
-      startX = e.clientX;
-      startScroll = track!.scrollLeft;
-      track!.style.cursor = "grabbing";
-    }
-    function onMove(e: PointerEvent) {
-      if (!isDown) return;
-      e.preventDefault();
-      track!.scrollLeft = startScroll - (e.clientX - startX);
-    }
-    function onUp() {
-      isDown = false;
-      track!.style.cursor = "grab";
-    }
-
-    track.addEventListener("pointerdown", onDown);
-    window.addEventListener("pointermove", onMove);
-    window.addEventListener("pointerup", onUp);
-    return () => {
-      track.removeEventListener("pointerdown", onDown);
-      window.removeEventListener("pointermove", onMove);
-      window.removeEventListener("pointerup", onUp);
-    };
-  }, []);
-
   return (
     <section
       id="gallery"
       ref={rootRef}
       data-header-theme="dark"
-      data-scene="11"
-      className="section-pad overflow-hidden bg-ivory text-charcoal"
+      data-scene="10"
+      className="section-pad bg-ivory text-charcoal"
     >
       <div data-gallery-reveal className="container-edge mb-14 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
@@ -121,34 +93,26 @@ export function Gallery({ property }: { property: Property }) {
         <button
           type="button"
           onClick={() => setViewerOpen(true)}
-          data-cursor="VIEW"
           className="text-eyebrow w-fit border-b border-charcoal pb-1 transition-opacity hover:opacity-60"
         >
           View All {flatGallery.length} Photos
         </button>
       </div>
 
-      <div
-        ref={trackRef}
-        data-gallery-reveal
-        className="no-scrollbar flex cursor-grab select-none items-center gap-6 overflow-x-auto px-6 pb-4 md:gap-10 md:px-12"
-      >
-        {preview.map((image, i) => {
-          const layout = PREVIEW_LAYOUT[i % PREVIEW_LAYOUT.length]!;
-          return (
-            <figure
-              key={image.id}
-              data-cursor="DRAG"
-              onClick={() => setViewerOpen(true)}
-              className={cx("group relative shrink-0 cursor-pointer overflow-hidden", layout.h, layout.w)}
-            >
-              <PlaceholderMedia
-                media={image}
-                className="pointer-events-none absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-105"
-              />
-            </figure>
-          );
-        })}
+      <div data-gallery-reveal className="container-edge grid grid-cols-4 gap-3 sm:grid-cols-6">
+        {preview.map(({ pick, image }) => (
+          <button
+            type="button"
+            key={image.id}
+            onClick={() => setViewerOpen(true)}
+            className={`group relative overflow-hidden ${pick.span}`}
+          >
+            <PlaceholderMedia
+              media={image}
+              className="absolute inset-0 transition-transform duration-500 ease-out group-hover:scale-105"
+            />
+          </button>
+        ))}
       </div>
 
       {viewerOpen && (
@@ -222,7 +186,6 @@ function GalleryViewer({
                           type="button"
                           key={image.id}
                           onClick={() => setLightboxIndex(index)}
-                          data-cursor="VIEW"
                           className="group relative aspect-square overflow-hidden"
                         >
                           <PlaceholderMedia

@@ -159,38 +159,35 @@ export const SALT_HAVEN: Property = {
     "ultrawide",
     "/images/salt-haven/exterior-04.jpeg"
   ),
-  heroTagline: "Water outside. Warmth within.",
-  heroSupporting: "A private Pacific Northwest escape.",
+  heroTagline: "A-frame living on Hood Canal.",
 
-  introHeading: "A quieter side of Washington.",
+  introHeading: "A place to slow down.",
   introStatement:
-    "Salt+Haven is a waterview A-frame on Hood Canal — three bedrooms, two baths, and room to sleep eight beneath vaulted wood ceilings. Panoramic water views, a covered hot tub, outdoor dining, and space enough to slow all the way down.",
+    "Salt+Haven is a three-level A-frame retreat overlooking Hood Canal in Union, Washington. Built around the view, the house sleeps eight and includes three bedrooms, two bathrooms, a covered hot tub, fire pit, outdoor dining and everything needed for a quieter stay.",
 
-  houseHeading: "1,446 square feet. Three levels. One view worth slowing down for.",
-  houseStatement: "An A-frame, built to settle into.",
+  houseHeading: "The house.",
+  houseStatement: "1,446 square feet across three levels.",
   houseDescription:
-    "Vaulted wood ceilings draw the eye up and out toward the water. A great room for gathering, a fully equipped kitchen, a dedicated dining area, and quiet corners — including a private workspace — for the moments in between.",
+    "Vaulted wood ceilings draw the eye up and out toward the water. A great room for gathering, a full kitchen, a dining area, and quiet corners — including a private workspace — for the moments in between.",
   houseFacts: [
     "A-frame architecture",
-    "1,446 sq ft across three levels",
     "Vaulted wood ceilings",
     "Great room",
-    "Fully equipped kitchen",
-    "Dedicated dining area",
+    "Full kitchen",
+    "Dining area",
     "Washer & dryer",
-    "Two full bathrooms",
     "Private workspace",
   ],
   storyImages: [fromGallery("exterior", 2), fromGallery("greatRoom", 0), fromGallery("kitchenDining", 0)],
 
-  viewHeading: "Hood Canal, from here.",
-  viewStatement: "Salt+Haven sits along the Hood Canal waterfront in Union, Washington.",
-  viewDescription:
-    "Panoramic water views. Sunsets that hold the whole sky. Wildlife passing through, and quiet on every side. A road sits between the property and the waterline — this is a water-view retreat, not direct beach access — but from the deck, the hot tub and nearly every window, Hood Canal is always there.",
+  viewHeading: "The view does most of the work.",
+  viewStatement:
+    "Salt+Haven looks across Hood Canal from Union, Washington, with changing light, wildlife and long waterfront sunsets.",
+  viewDescription: "No direct beach access. A road runs between the property and waterfront.",
   viewImages: [fromGallery("hoodCanal", 0), fromGallery("hoodCanal", 1), fromGallery("sunsetAtmospheric", 0)],
 
-  stayHeading: "An interior built for staying in.",
-  stayStatement: "Vaulted ceilings, an open great room, and everything you need to cook, gather and unwind.",
+  stayHeading: "Inside.",
+  stayStatement: "Warm wood. Open space. Everything you need.",
   interiorHighlights: [
     {
       id: "stay-great-room",
@@ -218,8 +215,8 @@ export const SALT_HAVEN: Property = {
     },
   ],
 
-  outdoorHeading: "Outside is part of the stay.",
-  outdoorStatement: "Stay out a little longer.",
+  outdoorHeading: "Outside counts too.",
+  outdoorStatement: "Hot tub after dark. Dinner outside. Fire going. Canal in front of you.",
   outdoorFeatures: [
     {
       id: "outside-hot-tub",
@@ -247,19 +244,7 @@ export const SALT_HAVEN: Property = {
     },
   ],
 
-  lifeAtHeading: "Life at Salt+Haven.",
-  lifeAtMoments: [
-    "Morning coffee overlooking the canal.",
-    "Lunch outside.",
-    "Afternoon exploring Union.",
-    "Sunset from the deck.",
-    "Hot tub after dark.",
-    "Fire pit conversations.",
-    "Record playing inside.",
-  ],
-  lifeAtBackgroundImage: fromGallery("sunsetAtmospheric", 0),
-
-  sleepingHeading: "Sleeps eight, easily.",
+  sleepingHeading: "Room for eight.",
   sleepingStatement: "Three bedrooms. Two bathrooms. Room enough for the whole group.",
   sleepingAreas: [
     {
@@ -302,9 +287,9 @@ export const SALT_HAVEN: Property = {
 
   amenityGroups: [
     {
-      id: "essentials",
-      title: "Essentials",
-      items: ["Fast Wi-Fi (100+ Mbps)", "Air conditioning", "Heating", "Washer", "Dryer", "Linens", "Towels"],
+      id: "comfort",
+      title: "Comfort",
+      items: ["Fast Wi-Fi (100+ Mbps)", "Heating", "Air conditioning", "Linens", "Towels", "Washer", "Dryer"],
     },
     {
       id: "kitchen",
@@ -326,11 +311,11 @@ export const SALT_HAVEN: Property = {
       ],
     },
     {
-      id: "outdoor",
-      title: "Outdoor",
+      id: "outside",
+      title: "Outside",
       items: [
         "Covered hot tub",
-        "Propane fire pit",
+        "Fire pit",
         "BBQ",
         "Outdoor dining",
         "Deck / patio",
@@ -368,39 +353,31 @@ export const SALT_HAVEN: Property = {
   fullAmenities: [],
 
   neighbourhood: {
-    heading: "Quiet enough to disappear. Close enough to explore.",
-    description:
-      "Salt+Haven is located in Union, Washington, on Hood Canal — an area known for boating, fishing, hiking, golf, wildlife, water views, sunsets, dining and outdoor recreation.",
-    activities: [
-      "Boating",
-      "Fishing",
-      "Hiking",
-      "Golf",
-      "Wildlife watching",
-      "Water views",
-      "Sunsets",
-      "Dining",
-      "Outdoor recreation",
-    ],
-    transitNote: "A personal vehicle is strongly recommended. Roads can be dark and winding at night.",
+    heading: "Your base on Hood Canal.",
+    description: "Union is a quiet Hood Canal community surrounded by water, forest and outdoor recreation.",
+    activities: ["Boating", "Fishing", "Hiking", "Golf", "Wildlife", "Sunsets", "Local dining"],
+    transitNote: "A personal vehicle is recommended. Roads can be dark and winding at night.",
     parkingNote: "Free on-site parking is available.",
-    evChargerNote: "A Tesla Universal Wall Connector is available for compatible EVs.",
+    evChargerNote: "Tesla Universal Wall Connector available on-site.",
     heroImage: fromGallery("hoodCanal", 0),
   },
 
   gallery,
 
   houseRules: [
-    { id: "check-in", title: "Check-in", description: "Contactless self check-in via smart lock. Access details provided before arrival." },
-    { id: "occupancy", title: "Occupancy", description: "Maximum 8 registered guests." },
-    { id: "pets", title: "Pets", description: "Dogs allowed with prior approval. Maximum 2 pets. $100 fee per pet, per stay." },
+    { id: "check-in", title: "Check-in", description: "Contactless smart lock." },
+    { id: "pets", title: "Pets", description: "Dogs by prior approval. Maximum two. $100 per pet per stay." },
     { id: "quiet-hours", title: "Quiet hours", description: "10 PM – 8 AM." },
+    { id: "occupancy", title: "Occupancy", description: "Maximum eight registered guests." },
+    { id: "events", title: "Events", description: "No parties or unauthorised gatherings." },
     { id: "smoking", title: "Smoking", description: "No smoking or vaping inside." },
-    { id: "events", title: "Events", description: "No parties, weddings, receptions or unauthorised gatherings." },
-    { id: "waterfront", title: "Waterfront", description: "No direct beach access. Children and pets must be supervised outside." },
-    { id: "stairs", title: "Stairs", description: "The home has three levels. Guests should be comfortable using stairs." },
-    { id: "security", title: "Security", description: "Exterior security cameras monitor outdoor areas only." },
-    { id: "rental-agreement", title: "Rental agreement", description: "Guests must electronically sign the Salt+Haven rental agreement before check-in." },
+    {
+      id: "safety",
+      title: "Safety",
+      description: "Children and pets must be supervised outdoors, near the deck, waterfront, stairs and hot tub.",
+    },
+    { id: "security", title: "Security", description: "Exterior cameras monitor outdoor areas only." },
+    { id: "rental-agreement", title: "Rental agreement", description: "Electronic agreement required before check-in." },
   ],
 
   cancellationPolicy: [

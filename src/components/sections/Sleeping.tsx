@@ -36,12 +36,12 @@ export function Sleeping({ property }: { property: Property }) {
   }, []);
 
   return (
-    <section id="sleeping" ref={rootRef} data-header-theme="dark" data-scene="8" className="section-pad bg-sand text-charcoal">
+    <section id="sleeping" ref={rootRef} data-header-theme="dark" data-scene="7" className="section-pad bg-sand text-charcoal">
       <div className="container-edge mb-12">
         <p className="text-eyebrow mb-6 flex items-center gap-3 text-charcoal/50">
           <span>07</span>
           <span className="h-px w-8 bg-current/50" />
-          <span>Sleeping</span>
+          <span>Sleep</span>
         </p>
         <h2 className="text-display-lg">{property.sleepingHeading}</h2>
         <p className="text-body-lg mt-6 max-w-xl text-charcoal/70">{property.sleepingStatement}</p>

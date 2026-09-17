@@ -42,7 +42,7 @@ export function Introduction({ property }: { property: Property }) {
       <div className="container-edge grid grid-cols-1 gap-16 md:grid-cols-12 md:gap-8">
         <div className="flex flex-col gap-8 md:col-span-5">
           <p data-intro-reveal className="text-eyebrow flex items-center gap-3 text-charcoal/50">
-            <span>01</span>
+            <span>02</span>
             <span className="h-px w-8 bg-current/50" />
             <span>Introduction</span>
           </p>

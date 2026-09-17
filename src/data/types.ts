@@ -63,12 +63,13 @@ export const GALLERY_CATEGORY_LABELS: Record<GalleryCategory, string> = {
   familyAmenity: "Family & Amenity Details",
 };
 
-/** Grouped for the "The House / Sleeping / Outside / The View / Details" full-gallery filters. */
+/** Grouped for the "House / Inside / Outside / Sleep / View / Details" full-gallery filters. */
 export const GALLERY_CATEGORY_SECTIONS: { label: string; categories: GalleryCategory[] }[] = [
-  { label: "The House", categories: ["exterior", "greatRoom", "kitchenDining"] },
-  { label: "Sleeping", categories: ["kingBedroom", "queenBedroom", "loft", "bathrooms"] },
+  { label: "House", categories: ["exterior"] },
+  { label: "Inside", categories: ["greatRoom", "kitchenDining"] },
   { label: "Outside", categories: ["hotTub", "firePit", "outdoorDining", "deckPatio"] },
-  { label: "The View", categories: ["hoodCanal", "sunsetAtmospheric"] },
+  { label: "Sleep", categories: ["kingBedroom", "queenBedroom", "loft", "bathrooms"] },
+  { label: "View", categories: ["hoodCanal", "sunsetAtmospheric"] },
   { label: "Details", categories: ["detailLifestyle", "familyAmenity"] },
 ];
 
@@ -143,7 +144,6 @@ export interface Property {
 
   heroMedia: Media;
   heroTagline: string;
-  heroSupporting: string;
 
   introHeading: string;
   introStatement: string;
@@ -166,10 +166,6 @@ export interface Property {
   outdoorHeading: string;
   outdoorStatement: string;
   outdoorFeatures: FeatureHighlight[];
-
-  lifeAtHeading: string;
-  lifeAtMoments: string[];
-  lifeAtBackgroundImage: Media;
 
   sleepingHeading: string;
   sleepingStatement: string;

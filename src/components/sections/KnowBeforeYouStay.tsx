@@ -38,16 +38,16 @@ export function KnowBeforeYouStay({ property }: { property: Property }) {
 
   return (
     <section
-      id="know-before-you-stay"
+      id="stay-info"
       ref={rootRef}
       data-header-theme="dark"
-      data-scene="12"
+      data-scene="11"
       className="section-pad container-edge bg-ivory text-charcoal"
     >
       <p data-kbys-reveal className="text-eyebrow mb-6 flex items-center gap-3 text-charcoal/50">
         <span>11</span>
         <span className="h-px w-8 bg-current/50" />
-        <span>Know Before You Stay</span>
+        <span>Stay Info</span>
       </p>
       <h2 data-kbys-reveal className="text-display-lg mb-16 max-w-2xl">
         Good to know, before you arrive.

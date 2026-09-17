@@ -4,7 +4,6 @@ import { TheHouse } from "@/components/sections/TheHouse";
 import { TheView } from "@/components/sections/TheView";
 import { Stay } from "@/components/sections/Stay";
 import { Outside } from "@/components/sections/Outside";
-import { LifeAt } from "@/components/sections/LifeAt";
 import { Sleeping } from "@/components/sections/Sleeping";
 import { Amenities } from "@/components/sections/Amenities";
 import { HoodCanal } from "@/components/sections/HoodCanal";
@@ -24,7 +23,6 @@ export default function HomePage() {
       <TheView property={property} />
       <Stay property={property} />
       <Outside property={property} />
-      <LifeAt property={property} />
       <Sleeping property={property} />
       <Amenities property={property} />
       <HoodCanal property={property} />
