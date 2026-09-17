@@ -1,12 +1,48 @@
-import { placeholder } from "./media";
+import { stockPlaceholder } from "./media";
 import type { Amenity, Property, Room } from "./types";
+import type { StockCategory } from "./stockPhotos";
 
 /**
- * PLACEHOLDER DATA — every value below is a labelled placeholder token, not
- * real Stay Haven content. Replace field-by-field once the real property
- * information is supplied; the templates, layout and motion are complete
- * and do not need to change when this file changes.
+ * PLACEHOLDER DATA — every text value below is a labelled placeholder token,
+ * not real Stay Haven content. Images are temporary Pexels stock photos
+ * (see stockPhotos.ts) chosen to loosely match each property's theme, purely
+ * so the site previews with real imagery instead of gray boxes. Replace
+ * field-by-field once the real property information is supplied; the
+ * templates, layout and motion are complete and do not need to change.
  */
+
+interface PropertyTheme {
+  hero: StockCategory;
+  gallery: StockCategory[];
+  rooms: StockCategory[];
+  /** [stay, eat, explore, unwind] */
+  experiences: [StockCategory, StockCategory, StockCategory, StockCategory];
+  attractions: StockCategory[];
+}
+
+const THEMES: PropertyTheme[] = [
+  {
+    hero: "villaExterior",
+    gallery: ["villaExterior", "pool", "bedroom", "livingRoom", "bathroom", "dining", "beach", "rooftop"],
+    rooms: ["bedroom", "bathroom", "livingRoom"],
+    experiences: ["livingRoom", "dining", "beach", "pool"],
+    attractions: ["beach", "cityStreet", "dining", "rooftop", "pool", "villaExterior"],
+  },
+  {
+    hero: "forestCabin",
+    gallery: ["forestCabin", "mountain", "bedroom", "livingRoom", "bathroom", "breakfast", "mountain", "forestCabin"],
+    rooms: ["bedroom", "bathroom", "livingRoom"],
+    experiences: ["livingRoom", "breakfast", "mountain", "spa"],
+    attractions: ["mountain", "forestCabin", "breakfast", "spa", "mountain", "forestCabin"],
+  },
+  {
+    hero: "lobby",
+    gallery: ["lobby", "cityStreet", "bedroom", "livingRoom", "bathroom", "dining", "rooftop", "cityStreet"],
+    rooms: ["bedroom", "bathroom", "livingRoom"],
+    experiences: ["livingRoom", "dining", "cityStreet", "rooftop"],
+    attractions: ["cityStreet", "rooftop", "dining", "lobby", "cityStreet", "rooftop"],
+  },
+];
 
 function amenities(propertyToken: string, count: number): Amenity[] {
   return Array.from({ length: count }, (_, i) => ({
@@ -15,10 +51,11 @@ function amenities(propertyToken: string, count: number): Amenity[] {
   }));
 }
 
-function rooms(propertyToken: string, count: number): Room[] {
+function rooms(propertyToken: string, count: number, theme: PropertyTheme): Room[] {
   return Array.from({ length: count }, (_, i) => {
     const n = String(i + 1).padStart(2, "0");
     const token = `${propertyToken}_ROOM_TYPE_${n}`;
+    const category = theme.rooms[i % theme.rooms.length]!;
     return {
       id: token,
       slug: token.toLowerCase().replace(/_/g, "-"),
@@ -32,8 +69,8 @@ function rooms(propertyToken: string, count: number): Room[] {
       priceFrom: null,
       currency: "USD",
       images: [
-        placeholder(`${token}_IMAGE_01`, `${token} interior`, "landscape"),
-        placeholder(`${token}_IMAGE_02`, `${token} detail`, "portrait"),
+        stockPlaceholder(`${token}_IMAGE_01`, `${token} interior`, "landscape", category, i),
+        stockPlaceholder(`${token}_IMAGE_02`, `${token} detail`, "portrait", category, i + 1),
       ],
       bookingEngineRoomId: null,
     };
@@ -43,6 +80,8 @@ function rooms(propertyToken: string, count: number): Room[] {
 function property(index: number, destinationSlug: string, featured: boolean): Property {
   const n = String(index).padStart(2, "0");
   const token = `PROPERTY_${n}`;
+  const theme = THEMES[index - 1]!;
+
   return {
     id: token,
     slug: token.toLowerCase().replace(/_/g, "-"),
@@ -52,27 +91,29 @@ function property(index: number, destinationSlug: string, featured: boolean): Pr
     shortDescription: `${token}_SHORT_DESCRIPTION`,
     longDescription: `${token}_LONG_DESCRIPTION`,
     positioningStatement: `${token}_POSITIONING_STATEMENT`,
-    heroMedia: placeholder(`${token}_HERO_MEDIA`, `${token} hero`, "wide", "image"),
+    heroMedia: stockPlaceholder(`${token}_HERO_MEDIA`, `${token} hero`, "wide", theme.hero),
     featuredStatement: `${token}_FEATURED_STATEMENT`,
-    gallery: Array.from({ length: 8 }, (_, i) =>
-      placeholder(
+    gallery: theme.gallery.map((category, i) =>
+      stockPlaceholder(
         `${token}_GALLERY_${String(i + 1).padStart(2, "0")}`,
         `${token} gallery image ${i + 1}`,
-        i % 3 === 0 ? "portrait" : "landscape"
+        i % 3 === 0 ? "portrait" : "landscape",
+        category,
+        i
       )
     ),
-    rooms: rooms(token, 3),
+    rooms: rooms(token, 3, theme),
     amenities: amenities(token, 8),
-    experiences: Array.from({ length: 4 }, (_, i) => {
+    experiences: theme.experiences.map((category, i) => {
       const en = String(i + 1).padStart(2, "0");
       return {
         id: `${token}_EXPERIENCE_${en}`,
         title: `${token}_EXPERIENCE_${en}_TITLE`,
         description: `${token}_EXPERIENCE_${en}_DESCRIPTION`,
-        image: placeholder(`${token}_EXPERIENCE_${en}_IMAGE`, `${token} experience ${en}`, "landscape"),
+        image: stockPlaceholder(`${token}_EXPERIENCE_${en}_IMAGE`, `${token} experience ${en}`, "landscape", category, i),
       };
     }),
-    nearbyAttractions: Array.from({ length: 6 }, (_, i) => {
+    nearbyAttractions: theme.attractions.map((category, i) => {
       const an = String(i + 1).padStart(2, "0");
       return {
         id: `${token}_ATTRACTION_${an}`,
@@ -80,7 +121,7 @@ function property(index: number, destinationSlug: string, featured: boolean): Pr
         category: `${token}_ATTRACTION_${an}_CATEGORY`,
         description: `${token}_ATTRACTION_${an}_DESCRIPTION`,
         distance: `${token}_ATTRACTION_${an}_DISTANCE`,
-        image: placeholder(`${token}_ATTRACTION_${an}_IMAGE`, `${token} nearby attraction ${an}`, "square"),
+        image: stockPlaceholder(`${token}_ATTRACTION_${an}_IMAGE`, `${token} nearby attraction ${an}`, "square", category, i),
       };
     }),
     testimonials: Array.from({ length: 2 }, (_, i) => {

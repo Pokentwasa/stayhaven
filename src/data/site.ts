@@ -1,4 +1,4 @@
-import { placeholder } from "./media";
+import { stockPlaceholder } from "./media";
 import type { SiteContent } from "./types";
 
 /**
@@ -27,7 +27,7 @@ export const SITE: SiteContent = {
     headline: "Stay somewhere worth remembering.",
     supporting: "A quieter way to travel.",
     scrollCue: "Discover the Collection",
-    media: placeholder("SITE_HERO_MEDIA", "Stay Haven Collection", "ultrawide", "video"),
+    media: stockPlaceholder("SITE_HERO_MEDIA", "luxury villa with infinity pool at dusk", "ultrawide", "villaExterior"),
   },
   manifesto: {
     eyebrow: "02 — Brand Manifesto",
@@ -45,25 +45,25 @@ export const SITE: SiteContent = {
       id: "pillar-stay",
       title: "Stay",
       description: "Beautiful spaces made to settle into.",
-      image: placeholder("PILLAR_STAY_IMAGE", "Stay", "landscape"),
+      image: stockPlaceholder("PILLAR_STAY_IMAGE", "cozy modern living room interior", "landscape", "livingRoom"),
     },
     {
       id: "pillar-eat",
       title: "Eat",
       description: "Slow mornings. Long dinners.",
-      image: placeholder("PILLAR_EAT_IMAGE", "Eat", "landscape"),
+      image: stockPlaceholder("PILLAR_EAT_IMAGE", "candlelit dinner table setting", "landscape", "dining"),
     },
     {
       id: "pillar-explore",
       title: "Explore",
       description: "Step outside and discover where you are.",
-      image: placeholder("PILLAR_EXPLORE_IMAGE", "Explore", "landscape"),
+      image: stockPlaceholder("PILLAR_EXPLORE_IMAGE", "european cobblestone street cafe", "landscape", "cityStreet"),
     },
     {
       id: "pillar-unwind",
       title: "Unwind",
       description: "The reason you came.",
-      image: placeholder("PILLAR_UNWIND_IMAGE", "Unwind", "landscape"),
+      image: stockPlaceholder("PILLAR_UNWIND_IMAGE", "spa massage relaxation", "landscape", "spa"),
     },
   ],
   footer: {
