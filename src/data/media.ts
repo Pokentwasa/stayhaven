@@ -1,10 +1,9 @@
 import type { GalleryCategory, GalleryImage, Media, MediaAspect } from "./types";
-import { stockPhotoUrl } from "./stockPhotos";
 
 /**
- * Creates a placeholder media slot. `src` is intentionally empty until real
- * photography/video is supplied — components render a styled placeholder
- * treatment (see `PlaceholderMedia`) whenever `src` is empty.
+ * Creates a placeholder media slot. `src` is intentionally empty — components
+ * render a styled placeholder treatment (see `PlaceholderMedia`) whenever
+ * `src` is empty. Used only where a real photo doesn't exist yet for a slot.
  */
 export function placeholder(
   id: string,
@@ -15,36 +14,18 @@ export function placeholder(
   return { id, src: "", type, alt, aspect };
 }
 
-/**
- * Same slot shape as `placeholder`, but filled with a real (freely-licensed,
- * generic) Pexels stock photo so the site previews with actual imagery
- * instead of gray boxes. `id` keeps the original placeholder token so the
- * slot is still unambiguous about what real Salt+Haven photo belongs there —
- * only `src`/`alt` differ. See src/data/stockPhotos.ts.
- */
-export function stockPlaceholder(
-  id: string,
-  alt: string,
-  aspect: MediaAspect,
-  category: GalleryCategory,
-  index = 0
-): Media {
-  return {
-    id,
-    src: stockPhotoUrl(category, index, aspect === "portrait" ? 1000 : 1600),
-    type: "image",
-    alt: `Placeholder stock photo (Pexels) — ${alt}`,
-    aspect,
-  };
+/** A real, local Salt+Haven photo. `src` is a path under /public (e.g. "/images/salt-haven/great-room-01.jpeg"). */
+export function realMedia(id: string, alt: string, aspect: MediaAspect, src: string): Media {
+  return { id, src, type: "image", alt, aspect };
 }
 
-/** Same as `stockPlaceholder`, but tagged with its gallery category for the full 53-photo gallery. */
-export function galleryImage(
+/** Same as `realMedia`, but tagged with its gallery category for the full photo gallery. */
+export function realGalleryImage(
   id: string,
   alt: string,
   aspect: MediaAspect,
   category: GalleryCategory,
-  index = 0
+  src: string
 ): GalleryImage {
-  return { ...stockPlaceholder(id, alt, aspect, category, index), category };
+  return { ...realMedia(id, alt, aspect, src), category };
 }

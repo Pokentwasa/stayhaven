@@ -1,4 +1,4 @@
-import { galleryImage, stockPlaceholder } from "./media";
+import { realGalleryImage, realMedia } from "./media";
 import type { GalleryCategory, GalleryImage, Property } from "./types";
 
 /**
@@ -10,45 +10,126 @@ import type { GalleryCategory, GalleryImage, Property } from "./types";
  * invented. Do not add rooms, amenities, pricing, activities or reviews
  * that aren't sourced from the real listing.
  *
- * Images are temporary Pacific-Northwest-cabin-styled Pexels stock photos
- * (see stockPhotos.ts) standing in for the real 53-photo library, already
- * organised into the 15 real categories so the swap is a data-only change.
+ * Images are the real Salt+Haven photo library (49 unique photos), stored
+ * under /public/images/salt-haven and organised into the 15 real gallery
+ * categories. `deckPatio` currently has no dedicated photo in the library
+ * (deck/patio views appear inside `exterior` shots instead) — its gallery
+ * group stays empty rather than reusing an unrelated image.
  */
 
-const galleryCounter: Partial<Record<GalleryCategory, number>> = {};
+const GALLERY_MANIFEST: Record<GalleryCategory, { file: string; alt: string }[]> = {
+  exterior: [
+    { file: "exterior-01.jpeg", alt: "Salt+Haven's A-frame entry and carport at dusk, string lights lit" },
+    { file: "exterior-02.jpeg", alt: "Aerial view of Salt+Haven's deck, hot tub gazebo and fenced yard" },
+    { file: "exterior-03.jpeg", alt: "Salt+Haven's A-frame exterior with Hood Canal and the Olympic Mountains behind" },
+    { file: "exterior-04.jpeg", alt: "Salt+Haven's A-frame exterior and hot tub gazebo at dusk" },
+  ],
+  hoodCanal: [
+    { file: "hood-canal-01.jpeg", alt: "Salt+Haven's A-frame roofline seen across Hood Canal, with the road and waterline below" },
+    { file: "hood-canal-02.jpeg", alt: "Hood Canal and the Olympic Mountains, seen from a Salt+Haven window" },
+  ],
+  greatRoom: [
+    { file: "great-room-01.jpeg", alt: "Salt+Haven's vaulted great room, kitchen and loft ladder" },
+    { file: "great-room-02.jpeg", alt: "Vaulted living room with a full-height window over Hood Canal" },
+    { file: "great-room-03.jpeg", alt: "Dining table beneath the vaulted ceiling, Hood Canal beyond" },
+    { file: "great-room-04.jpeg", alt: "Living room seating beneath the A-frame's peak" },
+    { file: "great-room-05.jpeg", alt: "Upper living room opening onto the deck and Hood Canal" },
+    { file: "great-room-06.jpeg", alt: "Living room sofa facing the deck, fire pit and water beyond" },
+    { file: "great-room-07.jpeg", alt: "View down into the great room from the loft" },
+    { file: "great-room-08.jpeg", alt: "Lower-level lounge with Smart TV and workspace" },
+  ],
+  kitchenDining: [
+    { file: "kitchen-dining-01.jpeg", alt: "Kitchen island and bar seating beneath the vaulted ceiling" },
+    { file: "kitchen-dining-02.jpeg", alt: "Kitchen and living area with Hood Canal through the windows" },
+    { file: "kitchen-dining-03.jpeg", alt: "Kitchen island, refrigerator and stairs to the loft" },
+    { file: "kitchen-dining-04.jpeg", alt: "Dining table with the loft staircase and kitchen behind" },
+    { file: "kitchen-dining-05.jpeg", alt: "Dishware and glassware in the kitchen cabinet" },
+    { file: "kitchen-dining-06.jpeg", alt: "Pantry staples and cookbooks in the kitchen" },
+    { file: "kitchen-dining-07.jpeg", alt: "Kitchen utensils and tools" },
+    { file: "kitchen-dining-08.jpeg", alt: "Stove, microwave and coffee station" },
+    { file: "kitchen-dining-09.jpeg", alt: "Pots and pans in the kitchen cabinet" },
+    { file: "kitchen-dining-10.jpeg", alt: "Coffee and tea station in the kitchen" },
+  ],
+  kingBedroom: [
+    { file: "king-bedroom-01.jpeg", alt: "King bedroom with a private workspace and water view" },
+    { file: "king-bedroom-02.jpeg", alt: "Bedroom with in-room laundry and a walk-in closet" },
+  ],
+  queenBedroom: [
+    { file: "queen-bedroom-01.jpeg", alt: "Queen bedroom opening onto the deck, with Hood Canal beyond" },
+    { file: "queen-bedroom-02.jpeg", alt: "Bedroom balcony over Hood Canal and the Olympic Mountains" },
+  ],
+  loft: [
+    { file: "loft-01.jpeg", alt: "Loft with two twin beds beneath the A-frame's peak" },
+    { file: "loft-02.jpeg", alt: "Loft overlooking the staircase and deck below" },
+  ],
+  bathrooms: [
+    { file: "bathroom-01.jpeg", alt: "Bathroom with a walk-in shower" },
+    { file: "bathroom-02.jpeg", alt: "Bathroom vanity beneath the sloped ceiling" },
+    { file: "bathroom-03.jpeg", alt: "Bathroom storage beneath the sink" },
+    { file: "bathroom-04.jpeg", alt: "Bathroom vanity and mirror" },
+    { file: "bathroom-05.jpeg", alt: "Folded towels on a bathroom shelf" },
+  ],
+  hotTub: [
+    { file: "hot-tub-01.jpeg", alt: "Covered hot tub gazebo with loungers" },
+    { file: "hot-tub-02.jpeg", alt: "Hot tub at sunset, overlooking Hood Canal" },
+  ],
+  firePit: [{ file: "fire-pit-01.jpeg", alt: "Adirondack chairs around the propane fire pit, Hood Canal beyond" }],
+  outdoorDining: [{ file: "outdoor-dining-01.jpeg", alt: "Outdoor dining table and BBQ on the deck, overlooking Hood Canal" }],
+  deckPatio: [],
+  detailLifestyle: [
+    { file: "detail-01.jpeg", alt: "Tesla Universal Wall Connector EV charger" },
+    { file: "detail-02.jpeg", alt: "Record player and vinyl collection" },
+    { file: "detail-03.jpeg", alt: "Gate sign confirming no direct beach access" },
+    { file: "detail-04.jpeg", alt: "Linens and towels in the closet" },
+    { file: "detail-05.jpeg", alt: "Record player and bookshelf in the living room" },
+    { file: "detail-06.jpeg", alt: "Laundry supplies" },
+  ],
+  sunsetAtmospheric: [{ file: "sunset-01.jpeg", alt: "Sunset over Hood Canal from the hot tub gazebo" }],
+  familyAmenity: [
+    { file: "family-01.jpeg", alt: "Board games for family game nights" },
+    { file: "family-02.jpeg", alt: "Dog bowl, treats and toys" },
+    { file: "family-03.jpeg", alt: "Fenced dog area sign" },
+  ],
+};
 
-function nextGalleryImages(category: GalleryCategory, count: number, aspect: "portrait" | "landscape" | "square" = "landscape"): GalleryImage[] {
-  const start = galleryCounter[category] ?? 0;
-  galleryCounter[category] = start + count;
-  return Array.from({ length: count }, (_, i) => {
-    const n = start + i + 1;
-    return galleryImage(
-      `SALT_HAVEN_GALLERY_${category.toUpperCase()}_${String(n).padStart(2, "0")}`,
-      `Salt+Haven — ${category} ${n}`,
-      aspect,
-      category,
-      start + i
-    );
-  });
+const PORTRAIT_FILES = new Set([
+  "kitchen-dining-01.jpeg",
+  "kitchen-dining-06.jpeg",
+  "bathroom-01.jpeg",
+  "bathroom-03.jpeg",
+  "bathroom-04.jpeg",
+  "detail-03.jpeg",
+  "detail-04.jpeg",
+  "detail-06.jpeg",
+]);
+const SQUARE_FILES = new Set([
+  "great-room-05.jpeg",
+  "great-room-06.jpeg",
+  "great-room-08.jpeg",
+  "kitchen-dining-03.jpeg",
+  "kitchen-dining-04.jpeg",
+  "kitchen-dining-09.jpeg",
+  "bathroom-02.jpeg",
+  "fire-pit-01.jpeg",
+]);
+
+function aspectFor(file: string): "portrait" | "square" | "landscape" {
+  if (PORTRAIT_FILES.has(file)) return "portrait";
+  if (SQUARE_FILES.has(file)) return "square";
+  return "landscape";
 }
 
-const gallery: GalleryImage[] = [
-  ...nextGalleryImages("exterior", 4, "landscape"),
-  ...nextGalleryImages("hoodCanal", 4, "landscape"),
-  ...nextGalleryImages("greatRoom", 4, "landscape"),
-  ...nextGalleryImages("kitchenDining", 4, "landscape"),
-  ...nextGalleryImages("kingBedroom", 3, "landscape"),
-  ...nextGalleryImages("queenBedroom", 3, "landscape"),
-  ...nextGalleryImages("loft", 3, "landscape"),
-  ...nextGalleryImages("bathrooms", 3, "landscape"),
-  ...nextGalleryImages("hotTub", 4, "landscape"),
-  ...nextGalleryImages("firePit", 4, "landscape"),
-  ...nextGalleryImages("outdoorDining", 3, "landscape"),
-  ...nextGalleryImages("deckPatio", 3, "landscape"),
-  ...nextGalleryImages("detailLifestyle", 4, "portrait"),
-  ...nextGalleryImages("sunsetAtmospheric", 5, "landscape"),
-  ...nextGalleryImages("familyAmenity", 2, "landscape"),
-];
+const gallery: GalleryImage[] = (Object.keys(GALLERY_MANIFEST) as GalleryCategory[]).flatMap((category) =>
+  GALLERY_MANIFEST[category].map(({ file, alt }, i) =>
+    realGalleryImage(
+      `SALT_HAVEN_GALLERY_${category.toUpperCase()}_${String(i + 1).padStart(2, "0")}`,
+      `Salt+Haven — ${alt}`,
+      aspectFor(file),
+      category,
+      `/images/salt-haven/${file}`
+    )
+  )
+);
 
 function fromGallery(category: GalleryCategory, index: number) {
   const match = gallery.filter((g) => g.category === category)[index];
@@ -72,7 +153,12 @@ export const SALT_HAVEN: Property = {
   bathrooms: 2,
   squareFeet: 1446,
 
-  heroMedia: stockPlaceholder("SALT_HAVEN_HERO_MEDIA", "Salt+Haven A-frame exterior at dusk, Hood Canal", "ultrawide", "exterior"),
+  heroMedia: realMedia(
+    "SALT_HAVEN_HERO_MEDIA",
+    "Salt+Haven's A-frame exterior and hot tub gazebo at dusk, Hood Canal",
+    "ultrawide",
+    "/images/salt-haven/exterior-04.jpeg"
+  ),
   heroTagline: "Water outside. Warmth within.",
   heroSupporting: "A private Pacific Northwest escape.",
 
@@ -95,7 +181,7 @@ export const SALT_HAVEN: Property = {
     "Two full bathrooms",
     "Private workspace",
   ],
-  storyImages: [fromGallery("exterior", 1), fromGallery("greatRoom", 0), fromGallery("kitchenDining", 0)],
+  storyImages: [fromGallery("exterior", 2), fromGallery("greatRoom", 0), fromGallery("kitchenDining", 0)],
 
   viewHeading: "Hood Canal, from here.",
   viewStatement: "Salt+Haven sits along the Hood Canal waterfront in Union, Washington.",
@@ -157,7 +243,7 @@ export const SALT_HAVEN: Property = {
       id: "outside-deck-patio",
       title: "Deck & Patio",
       description: "Deck and patio seating, plus a fenced area for dogs.",
-      image: fromGallery("deckPatio", 0),
+      image: fromGallery("exterior", 1),
     },
   ],
 
@@ -171,7 +257,7 @@ export const SALT_HAVEN: Property = {
     "Fire pit conversations.",
     "Record playing inside.",
   ],
-  lifeAtBackgroundImage: fromGallery("sunsetAtmospheric", 1),
+  lifeAtBackgroundImage: fromGallery("sunsetAtmospheric", 0),
 
   sleepingHeading: "Sleeps eight, easily.",
   sleepingStatement: "Three bedrooms. Two bathrooms. Room enough for the whole group.",
@@ -299,7 +385,7 @@ export const SALT_HAVEN: Property = {
     transitNote: "A personal vehicle is strongly recommended. Roads can be dark and winding at night.",
     parkingNote: "Free on-site parking is available.",
     evChargerNote: "A Tesla Universal Wall Connector is available for compatible EVs.",
-    heroImage: fromGallery("hoodCanal", 2),
+    heroImage: fromGallery("hoodCanal", 0),
   },
 
   gallery,

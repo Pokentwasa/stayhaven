@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import type { Media } from "@/data/types";
 import { cx } from "@/lib/utils";
 
@@ -68,7 +69,23 @@ export function PlaceholderMedia({
     );
   }
 
-  // Real <Image> wiring intentionally deferred until real asset paths exist.
+  // Local assets (the real Salt+Haven photo library) get Next's optimized
+  // Image component. An external/unconfigured remote URL falls back to a
+  // plain <img> instead of erroring at build time.
+  if (media.src.startsWith("/")) {
+    return (
+      <Image
+        className={cx(ASPECT_CLASS[media.aspect], "h-full w-full object-cover", className)}
+        src={media.src}
+        alt={media.alt}
+        fill
+        priority={priority}
+        sizes={fill ? sizes : undefined}
+        onError={() => setFailed(true)}
+      />
+    );
+  }
+
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
