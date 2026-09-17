@@ -1,10 +1,10 @@
 export * from "./types";
 export * from "./media";
 export { SITE } from "./site";
-export { DESTINATIONS } from "./destinations";
 export {
+  SALT_HAVEN,
   PROPERTIES,
+  isSinglePropertyMode,
   getPropertyBySlug,
-  getFeaturedProperty,
-  getAllTestimonials,
-} from "./properties";
+  getPrimaryProperty,
+} from "./property";

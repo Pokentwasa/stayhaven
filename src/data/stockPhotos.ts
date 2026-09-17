@@ -1,46 +1,32 @@
+import type { GalleryCategory } from "./types";
+
 /**
  * Curated pool of real, freely-licensed Pexels stock photos used as VISUAL
  * placeholders only (Pexels License — free to use, no attribution required:
- * https://www.pexels.com/license/). These are generic stock images, not
- * real Stay Haven Collection photography — every usage keeps its original
- * placeholder token as `id`/alt-text seed so it stays obvious what still
- * needs to be replaced once real property photography is supplied.
+ * https://www.pexels.com/license/) until the real 53-photo Salt+Haven
+ * library is supplied. Categories match `GalleryCategory` 1:1 so the same
+ * classification the real photos will use already drives the whole site.
  *
- * Swap these out by editing this file alone; nothing downstream needs to
- * change shape.
+ * These are generic Pacific-Northwest-cabin-styled stock images, NOT real
+ * Salt+Haven photography — every usage keeps its data-slot token as `id`/
+ * alt-text seed so it stays obvious what still needs replacing.
  */
-
-export type StockCategory =
-  | "villaExterior"
-  | "pool"
-  | "bedroom"
-  | "bathroom"
-  | "livingRoom"
-  | "dining"
-  | "lobby"
-  | "spa"
-  | "beach"
-  | "forestCabin"
-  | "cityStreet"
-  | "breakfast"
-  | "mountain"
-  | "rooftop";
-
-const POOL: Record<StockCategory, number[]> = {
-  villaExterior: [31817156, 29453302, 24807132, 26859026],
-  pool: [30615187, 31359181, 30037427, 6437583],
-  bedroom: [7786785, 31728406, 28843330, 15273732],
-  bathroom: [19141076, 33829528, 3741317, 19227243],
-  livingRoom: [4468806, 6035369, 6782369, 5825398],
-  dining: [29616285, 11160491, 28059316, 5116976],
-  lobby: [31080809, 6758532, 18426842],
-  spa: [19695969],
-  beach: [18245896, 14805497, 7245083],
-  forestCabin: [10583840, 28965545, 14295339, 14267367],
-  cityStreet: [35319765, 28508990, 30718801, 3888048],
-  breakfast: [34232215, 12716046, 4279, 5720774],
-  mountain: [34584160, 1266810, 35483575, 8936637],
-  rooftop: [12333626, 19718653, 16135943, 2725479],
+const POOL: Record<GalleryCategory, number[]> = {
+  exterior: [14295338, 5708937, 10583840, 28965545, 14295339, 14267367],
+  hoodCanal: [30948820, 35091112, 18158387, 346529, 13894088, 289561, 417074, 275538],
+  greatRoom: [29141327, 29887320, 5865276, 4468806, 6035369, 6782369, 5825398],
+  kitchenDining: [4221389, 3946661, 3946660, 29616285, 11160491],
+  kingBedroom: [19737839, 30708776, 7786785, 31728406],
+  queenBedroom: [34767464, 28843330, 15273732, 30708776],
+  loft: [7786785, 31728406, 28843330, 15273732],
+  bathrooms: [19141076, 33829528, 3741317, 19227243],
+  hotTub: [30615187, 31359181, 30037427, 6437583],
+  firePit: [2278646, 9355602, 29279929, 6799821],
+  outdoorDining: [29616285, 11160491, 28059316, 5116976],
+  deckPatio: [10583840, 28965545, 14295339, 14267367],
+  detailLifestyle: [34232215, 12716046, 4279, 5720774],
+  sunsetAtmospheric: [37981, 16099949, 17068948, 30755997, 28152629, 10781049],
+  familyAmenity: [4468806, 6035369, 6782369, 5825398],
 };
 
 /** Builds a Pexels CDN hotlink URL (Pexels License permits this for free, no key required). */
@@ -49,7 +35,7 @@ export function pexelsUrl(id: number, width = 1600): string {
 }
 
 /** Deterministically picks an image from a category pool so repeat calls with the same index stay stable. */
-export function stockPhotoUrl(category: StockCategory, index = 0, width = 1600): string {
+export function stockPhotoUrl(category: GalleryCategory, index = 0, width = 1600): string {
   const ids = POOL[category];
   const id = ids[index % ids.length]!;
   return pexelsUrl(id, width);

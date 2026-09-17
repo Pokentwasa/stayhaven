@@ -1,122 +1,199 @@
 /**
- * Central content schema for the Stay Haven Collection site.
+ * Central content schema for the Stay Haven site.
  *
- * Every piece of copy, imagery and operational detail rendered on the site
- * is typed here and sourced from `src/data/*.ts`. Nothing in `src/app` or
- * `src/components` should hardcode property, room, destination or pricing
- * content — it should always come through this layer, so the real Stay
- * Haven content can be dropped in by editing the data files alone.
+ * Stay Haven currently operates ONE property — Salt+Haven, on Hood Canal in
+ * Union, Washington. The data model still supports a `properties[]` array
+ * so a future second property can be added without a rewrite, but every
+ * component in this codebase should render for a single retreat today: no
+ * "Collection" framing, no invented sister properties.
  *
- * Placeholder values use UPPER_SNAKE_CASE tokens (e.g. "PROPERTY_01",
- * "ROOM_TYPE_01") so they are unmistakable as temporary and are never
- * confused with real copy.
+ * All copy here is either verbatim from, or an editorial rewrite of, real
+ * Salt+Haven listing content — nothing here is fabricated. Image `src`
+ * values are empty until the real 53-photo library is supplied; components
+ * render a labelled placeholder in the meantime (see PlaceholderMedia).
  */
 
 export type MediaAspect = "portrait" | "square" | "landscape" | "wide" | "ultrawide";
 
-/** A single image or video placeholder slot. Swap `src` in once real assets exist. */
+/** A single image or video slot. Empty `src` renders a placeholder treatment. */
 export interface Media {
-  /** Stable id / alt-text seed, e.g. "PROPERTY_01_HERO_IMAGE" */
   id: string;
-  /** Real asset path once supplied. Empty string renders the placeholder treatment. */
   src: string;
-  /** "image" | "video" */
   type: "image" | "video";
   alt: string;
   aspect: MediaAspect;
 }
 
-export interface Amenity {
-  id: string;
-  label: string;
+/**
+ * The 15 real photo categories the eventual 53-image library will be sorted
+ * into. Used to group both the homepage preview strip and the full gallery.
+ */
+export type GalleryCategory =
+  | "exterior"
+  | "hoodCanal"
+  | "greatRoom"
+  | "kitchenDining"
+  | "kingBedroom"
+  | "queenBedroom"
+  | "loft"
+  | "bathrooms"
+  | "hotTub"
+  | "firePit"
+  | "outdoorDining"
+  | "deckPatio"
+  | "detailLifestyle"
+  | "sunsetAtmospheric"
+  | "familyAmenity";
+
+export const GALLERY_CATEGORY_LABELS: Record<GalleryCategory, string> = {
+  exterior: "Exterior & Architecture",
+  hoodCanal: "Hood Canal & Water Views",
+  greatRoom: "Great Room & Living Area",
+  kitchenDining: "Kitchen & Dining",
+  kingBedroom: "King Bedroom",
+  queenBedroom: "Queen Bedroom",
+  loft: "Loft",
+  bathrooms: "Bathrooms",
+  hotTub: "Hot Tub",
+  firePit: "Fire Pit",
+  outdoorDining: "Outdoor Dining",
+  deckPatio: "Deck & Patio",
+  detailLifestyle: "Details & Lifestyle",
+  sunsetAtmospheric: "Sunset & Atmosphere",
+  familyAmenity: "Family & Amenity Details",
+};
+
+/** Grouped for the "The House / Sleeping / Outside / The View / Details" full-gallery filters. */
+export const GALLERY_CATEGORY_SECTIONS: { label: string; categories: GalleryCategory[] }[] = [
+  { label: "The House", categories: ["exterior", "greatRoom", "kitchenDining"] },
+  { label: "Sleeping", categories: ["kingBedroom", "queenBedroom", "loft", "bathrooms"] },
+  { label: "Outside", categories: ["hotTub", "firePit", "outdoorDining", "deckPatio"] },
+  { label: "The View", categories: ["hoodCanal", "sunsetAtmospheric"] },
+  { label: "Details", categories: ["detailLifestyle", "familyAmenity"] },
+];
+
+export interface GalleryImage extends Media {
+  category: GalleryCategory;
 }
 
-export interface Room {
+export interface SleepingArea {
   id: string;
-  slug: string;
-  /** e.g. "ROOM_TYPE_01" */
+  level: string;
   name: string;
   description: string;
-  occupancy: number;
   beds: string;
-  sizeSqm: number | null;
-  highlights: string[];
-  amenities: Amenity[];
-  /** Numeric nightly rate in the smallest sensible unit for the currency, or null if unset */
-  priceFrom: number | null;
-  currency: string;
-  images: Media[];
-  /** Identifier the booking engine uses for this room/rate, once known */
-  bookingEngineRoomId: string | null;
+  features: string[];
+  image: Media;
 }
 
-export interface Experience {
+export interface AmenityGroup {
+  id: string;
+  title: string;
+  items: string[];
+}
+
+export interface FeatureHighlight {
   id: string;
   title: string;
   description: string;
   image: Media;
 }
 
-export interface NearbyAttraction {
-  id: string;
-  name: string;
-  category: string;
+export interface NeighbourhoodInfo {
+  heading: string;
   description: string;
-  distance: string;
-  image: Media;
-}
-
-export interface Testimonial {
-  id: string;
-  quote: string;
-  guestName: string;
-  guestLocation: string;
-  propertySlug: string;
-}
-
-export interface Destination {
-  id: string;
-  slug: string;
-  name: string;
-  region: string;
-  description: string;
+  activities: string[];
+  transitNote: string;
+  parkingNote: string;
+  evChargerNote: string;
   heroImage: Media;
-  coordinates: { x: number; y: number } | null;
+}
+
+export interface HouseRule {
+  id: string;
+  title: string;
+  description: string;
+}
+
+export interface CancellationTier {
+  id: string;
+  window: string;
+  refund: string;
+}
+
+export interface PropertyLocation {
+  city: string;
+  state: string;
+  country: string;
+  region: string;
 }
 
 export interface Property {
   id: string;
   slug: string;
-  /** Placeholder token, e.g. "PROPERTY_01" */
+  /** "Salt+Haven" */
   name: string;
-  locationLabel: string;
-  destinationSlug: string;
-  shortDescription: string;
-  longDescription: string;
-  positioningStatement: string;
+  /** Listing title, e.g. "NEW Waterfront A-Frame Cabin With Panoramic Views" */
+  title: string;
+  location: PropertyLocation;
+  guests: number;
+  bedrooms: number;
+  bathrooms: number;
+  squareFeet: number;
+
   heroMedia: Media;
-  featuredStatement: string;
-  gallery: Media[];
-  rooms: Room[];
-  amenities: Amenity[];
-  experiences: Experience[];
-  nearbyAttractions: NearbyAttraction[];
-  testimonials: Testimonial[];
-  metadata: {
-    guestsFrom: number;
-    guestsTo: number;
-    bedroomsFrom: number;
-    bedroomsTo: number;
-    priceFrom: number | null;
-    currency: string;
-  };
+  heroTagline: string;
+  heroSupporting: string;
+
+  introHeading: string;
+  introStatement: string;
+
+  houseHeading: string;
+  houseStatement: string;
+  houseDescription: string;
+  houseFacts: string[];
+  storyImages: Media[];
+
+  viewHeading: string;
+  viewStatement: string;
+  viewDescription: string;
+  viewImages: Media[];
+
+  stayHeading: string;
+  stayStatement: string;
+  interiorHighlights: FeatureHighlight[];
+
+  outdoorHeading: string;
+  outdoorStatement: string;
+  outdoorFeatures: FeatureHighlight[];
+
+  lifeAtHeading: string;
+  lifeAtMoments: string[];
+  lifeAtBackgroundImage: Media;
+
+  sleepingHeading: string;
+  sleepingStatement: string;
+  sleepingAreas: SleepingArea[];
+
+  amenityGroups: AmenityGroup[];
+  fullAmenities: string[];
+
+  neighbourhood: NeighbourhoodInfo;
+
+  gallery: GalleryImage[];
+
+  houseRules: HouseRule[];
+  cancellationPolicy: CancellationTier[];
+
   booking: {
     /** Identifier the existing booking engine uses for this property */
     engineId: string | null;
     /** Direct deep-link into the existing engine for this property, if known */
     engineUrl: string | null;
+    /** Nightly rate, only ever set once real pricing is supplied — never fabricated */
+    priceFrom: number | null;
+    currency: string;
   };
-  isFeatured: boolean;
 }
 
 export interface NavLink {
@@ -128,24 +205,18 @@ export interface SiteContent {
   brand: {
     name: string;
     shortName: string;
+    /** "presents" kicker between the Stay Haven wordmark and the property name in the hero */
+    presentsLabel: string;
   };
   nav: {
     primary: NavLink[];
     bookCta: NavLink;
   };
   hero: {
-    eyebrow: string;
-    headline: string;
-    supporting: string;
     scrollCue: string;
-    media: Media;
+    primaryCta: string;
+    secondaryCta: string;
   };
-  manifesto: {
-    eyebrow: string;
-    heading: string;
-    lines: string[];
-  };
-  experiencePillars: Experience[];
   footer: {
     heading: string;
     nav: NavLink[];

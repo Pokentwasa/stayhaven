@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { PlaceholderMedia } from "@/components/ui/PlaceholderMedia";
-import { SITE } from "@/data/site";
+import type { Property } from "@/data/types";
 import { prefersReducedMotion } from "@/lib/motion";
 
 if (typeof window !== "undefined") {
@@ -12,21 +12,19 @@ if (typeof window !== "undefined") {
 }
 
 /**
- * 03 — The Experience. One definitive sequence, not two parallel versions:
- * fixed STAY/EAT/EXPLORE/UNWIND labels beside a single image stage whose
- * frame and caption crossfade as each category becomes active. Desktop pins
- * and drives it by scroll; touch/mobile drops the pin and drives the same
- * stage by tapping a label (same pattern as Destinations, for one shared
- * interaction language across the site).
+ * 05 — Outside. Hot tub, fire pit, outdoor dining, deck & patio: one
+ * definitive pinned crossfade sequence on desktop, the same stage driven by
+ * tapping a label on touch/mobile — the shared interaction language used
+ * elsewhere on the site.
  */
-export function ExperienceSection() {
+export function Outside({ property }: { property: Property }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const labelRefs = useRef<HTMLButtonElement[]>([]);
   const imageRefs = useRef<HTMLDivElement[]>([]);
   const descRefs = useRef<HTMLParagraphElement[]>([]);
   const [active, setActive] = useState(0);
 
-  const pillars = SITE.experiencePillars;
+  const features = property.outdoorFeatures;
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -58,18 +56,18 @@ export function ExperienceSection() {
         scrollTrigger: {
           trigger: section,
           start: "top top",
-          end: `+=${(pillars.length - 1) * 100}%`,
+          end: `+=${(features.length - 1) * 100}%`,
           scrub: 0.9,
           pin: true,
           onUpdate: (self) => {
-            const i = Math.min(pillars.length - 1, Math.round(self.progress * (pillars.length - 1)));
+            const i = Math.min(features.length - 1, Math.round(self.progress * (features.length - 1)));
             setActive((prev) => (prev === i ? prev : i));
             setLabelEmphasis(i);
           },
         },
       });
 
-      pillars.forEach((_, i) => {
+      features.forEach((_, i) => {
         if (i === 0) return;
         const seg = i - 1;
         tl.to(images[i - 1]!, { opacity: 0, scale: 0.96, ease: "power1.inOut", duration: 1 }, seg)
@@ -89,7 +87,7 @@ export function ExperienceSection() {
     });
 
     return () => mm.revert();
-  }, [pillars]);
+  }, [features]);
 
   function focusOn(i: number) {
     const isDesktopPin = typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches;
@@ -109,28 +107,29 @@ export function ExperienceSection() {
 
   return (
     <section
-      id="experience"
+      id="outside"
       ref={sectionRef}
       data-header-theme="dark"
-      data-scene="4"
+      data-scene="6"
       className="relative overflow-hidden bg-ivory text-charcoal"
     >
       <div className="container-edge section-pad-t pb-10 md:pb-0">
         <p className="text-eyebrow flex items-center gap-3 text-charcoal/50">
-          <span>03</span>
+          <span>05</span>
           <span className="h-px w-8 bg-current/50" />
-          <span>The Experience</span>
+          <span>Outside</span>
         </p>
-        <h2 className="text-display-lg mt-6 max-w-2xl">Made for staying a little longer.</h2>
+        <h2 className="text-display-lg mt-6 max-w-2xl">{property.outdoorHeading}</h2>
+        <p className="text-body-lg mt-6 max-w-xl text-charcoal/70">{property.outdoorStatement}</p>
       </div>
 
       <div className="relative mt-10 md:mt-16 md:h-[85svh]">
         <div className="container-edge grid grid-cols-1 gap-8 md:h-full md:grid-cols-[minmax(0,300px)_1fr] md:items-center md:gap-16">
           <div className="no-scrollbar flex flex-row gap-8 overflow-x-auto pb-2 md:flex-col md:gap-10 md:overflow-visible md:pb-0">
-            {pillars.map((pillar, i) => (
+            {features.map((feature, i) => (
               <button
                 type="button"
-                key={pillar.id}
+                key={feature.id}
                 ref={(el) => {
                   if (el) labelRefs.current[i] = el;
                 }}
@@ -139,34 +138,34 @@ export function ExperienceSection() {
                 className="flex shrink-0 items-baseline gap-4 text-left transition-opacity duration-500"
               >
                 <span className="text-eyebrow text-charcoal/50">{String(i + 1).padStart(2, "0")}</span>
-                <span className="text-display-sm">{pillar.title}</span>
+                <span className="text-display-sm">{feature.title}</span>
               </button>
             ))}
           </div>
 
           <div className="relative aspect-[4/3] w-full overflow-hidden md:aspect-auto md:h-[70vh]">
-            {pillars.map((pillar, i) => (
+            {features.map((feature, i) => (
               <div
-                key={pillar.id}
+                key={feature.id}
                 ref={(el) => {
                   if (el) imageRefs.current[i] = el;
                 }}
                 className="absolute inset-0"
               >
-                <PlaceholderMedia media={pillar.image} className="absolute inset-0" />
+                <PlaceholderMedia media={feature.image} className="absolute inset-0" />
                 <div className="absolute inset-0 bg-gradient-to-t from-warm-black/70 via-warm-black/5 to-transparent" />
               </div>
             ))}
             <div className="absolute inset-x-0 bottom-0 z-10 p-6 md:p-10">
-              {pillars.map((pillar, i) => (
+              {features.map((feature, i) => (
                 <p
-                  key={pillar.id}
+                  key={feature.id}
                   ref={(el) => {
                     if (el) descRefs.current[i] = el;
                   }}
                   className="text-body-lg absolute max-w-md text-ivory"
                 >
-                  {pillar.description}
+                  {feature.description}
                 </p>
               ))}
             </div>
@@ -174,7 +173,7 @@ export function ExperienceSection() {
         </div>
 
         <div className="pointer-events-none absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 gap-3 md:flex">
-          {pillars.map((_, i) => (
+          {features.map((_, i) => (
             <span
               key={i}
               className={`h-1 w-8 rounded-full transition-colors duration-500 ${

@@ -4,8 +4,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { PlaceholderMedia } from "@/components/ui/PlaceholderMedia";
-import { SITE } from "@/data/site";
-import { PROPERTIES } from "@/data/properties";
+import type { Property } from "@/data/types";
 import { prefersReducedMotion } from "@/lib/motion";
 
 if (typeof window !== "undefined") {
@@ -13,18 +12,16 @@ if (typeof window !== "undefined") {
 }
 
 /**
- * 02 — Brand Manifesto. A quiet, pinned breathing moment between the
- * Collection and the Experience: one line of the manifesto fills the
- * viewport at a time, dissolving into the next as the user scrolls, over a
- * faint drifting background texture.
+ * 06 — Life at Salt+Haven. A quiet, pinned breathing moment between Outside
+ * and Sleeping: one moment fills the viewport at a time, dissolving into the
+ * next as the user scrolls, over a faint drifting background texture.
  *
  * Markup renders as a plain static stacked list by default (accessible,
  * no-JS/reduced-motion fallback); the pinned crossfade treatment is applied
  * imperatively at runtime only when motion is allowed, so nothing here
  * depends on JS to be readable.
  */
-export function BrandManifesto() {
-  const { manifesto } = SITE;
+export function LifeAt({ property }: { property: Property }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
   const introRef = useRef<HTMLDivElement>(null);
@@ -92,30 +89,35 @@ export function BrandManifesto() {
 
   return (
     <section
+      id="life-at-salt-haven"
       ref={sectionRef}
       data-header-theme="dark"
-      data-scene="3"
+      data-scene="7"
       className="relative flex min-h-[100svh] flex-col items-center justify-center gap-16 overflow-hidden bg-ivory py-24 text-charcoal md:h-[100svh] md:py-0"
     >
       <div ref={bgRef} className="absolute inset-0 opacity-[0.06]">
-        <PlaceholderMedia media={PROPERTIES[0]!.heroMedia} className="absolute inset-0 grayscale" />
+        <PlaceholderMedia media={property.lifeAtBackgroundImage} className="absolute inset-0 grayscale" />
       </div>
 
       <div ref={introRef} className="container-edge relative z-10 flex flex-col items-center gap-6 text-center">
-        <p className="text-eyebrow text-charcoal/50">{manifesto.eyebrow}</p>
-        <h2 className="text-display-md text-charcoal/40">{manifesto.heading}</h2>
+        <p className="text-eyebrow flex items-center gap-3 text-charcoal/50">
+          <span>06</span>
+          <span className="h-px w-8 bg-current/50" />
+          <span>Life at Salt+Haven</span>
+        </p>
+        <h2 className="text-display-md text-charcoal/40">{property.lifeAtHeading}</h2>
       </div>
 
       <div ref={linesWrapRef} className="container-edge relative z-10 flex flex-col items-center gap-8 text-center">
-        {manifesto.lines.map((line, i) => (
+        {property.lifeAtMoments.map((moment, i) => (
           <p
-            key={line}
+            key={moment}
             ref={(el) => {
               if (el) lineRefs.current[i] = el;
             }}
             className="text-display-md md:text-display-xl max-w-5xl"
           >
-            {line}
+            {moment}
           </p>
         ))}
       </div>

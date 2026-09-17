@@ -1,85 +1,45 @@
-import { stockPlaceholder } from "./media";
 import type { SiteContent } from "./types";
 
 /**
- * Site-level brand/navigation copy. The hero, manifesto and pillar lines
- * below are the DRAFT direction supplied in the creative brief — not
- * fabricated property content — and remain easy to swap from this single
- * file once final brand copy is approved.
+ * Brand-level content shared across the (currently single) Stay Haven
+ * property. Property-specific facts and copy live in property.ts — this
+ * file only holds the Stay Haven wordmark, navigation and footer shell.
  */
 export const SITE: SiteContent = {
   brand: {
-    name: "Stay Haven Collection",
+    name: "Stay Haven",
     shortName: "Stay Haven",
+    presentsLabel: "presents",
   },
   nav: {
     primary: [
-      { label: "Stays", href: "/stays" },
-      { label: "Destinations", href: "/destinations" },
-      { label: "Experience", href: "/#experience" },
-      { label: "About", href: "/about" },
-      { label: "Journal", href: "/journal" },
+      { label: "Salt+Haven", href: "/" },
+      { label: "The House", href: "/#the-house" },
+      { label: "Amenities", href: "/#amenities" },
+      { label: "Hood Canal", href: "/#hood-canal" },
+      { label: "Gallery", href: "/#gallery" },
     ],
-    bookCta: { label: "Book Your Stay", href: "/#booking" },
+    bookCta: { label: "Book Your Stay", href: "/#book" },
   },
   hero: {
-    eyebrow: "Stay Haven Collection",
-    headline: "Stay somewhere worth remembering.",
-    supporting: "A quieter way to travel.",
-    scrollCue: "Discover the Collection",
-    media: stockPlaceholder("SITE_HERO_MEDIA", "luxury villa with infinity pool at dusk", "ultrawide", "villaExterior"),
+    scrollCue: "Explore Salt+Haven",
+    primaryCta: "Book Your Stay",
+    secondaryCta: "Explore Salt+Haven",
   },
-  manifesto: {
-    eyebrow: "02 — Brand Manifesto",
-    heading: "A different way to stay.",
-    lines: [
-      "Thoughtful spaces.",
-      "Slower travel.",
-      "Considered design.",
-      "Neighbourhoods worth discovering.",
-      "Stays worth remembering.",
-    ],
-  },
-  experiencePillars: [
-    {
-      id: "pillar-stay",
-      title: "Stay",
-      description: "Beautiful spaces made to settle into.",
-      image: stockPlaceholder("PILLAR_STAY_IMAGE", "cozy modern living room interior", "landscape", "livingRoom"),
-    },
-    {
-      id: "pillar-eat",
-      title: "Eat",
-      description: "Slow mornings. Long dinners.",
-      image: stockPlaceholder("PILLAR_EAT_IMAGE", "candlelit dinner table setting", "landscape", "dining"),
-    },
-    {
-      id: "pillar-explore",
-      title: "Explore",
-      description: "Step outside and discover where you are.",
-      image: stockPlaceholder("PILLAR_EXPLORE_IMAGE", "european cobblestone street cafe", "landscape", "cityStreet"),
-    },
-    {
-      id: "pillar-unwind",
-      title: "Unwind",
-      description: "The reason you came.",
-      image: stockPlaceholder("PILLAR_UNWIND_IMAGE", "spa massage relaxation", "landscape", "spa"),
-    },
-  ],
   footer: {
     heading: "Stay Haven",
     nav: [
-      { label: "Collection", href: "/stays" },
-      { label: "Destinations", href: "/destinations" },
-      { label: "Experience", href: "/#experience" },
-      { label: "About", href: "/about" },
-      { label: "Journal", href: "/journal" },
+      { label: "The House", href: "/#the-house" },
+      { label: "Amenities", href: "/#amenities" },
+      { label: "Gallery", href: "/#gallery" },
+      { label: "Policies", href: "/#know-before-you-stay" },
+      { label: "Book Your Stay", href: "/#book" },
       { label: "Contact", href: "/contact" },
     ],
     social: [{ label: "Instagram", href: "https://instagram.com/" }],
     newsletter: {
       heading: "Letters from Stay Haven.",
-      description: "Occasional notes on new Havens, destinations and quiet places worth knowing about.",
+      description: "Occasional notes from Salt+Haven and Hood Canal, worth knowing about.",
       placeholder: "Your email",
       cta: "Subscribe",
     },

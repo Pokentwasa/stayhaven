@@ -7,6 +7,7 @@ import { PlaceholderMedia } from "@/components/ui/PlaceholderMedia";
 import { BookingTrigger } from "@/components/booking/BookingTrigger";
 import { TransitionLink } from "@/components/layout/TransitionLink";
 import { SITE } from "@/data/site";
+import { getPrimaryProperty } from "@/data/property";
 import { prefersReducedMotion } from "@/lib/motion";
 
 if (typeof window !== "undefined") {
@@ -14,13 +15,15 @@ if (typeof window !== "undefined") {
 }
 
 /**
- * 00 — Opening scene. An editorial composition (not centered text-on-image):
- * small label upper-left, monumental headline lower-left, supporting line
- * and CTA set apart, thin rules and a location-style metadata mark. Pins
- * briefly on exit so the frame visibly recedes into the Collection scene
- * rather than cutting straight to it.
+ * 00 — Hero. "Stay Haven presents Salt+Haven": an editorial composition
+ * (not centered text-on-image) — brand kicker upper-left, location metadata
+ * upper-right, a monumental tagline lower-left over an oversized "00"
+ * numeral (the same page-slug device reused through the rest of the site),
+ * capacity facts and both CTAs set apart. Pins briefly on exit so the next
+ * scene feels like it emerges from the hero rather than cutting to it.
  */
 export function CinematicHero() {
+  const property = getPrimaryProperty();
   const rootRef = useRef<HTMLDivElement>(null);
   const mediaRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -74,7 +77,7 @@ export function CinematicHero() {
     return () => ctx.revert();
   }, []);
 
-  const headlineWords = SITE.hero.headline.split(" ");
+  const headlineWords = property.heroTagline.split(" ");
 
   return (
     <section
@@ -84,20 +87,23 @@ export function CinematicHero() {
       className="relative flex h-[100svh] w-full overflow-hidden bg-warm-black text-ivory"
     >
       <div ref={mediaRef} className="absolute inset-0">
-        <PlaceholderMedia media={SITE.hero.media} className="opacity-70" />
+        <PlaceholderMedia media={property.heroMedia} className="opacity-70" />
         <div
           ref={vignetteRef}
           className="absolute inset-0 bg-gradient-to-t from-warm-black via-warm-black/20 to-warm-black/55 opacity-100"
         />
       </div>
 
-      <div ref={contentRef} className="container-edge relative z-10 flex h-full w-full flex-col justify-between py-8">
+      <div ref={contentRef} className="container-edge relative z-10 flex h-full w-full flex-col justify-between pb-8 pt-28">
         <div className="flex items-start justify-between">
-          <p data-hero-eyebrow className="text-eyebrow opacity-80">
-            {SITE.hero.eyebrow}
-          </p>
+          <div data-hero-eyebrow className="flex flex-col gap-1">
+            <p className="text-eyebrow opacity-80">{SITE.brand.shortName}</p>
+            <p className="text-sm italic text-ivory/60">
+              {SITE.brand.presentsLabel} {property.name}
+            </p>
+          </div>
           <p data-hero-mark className="text-eyebrow text-right opacity-50">
-            00 — Intro
+            {property.location.city}, {property.location.state} · {property.location.region}
           </p>
         </div>
 
@@ -121,13 +127,16 @@ export function CinematicHero() {
             ))}
           </h1>
 
-          <div className="flex flex-col items-start justify-between gap-10 md:flex-row md:items-end">
-            <p data-hero-sub className="text-body-lg max-w-md opacity-80">
-              {SITE.hero.supporting}
-            </p>
-            <div data-hero-cta>
-              <BookingTrigger className="inline-block border-b border-ivory pb-1">
-                Discover the Collection
+          <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
+            <div data-hero-sub className="flex flex-col gap-3">
+              <p className="text-body-lg max-w-md opacity-80">{property.heroSupporting}</p>
+              <p className="text-sm uppercase tracking-widest opacity-60">
+                {property.guests} Guests · {property.bedrooms} Bedrooms · {property.bathrooms} Bathrooms
+              </p>
+            </div>
+            <div data-hero-cta className="flex items-center gap-10">
+              <BookingTrigger property={property} className="inline-block border-b border-ivory pb-1">
+                {SITE.hero.primaryCta}
               </BookingTrigger>
             </div>
           </div>
@@ -135,14 +144,12 @@ export function CinematicHero() {
       </div>
 
       <TransitionLink
-        href="#collection"
+        href="#introduction"
         data-hero-cue
         className="absolute bottom-10 right-6 z-10 flex flex-col items-center gap-3 md:right-12"
-        aria-label={SITE.hero.scrollCue}
+        aria-label={SITE.hero.secondaryCta}
       >
-        <span className="text-eyebrow rotate-90 whitespace-nowrap opacity-70">
-          {SITE.hero.scrollCue}
-        </span>
+        <span className="text-eyebrow rotate-90 whitespace-nowrap opacity-70">{SITE.hero.secondaryCta}</span>
         <span className="h-14 w-px animate-pulse bg-ivory/50 motion-reduce:animate-none" />
       </TransitionLink>
     </section>
