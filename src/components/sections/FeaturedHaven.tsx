@@ -90,35 +90,38 @@ export function FeaturedHaven() {
         {property.featuredStatement}
       </p>
 
-      <div className="container-edge mt-16 grid grid-cols-1 gap-6 md:mt-20 md:grid-cols-12 md:gap-8">
+      <div className="container-edge relative mt-16 flex flex-col gap-6 md:mt-24 md:h-[68vh] md:gap-0">
         {imgA && (
-          <div data-reveal className="relative aspect-[3/4] overflow-hidden md:col-span-4 md:col-start-1">
+          <div
+            data-reveal
+            className="relative aspect-[3/4] w-[70%] overflow-hidden md:absolute md:left-0 md:top-0 md:h-full md:w-[36%]"
+          >
             <div data-reveal-media className="absolute inset-0">
               <PlaceholderMedia media={imgA} className="absolute inset-0" />
             </div>
           </div>
         )}
         {imgB && (
-          <div data-reveal className="relative aspect-[4/3] overflow-hidden md:col-span-7 md:col-start-6 md:-mt-20">
+          <div
+            data-reveal
+            className="relative ml-auto aspect-[4/3] w-[85%] overflow-hidden md:absolute md:right-0 md:top-[22%] md:z-10 md:h-[68%] md:w-[58%]"
+          >
             <div data-reveal-media className="absolute inset-0">
               <PlaceholderMedia media={imgB} className="absolute inset-0" />
             </div>
           </div>
         )}
-      </div>
-
-      {imgC && (
-        <div className="container-edge relative mt-10 md:-mt-16">
+        {imgC && (
           <div
             data-reveal
-            className="relative aspect-square w-1/2 overflow-hidden md:ml-[40%] md:w-[24%]"
+            className="relative aspect-square w-1/2 overflow-hidden md:absolute md:bottom-0 md:left-[30%] md:z-20 md:h-[30%] md:w-[22%]"
           >
             <div data-reveal-media className="absolute inset-0">
               <PlaceholderMedia media={imgC} className="absolute inset-0" />
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
       <div className="container-edge mt-16 flex items-center justify-between gap-10 md:mt-20">
         <LuxuryButton href={`/stays/${property.slug}`} variant="dark" data-cursor="VIEW">

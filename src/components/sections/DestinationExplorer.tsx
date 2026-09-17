@@ -48,8 +48,14 @@ export function DestinationExplorer() {
     const next = bgRefs.current[i];
     setActive(i);
     setEngaged(true);
-    if (prev && prev !== next) gsap.to(prev, { opacity: 0, duration: 0.6, ease: "power2.out" });
-    if (next) gsap.to(next, { opacity: 1, duration: 0.6, ease: "power2.out" });
+    if (prev && prev !== next) gsap.to(prev, { opacity: 0, duration: 0.7, ease: "power2.out" });
+    if (next) {
+      gsap.to(next, { opacity: 1, duration: 0.7, ease: "power2.out" });
+      const media = next.querySelector("img, [role='img']");
+      if (media) {
+        gsap.fromTo(media, { scale: 1.08 }, { scale: 1, duration: 1.4, ease: "power2.out" });
+      }
+    }
   }
 
   function release() {
@@ -120,10 +126,12 @@ export function DestinationExplorer() {
                   onFocus={() => focusOn(i)}
                   onClick={(e) => handleTapNavigate(e, i)}
                   data-cursor="EXPLORE"
-                  className="flex flex-col items-start justify-between gap-2 py-8 transition-opacity duration-300 md:flex-row md:items-baseline md:py-10"
+                  className="group flex flex-col items-start justify-between gap-2 py-8 transition-opacity duration-300 md:flex-row md:items-baseline md:py-10"
                   style={{ opacity: engaged && !isActive ? 0.35 : 1 }}
                 >
-                  <span className="text-display-lg leading-none md:text-[7.5vw]">{d.name}</span>
+                  <span className="text-display-lg inline-block leading-none transition-transform duration-500 ease-out md:text-[8vw] md:group-hover:scale-[1.015]">
+                    {d.name}
+                  </span>
                   <span className="text-eyebrow opacity-60">{d.region}</span>
                 </TransitionLink>
                 {isActive && (

@@ -60,7 +60,7 @@ export function CinematicHero() {
           trigger: root,
           start: "top top",
           end: isMobile ? "+=35%" : "+=70%",
-          scrub: 0.6,
+          scrub: 0.9,
           pin: true,
           pinSpacing: true,
         },
@@ -101,9 +101,17 @@ export function CinematicHero() {
           </p>
         </div>
 
-        <div className="flex flex-col gap-8 pb-16 md:pb-24">
-          <span data-hero-rule className="block h-px w-16 bg-ivory/50" />
-          <h1 className="text-display-xl max-w-5xl">
+        <div className="relative flex flex-col gap-8 pb-16 md:pb-24">
+          <span
+            data-hero-mark
+            aria-hidden="true"
+            className="pointer-events-none absolute -top-[0.3em] left-0 select-none font-serif leading-none text-ivory/10"
+            style={{ fontSize: "26vw" }}
+          >
+            00
+          </span>
+          <span data-hero-rule className="relative block h-px w-16 bg-ivory/50" />
+          <h1 className="text-display-xl relative max-w-none pr-0 md:pr-[8vw]">
             {headlineWords.map((word, i) => (
               <span key={i} className="mr-[0.28em] inline-block overflow-hidden align-bottom">
                 <span data-hero-line className="inline-block">

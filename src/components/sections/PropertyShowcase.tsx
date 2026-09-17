@@ -58,15 +58,15 @@ export function PropertyShowcase() {
     mm.add("(min-width: 768px)", () => {
       setInteractive(0);
       gsap.set(frames.slice(1), { clipPath: "inset(0 0 0 100%)" });
-      gsap.set(numbers.slice(1), { opacity: 0, yPercent: 30 });
+      gsap.set(numbers.slice(1), { opacity: 0, yPercent: 30, xPercent: 6 });
       gsap.set(texts.slice(1), { opacity: 0, y: 24 });
 
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
           start: "top top",
-          end: `+=${(PROPERTIES.length - 1) * 100}%`,
-          scrub: 0.7,
+          end: `+=${(PROPERTIES.length - 1) * 130}%`,
+          scrub: 1,
           pin: true,
           onUpdate: (self) => {
             const i = Math.min(PROPERTIES.length - 1, Math.round(self.progress * (PROPERTIES.length - 1)));
@@ -79,18 +79,18 @@ export function PropertyShowcase() {
       PROPERTIES.forEach((_, i) => {
         if (i === 0) return;
         const seg = i - 1;
-        tl.to(frames[i]!, { clipPath: "inset(0 0 0 0%)", ease: "power2.inOut", duration: 1 }, seg)
-          .to(frames[i]!.querySelector("[data-frame-media]"), { scale: 1, ease: "power2.out", duration: 1 }, seg)
-          .to(numbers[i - 1]!, { opacity: 0, yPercent: -20, ease: "power1.in", duration: 0.5 }, seg)
-          .to(numbers[i]!, { opacity: 1, yPercent: 0, ease: "power2.out", duration: 0.6 }, seg + 0.15)
-          .to(texts[i - 1]!, { opacity: 0, y: -16, ease: "power1.in", duration: 0.45 }, seg + 0.05)
-          .to(texts[i]!, { opacity: 1, y: 0, ease: "power2.out", duration: 0.6 }, seg + 0.3)
-          .fromTo(
-            frames[i]!.querySelector("[data-frame-media]"),
-            { scale: 1.08 },
-            { scale: 1, ease: "power2.out", duration: 1 },
-            seg
-          );
+        const outgoingMedia = frames[i - 1]!.querySelector("[data-frame-media]");
+        const incomingMedia = frames[i]!.querySelector("[data-frame-media]");
+        // The outgoing frame keeps drifting — a slow pan/scale, not a static
+        // hold — so it visibly lingers under the incoming wipe rather than
+        // just vanishing once covered.
+        tl.to(outgoingMedia, { scale: 1.14, xPercent: -4, ease: "power1.inOut", duration: 1.4 }, seg)
+          .to(frames[i]!, { clipPath: "inset(0 0 0 0%)", ease: "power2.inOut", duration: 1.3 }, seg)
+          .fromTo(incomingMedia, { scale: 1.1 }, { scale: 1, ease: "power2.out", duration: 1.3 }, seg)
+          .to(numbers[i - 1]!, { opacity: 0, yPercent: -20, xPercent: -6, ease: "power1.in", duration: 0.6 }, seg)
+          .to(numbers[i]!, { opacity: 1, yPercent: 0, xPercent: 0, ease: "power2.out", duration: 0.7 }, seg + 0.2)
+          .to(texts[i - 1]!, { opacity: 0, y: -18, ease: "power1.in", duration: 0.5 }, seg + 0.05)
+          .to(texts[i]!, { opacity: 1, y: 0, ease: "power2.out", duration: 0.7 }, seg + 0.45);
       });
 
       return () => tl.scrollTrigger?.kill();
@@ -141,7 +141,7 @@ export function PropertyShowcase() {
                 if (el) numberRefs.current[i] = el;
               }}
               className="absolute left-4 font-serif leading-none text-ivory/10 lg:left-8"
-              style={{ fontSize: "20vw" }}
+              style={{ fontSize: "23vw" }}
               aria-hidden="true"
             >
               {String(i + 1).padStart(2, "0")}
@@ -178,7 +178,7 @@ export function PropertyShowcase() {
               <p className="text-eyebrow opacity-70">
                 {String(i + 1).padStart(2, "0")} / {String(PROPERTIES.length).padStart(2, "0")} — The Collection
               </p>
-              <h2 className="text-display-lg max-w-3xl">{property.name}</h2>
+              <h2 className="text-display-lg lg:text-display-xl max-w-4xl">{property.name}</h2>
               <p className="text-eyebrow opacity-70">{property.locationLabel}</p>
               <p className="text-body-lg max-w-xl opacity-85">{property.positioningStatement}</p>
               <p className="text-sm uppercase tracking-widest opacity-60">

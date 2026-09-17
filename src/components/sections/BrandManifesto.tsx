@@ -55,20 +55,20 @@ export function BrandManifesto() {
         scrollTrigger: {
           trigger: section,
           start: "top top",
-          end: `+=${segments * 60}%`,
-          scrub: 0.7,
+          end: `+=${segments * 85}%`,
+          scrub: 1,
           pin: true,
         },
       });
 
-      tl.to(intro, { opacity: 0, y: -20, duration: 0.6, ease: "power1.in" }, 0.5);
+      tl.to(intro, { opacity: 0, y: -20, duration: 0.7, ease: "power1.in" }, 0.5);
 
       lines.forEach((line, i) => {
         const seg = i + 1;
-        tl.to(line, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, seg).to(
+        tl.to(line, { opacity: 1, y: 0, duration: 0.85, ease: "power2.out" }, seg).to(
           line,
-          { opacity: 0, y: -24, duration: 0.6, ease: "power1.in" },
-          seg + 0.75
+          { opacity: 0, y: -24, duration: 0.85, ease: "power1.in" },
+          seg + 0.95
         );
       });
 

@@ -79,12 +79,14 @@ export function BookingCTA() {
           data-finale
           className="grid w-full grid-cols-1 divide-y divide-ivory/15 border-t border-ivory/20 text-left sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-4"
         >
-          <label className="flex flex-col gap-3 px-0 py-6 sm:px-8 sm:first:pl-0">
-            <span className="text-eyebrow opacity-60">Destination</span>
+          <label className="group relative flex flex-col gap-4 px-0 py-7 sm:px-8 sm:first:pl-0">
+            <span className="font-serif text-lg text-ivory/40 transition-colors duration-300 group-focus-within:text-ivory/70">
+              Destination
+            </span>
             <select
               value={propertySlug}
               onChange={(e) => setPropertySlug(e.target.value)}
-              className="bg-transparent pb-1 outline-none"
+              className="field-control border-b border-ivory/20 pb-2 pr-6 text-body-lg outline-none transition-colors duration-300 group-focus-within:border-ivory/70"
             >
               {PROPERTIES.map((p) => (
                 <option key={p.slug} value={p.slug} className="text-charcoal">
@@ -92,37 +94,46 @@ export function BookingCTA() {
                 </option>
               ))}
             </select>
+            <span aria-hidden="true" className="pointer-events-none absolute bottom-9 right-0 text-xs opacity-40">
+              ⌄
+            </span>
           </label>
 
-          <label className="flex flex-col gap-3 px-0 py-6 sm:px-8">
-            <span className="text-eyebrow opacity-60">Check-in</span>
+          <label className="group relative flex flex-col gap-4 px-0 py-7 sm:px-8">
+            <span className="font-serif text-lg text-ivory/40 transition-colors duration-300 group-focus-within:text-ivory/70">
+              Check-in
+            </span>
             <input
               type="date"
               value={checkIn}
               onChange={(e) => setCheckIn(e.target.value)}
-              className="bg-transparent pb-1 outline-none"
+              className="field-control field-control-invert border-b border-ivory/20 pb-2 text-body-lg outline-none transition-colors duration-300 group-focus-within:border-ivory/70"
             />
           </label>
 
-          <label className="flex flex-col gap-3 px-0 py-6 sm:px-8">
-            <span className="text-eyebrow opacity-60">Check-out</span>
+          <label className="group relative flex flex-col gap-4 px-0 py-7 sm:px-8">
+            <span className="font-serif text-lg text-ivory/40 transition-colors duration-300 group-focus-within:text-ivory/70">
+              Check-out
+            </span>
             <input
               type="date"
               value={checkOut}
               onChange={(e) => setCheckOut(e.target.value)}
-              className="bg-transparent pb-1 outline-none"
+              className="field-control field-control-invert border-b border-ivory/20 pb-2 text-body-lg outline-none transition-colors duration-300 group-focus-within:border-ivory/70"
             />
           </label>
 
-          <label className="flex flex-col gap-3 px-0 py-6 sm:px-8 sm:last:pr-0">
-            <span className="text-eyebrow opacity-60">Guests</span>
+          <label className="group relative flex flex-col gap-4 px-0 py-7 sm:px-8 sm:last:pr-0">
+            <span className="font-serif text-lg text-ivory/40 transition-colors duration-300 group-focus-within:text-ivory/70">
+              Guests
+            </span>
             <input
               type="number"
               min={1}
               max={16}
               value={guests}
               onChange={(e) => setGuests(Number(e.target.value))}
-              className="bg-transparent pb-1 outline-none"
+              className="field-control border-b border-ivory/20 pb-2 text-body-lg outline-none transition-colors duration-300 group-focus-within:border-ivory/70"
             />
           </label>
         </form>

@@ -149,6 +149,35 @@ button {
   }
 }
 
+/* ---------- Editorial form controls (Booking finale) ---------- */
+
+.field-control {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  color: inherit;
+}
+
+.field-control::-webkit-calendar-picker-indicator {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.field-control[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.field-control[type="number"]::-webkit-outer-spin-button,
+.field-control[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* On dark backgrounds the native calendar-icon glyph renders near-black; invert it to read against the dark field. */
+.field-control-invert::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
 /* ---------- Header entrance ---------- */
 
 @keyframes header-reveal {

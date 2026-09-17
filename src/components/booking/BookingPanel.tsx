@@ -127,12 +127,14 @@ function BookingPanelContent({
       )}
 
       <form onSubmit={handleSubmit} className="flex flex-1 flex-col gap-8 px-6 py-10 md:px-12">
-        <label className="flex flex-col gap-2">
-          <span className="text-eyebrow text-charcoal/55">Destination / Property</span>
+        <label className="group relative flex flex-col gap-3">
+          <span className="font-serif text-lg text-charcoal/45 transition-colors duration-300 group-focus-within:text-charcoal/80">
+            Destination / Property
+          </span>
           <select
             value={propertySlug}
             onChange={(e) => setPropertySlug(e.target.value)}
-            className="border-b border-charcoal/20 bg-transparent py-3 text-body-lg outline-none"
+            className="field-control border-b border-charcoal/20 pb-2 pr-6 text-body-lg outline-none transition-colors duration-300 group-focus-within:border-charcoal/60"
           >
             {PROPERTIES.map((p) => (
               <option key={p.slug} value={p.slug}>
@@ -140,38 +142,47 @@ function BookingPanelContent({
               </option>
             ))}
           </select>
+          <span aria-hidden="true" className="pointer-events-none absolute bottom-2 right-0 text-xs opacity-40">
+            ⌄
+          </span>
         </label>
 
         <div className="grid grid-cols-2 gap-6">
-          <label className="flex flex-col gap-2">
-            <span className="text-eyebrow text-charcoal/55">Check-in</span>
+          <label className="group flex flex-col gap-3">
+            <span className="font-serif text-lg text-charcoal/45 transition-colors duration-300 group-focus-within:text-charcoal/80">
+              Check-in
+            </span>
             <input
               type="date"
               value={checkIn}
               onChange={(e) => setCheckIn(e.target.value)}
-              className="border-b border-charcoal/20 bg-transparent py-3 outline-none"
+              className="field-control border-b border-charcoal/20 pb-2 outline-none transition-colors duration-300 group-focus-within:border-charcoal/60"
             />
           </label>
-          <label className="flex flex-col gap-2">
-            <span className="text-eyebrow text-charcoal/55">Check-out</span>
+          <label className="group flex flex-col gap-3">
+            <span className="font-serif text-lg text-charcoal/45 transition-colors duration-300 group-focus-within:text-charcoal/80">
+              Check-out
+            </span>
             <input
               type="date"
               value={checkOut}
               onChange={(e) => setCheckOut(e.target.value)}
-              className="border-b border-charcoal/20 bg-transparent py-3 outline-none"
+              className="field-control border-b border-charcoal/20 pb-2 outline-none transition-colors duration-300 group-focus-within:border-charcoal/60"
             />
           </label>
         </div>
 
-        <label className="flex flex-col gap-2">
-          <span className="text-eyebrow text-charcoal/55">Guests</span>
+        <label className="group flex flex-col gap-3">
+          <span className="font-serif text-lg text-charcoal/45 transition-colors duration-300 group-focus-within:text-charcoal/80">
+            Guests
+          </span>
           <input
             type="number"
             min={1}
             max={16}
             value={guests}
             onChange={(e) => setGuests(Number(e.target.value))}
-            className="border-b border-charcoal/20 bg-transparent py-3 outline-none"
+            className="field-control border-b border-charcoal/20 pb-2 outline-none transition-colors duration-300 group-focus-within:border-charcoal/60"
           />
         </label>
 

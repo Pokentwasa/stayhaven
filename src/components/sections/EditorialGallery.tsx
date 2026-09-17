@@ -12,15 +12,28 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const HEIGHTS = ["h-[46vh]", "h-[62vh]", "h-[36vh]", "h-[88vh]", "h-[52vh]", "h-[40vh]", "h-[58vh]", "h-[70vh]"];
-const ROTATE = ["", "", "rotate-[-1.5deg]", "", "rotate-[1.5deg]", "", "", "rotate-[-1deg]"];
-const WIDTHS = ["w-[62vw]", "w-[42vw]", "w-[30vw]", "w-[78vw]", "w-[48vw]", "w-[34vw]", "w-[52vw]", "w-[40vw]"];
+/**
+ * A deliberately small, curated set (not a gallery dump) with irregular
+ * pacing: portrait, wide, full-width, a small detail, a full-screen
+ * interruption, then a closing wide frame.
+ */
+const LAYOUT = [
+  { h: "h-[68vh]", w: "w-[38vw]", r: "" }, // portrait
+  { h: "h-[46vh]", w: "w-[64vw]", r: "rotate-[-1deg]" }, // wide
+  { h: "h-[56vh]", w: "w-[86vw]", r: "" }, // full-width
+  { h: "h-[28vh]", w: "w-[20vw]", r: "rotate-[1.5deg]" }, // small detail
+  { h: "h-[92vh]", w: "w-[96vw]", r: "" }, // full-screen interruption
+  { h: "h-[50vh]", w: "w-[56vw]", r: "rotate-[-1deg]" }, // closing wide
+] as const;
 
-/** 06 — Moments. An unpredictable, draggable horizontal strip rather than a masonry grid. */
+/** 06 — Moments. A small, hard-curated, draggable horizontal strip rather than a masonry grid. */
 export function EditorialGallery() {
   const trackRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLDivElement>(null);
-  const moments = PROPERTIES.flatMap((p) => p.gallery).slice(0, 12);
+  // Two frames per property (spread across each gallery, not the first N in a row) for variety across the Collection.
+  const moments = PROPERTIES.flatMap((p) => [p.gallery[0], p.gallery[4]])
+    .filter((m): m is (typeof PROPERTIES)[number]["gallery"][number] => Boolean(m))
+    .slice(0, LAYOUT.length);
 
   useEffect(() => {
     if (!headingRef.current || prefersReducedMotion()) return;
@@ -85,15 +98,17 @@ export function EditorialGallery() {
         ref={trackRef}
         className="no-scrollbar flex cursor-grab select-none items-center gap-6 overflow-x-auto px-6 pb-4 md:gap-10 md:px-12"
       >
-        {moments.map((media, i) => (
+        {moments.map((media, i) => {
+          const layout = LAYOUT[i % LAYOUT.length]!;
+          return (
           <figure
             key={media.id}
             data-cursor="DRAG"
             className={cx(
               "group relative shrink-0 overflow-hidden transition-transform duration-500",
-              HEIGHTS[i % HEIGHTS.length],
-              WIDTHS[i % WIDTHS.length],
-              ROTATE[i % ROTATE.length]
+              layout.h,
+              layout.w,
+              layout.r
             )}
           >
             <PlaceholderMedia
@@ -104,7 +119,8 @@ export function EditorialGallery() {
               {media.id.replace(/_/g, " ")}
             </figcaption>
           </figure>
-        ))}
+          );
+        })}
       </div>
     </section>
   );
