@@ -39,6 +39,22 @@ function HeroAvailabilityWidget() {
     >
       <p className="text-eyebrow text-charcoal/55">Check Availability</p>
 
+      <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-charcoal/70">
+        <span>{property.metadata.guestsTo} guests</span>
+        <span aria-hidden="true" className="text-charcoal/30">
+          |
+        </span>
+        <span>
+          {property.metadata.bedroomsTo} bedroom{property.metadata.bedroomsTo === 1 ? "" : "s"}
+        </span>
+        <span aria-hidden="true" className="text-charcoal/30">
+          |
+        </span>
+        <span>
+          {property.metadata.bathrooms} bathroom{property.metadata.bathrooms === 1 ? "" : "s"}
+        </span>
+      </p>
+
       <div className="grid grid-cols-2 gap-4">
         <label className="flex flex-col gap-1.5">
           <span className="text-[0.65rem] uppercase tracking-widest text-charcoal/50">Check-in</span>
@@ -86,6 +102,7 @@ function HeroAvailabilityWidget() {
 export function CinematicHero() {
   const rootRef = useRef<HTMLDivElement>(null);
   const mediaRef = useRef<HTMLDivElement>(null);
+  const property = getFeaturedProperty();
 
   useEffect(() => {
     const root = rootRef.current;
@@ -142,6 +159,22 @@ export function CinematicHero() {
           </h1>
           <p data-hero-sub className="text-body-lg max-w-md opacity-80">
             {SITE.hero.supporting}
+          </p>
+
+          <p data-hero-sub className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm opacity-75 md:hidden">
+            <span>{property.metadata.guestsTo} guests</span>
+            <span aria-hidden="true" className="opacity-50">
+              |
+            </span>
+            <span>
+              {property.metadata.bedroomsTo} bedroom{property.metadata.bedroomsTo === 1 ? "" : "s"}
+            </span>
+            <span aria-hidden="true" className="opacity-50">
+              |
+            </span>
+            <span>
+              {property.metadata.bathrooms} bathroom{property.metadata.bathrooms === 1 ? "" : "s"}
+            </span>
           </p>
 
           <div data-hero-cta>

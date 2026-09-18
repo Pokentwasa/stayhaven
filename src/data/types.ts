@@ -130,6 +130,7 @@ export interface Property {
     guestsTo: number;
     bedroomsFrom: number;
     bedroomsTo: number;
+    bathrooms: number;
     priceFrom: number | null;
     currency: string;
   };

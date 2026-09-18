@@ -281,6 +281,7 @@ const SALT_HAVEN: Property = {
     guestsTo: 8,
     bedroomsFrom: 3,
     bedroomsTo: 3,
+    bathrooms: 2,
     priceFrom: null,
     currency: "USD",
   },
