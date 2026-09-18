@@ -95,6 +95,12 @@ export interface PropertyMoment {
   image: Media;
 }
 
+/** A category of amenities (matches Amenity.category) paired with one representative image for the tabbed accordion. */
+export interface AmenityCategory {
+  name: string;
+  image: Media;
+}
+
 export interface Property {
   id: string;
   slug: string;
@@ -111,6 +117,8 @@ export interface Property {
   featuredStatement: string;
   /** The large Featured Haven spread image — kept distinct from heroMedia so the two sections never repeat the same photo. */
   featuredImage: Media;
+  /** One representative image per amenity category, for the tabbed Amenities accordion. */
+  amenityCategoryImages: AmenityCategory[];
   gallery: Media[];
   rooms: Room[];
   amenities: Amenity[];
