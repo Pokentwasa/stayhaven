@@ -10,7 +10,7 @@ export function Footer() {
       className="section-pad-t container-edge flex flex-col gap-20 bg-warm-black pb-10 text-ivory"
     >
       <div className="flex flex-col justify-between gap-16 md:flex-row">
-        <p className="text-display-lg leading-none">{footer.heading}</p>
+        <p className="text-display-xl leading-none">{footer.heading}</p>
 
         <div className="flex flex-col gap-16 sm:flex-row sm:gap-24">
           <nav className="flex flex-col gap-4">

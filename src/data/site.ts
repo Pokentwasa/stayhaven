@@ -1,64 +1,85 @@
+import { placeholder } from "./media";
 import type { SiteContent } from "./types";
 
 /**
- * Brand-level content shared across the (currently single) Stay Haven
- * Collection property. Property-specific facts and copy live in
- * property.ts — this file only holds the Stay Haven Collection wordmark,
- * navigation and footer shell.
- *
- * Stay Haven Collection is the parent brand; Salt+Haven is the first and
- * currently only property within it. The site always frames it as
- * "Stay Haven Collection presents Salt+Haven" — never a standalone brand
- * rename, and never implying a multi-property collection that doesn't
- * exist yet.
+ * Site-level brand/navigation copy. The hero, manifesto and pillar lines
+ * below are the DRAFT direction supplied in the creative brief — not
+ * fabricated property content — and remain easy to swap from this single
+ * file once final brand copy is approved.
  */
 export const SITE: SiteContent = {
   brand: {
     name: "Stay Haven Collection",
     shortName: "Stay Haven",
-    presentsLabel: "presents",
   },
   nav: {
     primary: [
-      { label: "The House", href: "/#the-house" },
+      { label: "Stays", href: "/stays" },
+      { label: "Destinations", href: "/destinations" },
       { label: "Experience", href: "/#experience" },
-      { label: "Hood Canal", href: "/#hood-canal" },
-      { label: "Moments", href: "/#moments" },
+      { label: "About", href: "/about" },
+      { label: "Journal", href: "/journal" },
     ],
-    bookCta: { label: "Book", href: "/#book" },
+    bookCta: { label: "Book Your Stay", href: "/#booking" },
   },
   hero: {
     eyebrow: "Stay Haven Collection",
     headline: "Stay somewhere worth remembering.",
     supporting: "A quieter way to travel.",
-    cta: "Discover Salt+Haven",
-    scrollCue: "Explore Salt+Haven",
+    scrollCue: "Discover the Collection",
+    media: placeholder("SITE_HERO_MEDIA", "Stay Haven Collection", "ultrawide", "video"),
   },
   manifesto: {
-    eyebrow: "The Manifesto",
+    eyebrow: "02 — Brand Manifesto",
     heading: "A different way to stay.",
     lines: [
       "Thoughtful spaces.",
-      "Slower mornings.",
-      "Time outside.",
-      "Places worth discovering.",
+      "Slower travel.",
+      "Considered design.",
+      "Neighbourhoods worth discovering.",
       "Stays worth remembering.",
     ],
   },
+  experiencePillars: [
+    {
+      id: "pillar-stay",
+      title: "Stay",
+      description: "Beautiful spaces made to settle into.",
+      image: placeholder("PILLAR_STAY_IMAGE", "Stay", "landscape"),
+    },
+    {
+      id: "pillar-eat",
+      title: "Eat",
+      description: "Slow mornings. Long dinners.",
+      image: placeholder("PILLAR_EAT_IMAGE", "Eat", "landscape"),
+    },
+    {
+      id: "pillar-explore",
+      title: "Explore",
+      description: "Step outside and discover where you are.",
+      image: placeholder("PILLAR_EXPLORE_IMAGE", "Explore", "landscape"),
+    },
+    {
+      id: "pillar-unwind",
+      title: "Unwind",
+      description: "The reason you came.",
+      image: placeholder("PILLAR_UNWIND_IMAGE", "Unwind", "landscape"),
+    },
+  ],
   footer: {
-    heading: "Stay Haven Collection",
+    heading: "Stay Haven",
     nav: [
-      { label: "The House", href: "/#the-house" },
+      { label: "Collection", href: "/stays" },
+      { label: "Destinations", href: "/destinations" },
       { label: "Experience", href: "/#experience" },
-      { label: "Hood Canal", href: "/#hood-canal" },
-      { label: "Moments", href: "/#moments" },
-      { label: "Book", href: "/#book" },
+      { label: "About", href: "/about" },
+      { label: "Journal", href: "/journal" },
       { label: "Contact", href: "/contact" },
     ],
     social: [{ label: "Instagram", href: "https://instagram.com/" }],
     newsletter: {
       heading: "Letters from Stay Haven.",
-      description: "Occasional notes from Salt+Haven and Hood Canal, worth knowing about.",
+      description: "Occasional notes on new Havens, destinations and quiet places worth knowing about.",
       placeholder: "Your email",
       cta: "Subscribe",
     },

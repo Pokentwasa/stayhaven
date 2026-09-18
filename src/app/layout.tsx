@@ -4,12 +4,11 @@ import "./globals.css";
 import { SmoothScrollProvider } from "@/components/layout/SmoothScrollProvider";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { ScrollProgress } from "@/components/ui/ScrollProgress";
-import { LoadingScreen } from "@/components/layout/LoadingScreen";
+import { Cursor } from "@/components/ui/Cursor";
+import { GrainOverlay } from "@/components/ui/GrainOverlay";
 import { BookingProvider } from "@/components/booking/BookingContext";
 import { BookingPanel } from "@/components/booking/BookingPanel";
 import { SITE } from "@/data/site";
-import { getPrimaryProperty } from "@/data/property";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -24,64 +23,23 @@ const inter = Inter({
   display: "swap",
 });
 
-const property = getPrimaryProperty();
-const pageTitle = `${property.name} | Hood Canal A-Frame Retreat in ${property.location.city}, ${property.location.state}`;
-const pageDescription = `A ${property.bedrooms}-bedroom, ${property.bathrooms}-bath waterview A-frame on Hood Canal in ${property.location.city}, WA. Sleeps ${property.guests}, with a private hot tub and panoramic water views.`;
-
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "LodgingBusiness",
-  "@id": "https://www.stayhavencollection.com/#salt-haven",
-  name: property.name,
-  description: pageDescription,
-  url: "https://www.stayhavencollection.com/",
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: property.location.city,
-    addressRegion: property.location.state,
-    addressCountry: property.location.country,
-  },
-  numberOfRooms: property.bedrooms,
-  petsAllowed: true,
-  amenityFeature: property.fullAmenities.map((item) => ({
-    "@type": "LocationFeatureSpecification",
-    name: item,
-  })),
-  ...(property.booking.priceFrom
-    ? {
-        priceRange: `From ${property.booking.currency} ${property.booking.priceFrom}/night`,
-      }
-    : {}),
-};
-
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.stayhavencollection.com"),
   title: {
-    default: pageTitle,
+    default: `${SITE.brand.name} — ${SITE.hero.headline}`,
     template: `%s — ${SITE.brand.name}`,
   },
-  description: pageDescription,
-  keywords: [
-    "Salt+Haven",
-    "Union WA",
-    "Union Washington",
-    "Hood Canal",
-    "Hood Canal cabin",
-    "Hood Canal vacation rental",
-    "Washington A-frame",
-    "waterfront A-frame Washington",
-    "Hood Canal accommodation",
-  ],
+  description: SITE.hero.supporting,
   openGraph: {
     type: "website",
     siteName: SITE.brand.name,
-    title: pageTitle,
-    description: pageDescription,
+    title: SITE.brand.name,
+    description: SITE.hero.supporting,
   },
   twitter: {
     card: "summary_large_image",
-    title: pageTitle,
-    description: pageDescription,
+    title: SITE.brand.name,
+    description: SITE.hero.supporting,
   },
 };
 
@@ -89,10 +47,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${fraunces.variable} ${inter.variable}`}>
       <body>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-        />
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-ivory focus:px-4 focus:py-2 focus:text-charcoal"
@@ -101,8 +55,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
         <BookingProvider>
           <SmoothScrollProvider>
-            <LoadingScreen property={property} />
-            <ScrollProgress />
+            <Cursor />
+            <GrainOverlay />
             <Header />
             <main id="main-content">{children}</main>
             <Footer />

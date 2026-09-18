@@ -1,34 +1,18 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { gsap } from "@/lib/gsap";
-import { prefersReducedMotion } from "@/lib/motion";
-import type { Property } from "@/data/types";
+import { useRef, useState } from "react";
+import { getAllTestimonials, PROPERTIES } from "@/data/properties";
 
-/**
- * 07 — Good to Know. A deliberate pause: one huge fact at a time, near-empty
- * space, almost no UI. Real practical information, never a fabricated
- * guest review.
- */
-export function GuestNotes({ property }: { property: Property }) {
-  const items = property.goodToKnow;
+export function GuestNotes() {
+  const testimonials = getAllTestimonials();
   const [index, setIndex] = useState(0);
   const startX = useRef<number | null>(null);
-  const quoteRef = useRef<HTMLDivElement>(null);
-  const prevIndex = useRef(0);
 
-  const item = items[index];
-
-  useEffect(() => {
-    if (index === prevIndex.current) return;
-    prevIndex.current = index;
-    const el = quoteRef.current;
-    if (!el || prefersReducedMotion()) return;
-    gsap.fromTo(el, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 1.4, ease: "power2.out" });
-  }, [index]);
+  const testimonial = testimonials[index];
+  const property = PROPERTIES.find((p) => p.slug === testimonial?.propertySlug);
 
   function go(delta: number) {
-    setIndex((prev) => (prev + delta + items.length) % items.length);
+    setIndex((prev) => (prev + delta + testimonials.length) % testimonials.length);
   }
 
   function onPointerDown(e: React.PointerEvent) {
@@ -41,48 +25,58 @@ export function GuestNotes({ property }: { property: Property }) {
     startX.current = null;
   }
 
-  if (!item) return null;
+  if (!testimonial) return null;
 
   return (
-    <section
-      id="good-to-know"
-      data-header-theme="dark"
-      data-scene="8"
-      className="container-edge relative flex min-h-[110svh] flex-col items-center justify-center gap-20 bg-ivory py-24 text-charcoal"
-    >
-      <h2 className="sr-only">Good to Know</h2>
-
-      <button
-        type="button"
-        onClick={() => go(-1)}
-        aria-label="Previous"
-        className="absolute left-4 top-1/2 hidden -translate-y-1/2 text-2xl text-charcoal/20 transition-colors duration-300 hover:text-charcoal/60 md:left-12 md:block"
-      >
-        &larr;
-      </button>
-      <button
-        type="button"
-        onClick={() => go(1)}
-        aria-label="Next"
-        className="absolute right-4 top-1/2 hidden -translate-y-1/2 text-2xl text-charcoal/20 transition-colors duration-300 hover:text-charcoal/60 md:right-12 md:block"
-      >
-        &rarr;
-      </button>
+    <section data-header-theme="dark" className="section-pad container-edge bg-ivory text-charcoal">
+      <h2 className="sr-only">Guest Notes</h2>
+      <p aria-hidden="true" className="text-eyebrow mb-16 flex items-center justify-center gap-3 text-charcoal/50">
+        <span>07</span>
+        <span className="h-px w-8 bg-current/50" />
+        <span>Guest Notes</span>
+      </p>
 
       <div
-        className="mx-auto flex max-w-4xl cursor-grab select-none flex-col items-center gap-14 text-center active:cursor-grabbing"
+        className="mx-auto flex max-w-3xl cursor-grab select-none flex-col items-center gap-10 text-center active:cursor-grabbing"
         onPointerDown={onPointerDown}
         onPointerUp={onPointerUp}
       >
-        <div ref={quoteRef} className="flex flex-col items-center gap-6">
-          <p className="text-eyebrow text-charcoal/50">Good to know</p>
-          <p className="text-display-md">{item.title}</p>
-          <p className="text-body-lg max-w-xl text-charcoal/70">{item.description}</p>
+        <p className="text-display-md">&ldquo;{testimonial.quote}&rdquo;</p>
+        <div className="flex flex-col gap-1">
+          <p className="text-eyebrow">{testimonial.guestName}</p>
+          <p className="text-sm text-charcoal/55">
+            {property?.name} — {testimonial.guestLocation}
+          </p>
         </div>
 
-        <p className="text-eyebrow text-charcoal/30">
-          {String(index + 1).padStart(2, "0")} — {String(items.length).padStart(2, "0")}
-        </p>
+        <div className="flex items-center gap-8 pt-4">
+          <button
+            type="button"
+            onClick={() => go(-1)}
+            aria-label="Previous guest note"
+            className="text-eyebrow transition-opacity hover:opacity-60"
+          >
+            Prev
+          </button>
+          <div className="flex gap-2">
+            {testimonials.map((t, i) => (
+              <span
+                key={t.id}
+                className={`h-1.5 w-1.5 rounded-full transition-colors ${
+                  i === index ? "bg-charcoal" : "bg-charcoal/25"
+                }`}
+              />
+            ))}
+          </div>
+          <button
+            type="button"
+            onClick={() => go(1)}
+            aria-label="Next guest note"
+            className="text-eyebrow transition-opacity hover:opacity-60"
+          >
+            Next
+          </button>
+        </div>
       </div>
     </section>
   );

@@ -2,8 +2,13 @@
 
 import { useEffect } from "react";
 import Lenis from "lenis";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { prefersReducedMotion } from "@/lib/motion";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 /** Drives buttery scroll + keeps GSAP ScrollTrigger in sync. Fully bypassed under reduced motion. */
 export function SmoothScrollProvider({ children }: { children: React.ReactNode }) {

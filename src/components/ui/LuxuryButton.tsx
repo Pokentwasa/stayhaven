@@ -19,17 +19,6 @@ function Underline() {
   );
 }
 
-function Arrow() {
-  return (
-    <span
-      aria-hidden="true"
-      className="inline-block translate-x-0 transition-transform duration-500 ease-out group-hover:translate-x-1"
-    >
-      &rarr;
-    </span>
-  );
-}
-
 export function LuxuryButton({
   href,
   variant = "primary",
@@ -46,7 +35,6 @@ export function LuxuryButton({
     <TransitionLink href={href} className={cx(base, variants[variant], className)} {...rest}>
       <span>{children}</span>
       <Underline />
-      <Arrow />
     </TransitionLink>
   );
 }
@@ -65,7 +53,6 @@ export function LuxuryButtonAsButton({
     <button type="button" className={cx(base, variants[variant], className)} {...rest}>
       <span>{children}</span>
       <Underline />
-      <Arrow />
     </button>
   );
 }

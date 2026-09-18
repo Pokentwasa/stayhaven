@@ -46,7 +46,7 @@ export function Header() {
   return (
     <header
       className={cx(
-        "animate-header-reveal fixed inset-x-0 top-0 z-50 transition-[background-color,backdrop-filter] duration-500",
+        "fixed inset-x-0 top-0 z-50 transition-[background-color,backdrop-filter] duration-500",
         solid ? "bg-ivory/90 backdrop-blur-md" : "bg-transparent"
       )}
     >
@@ -57,7 +57,7 @@ export function Header() {
         )}
       >
         <TransitionLink href="/" className="text-eyebrow font-medium">
-          {SITE.brand.name}
+          {SITE.brand.shortName}
         </TransitionLink>
 
         <nav className="hidden items-center gap-9 md:flex">
