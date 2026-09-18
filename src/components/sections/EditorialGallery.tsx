@@ -33,7 +33,7 @@ export function EditorialGallery({ property }: { property: Property }) {
   const headingRef = useRef<HTMLDivElement>(null);
   const [viewerOpen, setViewerOpen] = useState(false);
 
-  const moments = useMemo(() => property.gallery.filter((img) => img.category !== "bathrooms").slice(0, 12), [property.gallery]);
+  const moments = property.momentsGallery;
 
   const groups = useMemo(
     () =>

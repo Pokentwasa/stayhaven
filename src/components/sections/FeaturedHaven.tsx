@@ -78,7 +78,7 @@ export function FeaturedHaven({ property }: { property: Property }) {
         <h2 className="container-edge text-display-xl leading-[0.85] text-charcoal/[0.08]">{property.name}</h2>
         <div data-reveal className="relative -mt-[14vw] aspect-[16/9] w-full overflow-hidden md:-mt-[9vw]">
           <div data-reveal-media className="absolute inset-0">
-            <PlaceholderMedia media={property.heroMedia} className="absolute inset-0" />
+            <PlaceholderMedia media={property.featuredHeroImage} className="absolute inset-0" />
           </div>
         </div>
       </div>

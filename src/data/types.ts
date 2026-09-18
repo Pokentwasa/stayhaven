@@ -212,10 +212,14 @@ export interface Property {
   experienceScenes: ExperienceScene[];
   /** Short two-line statement for the Featured Haven spread, e.g. "Water outside. / Warmth within." */
   featuredStatement: string;
+  /** The large spread image at the top of Featured Haven — kept distinct from heroMedia so the two sections don't repeat the same photo. */
+  featuredHeroImage: Media;
   /** 3-4 images for the Featured Haven magazine layout. */
   featuredGallery: Media[];
   /** The three-part Hood Canal sequence: The Water / The Outdoors / The Quiet. */
   hoodCanalMoments: HoodCanalMoment[];
+  /** Curated selection for the Moments drag-strip — indoor-led per the real photography, with a few outdoor accents. */
+  momentsGallery: Media[];
   /** Rotating practical facts for the "Good to Know" section — never invented guest reviews. */
   goodToKnow: GoodToKnowItem[];
 

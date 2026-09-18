@@ -68,7 +68,7 @@ export const SALT_HAVEN_IMAGES: SaltHavenImage[] = [
   image("great-room-02.jpeg", 875, 720, "greatRoom", "Vaulted living room, full-height window over Hood Canal", { priority: true, featured: true }),
   image("great-room-03.jpeg", 1080, 720, "greatRoom", "Dining table beneath the vaulted ceiling, Hood Canal beyond", { featured: true }),
   image("great-room-04.jpeg", 944, 720, "greatRoom", "Living room seating beneath the A-frame's peak", { featured: true }),
-  image("great-room-05.jpeg", 789, 720, "greatRoom", "Upper living room opening onto the deck and Hood Canal"),
+  image("great-room-05.jpeg", 789, 720, "greatRoom", "Vaulted great room with leather seating, opening onto the deck and Hood Canal", { priority: true, featured: true }),
   image("great-room-06.jpeg", 805, 720, "greatRoom", "Living room sofa facing the deck, fire pit and water beyond"),
   image("great-room-07.jpeg", 998, 720, "greatRoom", "View down into the great room from the loft", { priority: true, featured: true }),
   image("great-room-08.jpeg", 745, 720, "greatRoom", "Lower-level lounge with Smart TV and workspace", { featured: true }),

@@ -1,4 +1,3 @@
-import { realMedia } from "./media";
 import { SALT_HAVEN_IMAGES } from "./images";
 import type { GalleryCategory, GalleryImage, Property } from "./types";
 
@@ -48,12 +47,7 @@ export const SALT_HAVEN: Property = {
   bathrooms: 2,
   squareFeet: 1446,
 
-  heroMedia: realMedia(
-    "SALT_HAVEN_HERO_MEDIA",
-    "Salt+Haven's A-frame exterior and hot tub gazebo at dusk, Hood Canal",
-    "ultrawide",
-    "/images/salt-haven/exterior-04.jpeg"
-  ),
+  heroMedia: fromGallery("greatRoom", 4),
   heroTagline: "A-frame living on Hood Canal.",
 
   houseHeading: "The house.",
@@ -323,11 +317,27 @@ export const SALT_HAVEN: Property = {
   ],
 
   featuredStatement: "Water outside.\nWarmth within.",
+  featuredHeroImage: fromGallery("greatRoom", 6),
   featuredGallery: [
+    fromGallery("kitchenDining", 0),
     fromGallery("greatRoom", 1),
-    fromGallery("queenBedroom", 0),
-    fromGallery("hotTub", 0),
+    fromGallery("detailLifestyle", 1),
     fromGallery("sunsetAtmospheric", 0),
+  ],
+
+  momentsGallery: [
+    fromGallery("greatRoom", 2),
+    fromGallery("kitchenDining", 2),
+    fromGallery("kingBedroom", 1),
+    fromGallery("exterior", 0),
+    fromGallery("greatRoom", 3),
+    fromGallery("loft", 1),
+    fromGallery("hotTub", 0),
+    fromGallery("queenBedroom", 1),
+    fromGallery("familyAmenity", 1),
+    fromGallery("exterior", 3),
+    fromGallery("greatRoom", 7),
+    fromGallery("detailLifestyle", 2),
   ],
 
   hoodCanalMoments: [
