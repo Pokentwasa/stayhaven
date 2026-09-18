@@ -1,37 +1,54 @@
-import { placeholder } from "./media";
+import { realMedia } from "./media";
 import type { Destination } from "./types";
 
 /**
- * PLACEHOLDER DATA — replace with real Stay Haven destinations.
- * `coordinates` are percentage positions (0-100) on the abstract destination
- * map in <DestinationExplorer />; adjust once real destinations are known.
+ * Stay Haven currently operates one property, on Hood Canal in Union,
+ * Washington. These three entries are three real facets of that one place
+ * — not three separate destinations — so the destination-index interaction
+ * stays intact without implying a collection that doesn't exist yet.
  */
 export const DESTINATIONS: Destination[] = [
   {
-    id: "destination-01",
-    slug: "destination-01",
-    name: "DESTINATION_01",
-    region: "DESTINATION_01_REGION",
-    description: "DESTINATION_01_DESCRIPTION",
-    heroImage: placeholder("DESTINATION_01_HERO_IMAGE", "DESTINATION_01 landscape", "landscape"),
+    id: "destination-water",
+    slug: "hood-canal",
+    name: "The Water",
+    region: "Hood Canal",
+    description:
+      "Union sits right on Hood Canal, with changing light, wildlife and long waterfront sunsets across the water.",
+    heroImage: realMedia(
+      "DESTINATION_WATER_HERO_IMAGE",
+      "The A-frame roofline seen across Hood Canal",
+      "landscape",
+      "/images/salt-haven/hood-canal-01.jpeg"
+    ),
     coordinates: { x: 28, y: 62 },
   },
   {
-    id: "destination-02",
-    slug: "destination-02",
-    name: "DESTINATION_02",
-    region: "DESTINATION_02_REGION",
-    description: "DESTINATION_02_DESCRIPTION",
-    heroImage: placeholder("DESTINATION_02_HERO_IMAGE", "DESTINATION_02 landscape", "landscape"),
+    id: "destination-outdoors",
+    slug: "the-outdoors",
+    name: "The Outdoors",
+    region: "Hood Canal",
+    description: "A fenced yard, a covered hot tub and a deck built for being outside, whatever the season.",
+    heroImage: realMedia(
+      "DESTINATION_OUTDOORS_HERO_IMAGE",
+      "Aerial view of the deck, hot tub gazebo and fenced yard",
+      "landscape",
+      "/images/salt-haven/exterior-02.jpeg"
+    ),
     coordinates: { x: 58, y: 38 },
   },
   {
-    id: "destination-03",
-    slug: "destination-03",
-    name: "DESTINATION_03",
-    region: "DESTINATION_03_REGION",
-    description: "DESTINATION_03_DESCRIPTION",
-    heroImage: placeholder("DESTINATION_03_HERO_IMAGE", "DESTINATION_03 landscape", "landscape"),
+    id: "destination-quiet",
+    slug: "the-quiet",
+    name: "The Quiet",
+    region: "Hood Canal",
+    description: "Dark roads, wildlife and a quiet after ten — the kind of quiet that's hard to find.",
+    heroImage: realMedia(
+      "DESTINATION_QUIET_HERO_IMAGE",
+      "Sunset over Hood Canal from the hot tub gazebo",
+      "wide",
+      "/images/salt-haven/sunset-01.jpeg"
+    ),
     coordinates: { x: 76, y: 70 },
   },
 ];

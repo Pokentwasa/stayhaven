@@ -13,3 +13,8 @@ export function placeholder(
 ): Media {
   return { id, src: "", type, alt, aspect };
 }
+
+/** A real, local Salt+Haven photo. `src` is a path under /public, e.g. "/images/salt-haven/great-room-01.jpeg". */
+export function realMedia(id: string, alt: string, aspect: MediaAspect, src: string): Media {
+  return { id, src, type: "image", alt, aspect };
+}

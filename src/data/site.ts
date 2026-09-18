@@ -1,12 +1,6 @@
-import { placeholder } from "./media";
+import { realMedia } from "./media";
 import type { SiteContent } from "./types";
 
-/**
- * Site-level brand/navigation copy. The hero, manifesto and pillar lines
- * below are the DRAFT direction supplied in the creative brief — not
- * fabricated property content — and remain easy to swap from this single
- * file once final brand copy is approved.
- */
 export const SITE: SiteContent = {
   brand: {
     name: "Stay Haven Collection",
@@ -27,43 +21,48 @@ export const SITE: SiteContent = {
     headline: "Stay somewhere worth remembering.",
     supporting: "A quieter way to travel.",
     scrollCue: "Discover the Collection",
-    media: placeholder("SITE_HERO_MEDIA", "Stay Haven Collection", "ultrawide", "video"),
+    media: realMedia(
+      "SITE_HERO_MEDIA",
+      "Salt+Haven's vaulted great room, opening onto the deck and Hood Canal",
+      "ultrawide",
+      "/images/salt-haven/great-room-05.jpeg"
+    ),
   },
   manifesto: {
     eyebrow: "02 — Brand Manifesto",
     heading: "A different way to stay.",
     lines: [
       "Thoughtful spaces.",
-      "Slower travel.",
-      "Considered design.",
-      "Neighbourhoods worth discovering.",
+      "Slower mornings.",
+      "Time outside.",
+      "Places worth discovering.",
       "Stays worth remembering.",
     ],
   },
   experiencePillars: [
     {
-      id: "pillar-stay",
-      title: "Stay",
-      description: "Beautiful spaces made to settle into.",
-      image: placeholder("PILLAR_STAY_IMAGE", "Stay", "landscape"),
+      id: "pillar-settle-in",
+      title: "Settle In",
+      description: "A king bedroom with its own workspace and a water view — the moment you first put your bags down.",
+      image: realMedia("PILLAR_SETTLE_IN_IMAGE", "King bedroom with a private workspace and water view", "landscape", "/images/salt-haven/king-bedroom-01.jpeg"),
     },
     {
-      id: "pillar-eat",
-      title: "Eat",
-      description: "Slow mornings. Long dinners.",
-      image: placeholder("PILLAR_EAT_IMAGE", "Eat", "landscape"),
+      id: "pillar-gather",
+      title: "Gather",
+      description: "Vaulted ceilings over an open great room, made for the whole group to end up in one place.",
+      image: realMedia("PILLAR_GATHER_IMAGE", "Vaulted great room, kitchen and loft ladder", "landscape", "/images/salt-haven/great-room-01.jpeg"),
     },
     {
-      id: "pillar-explore",
-      title: "Explore",
-      description: "Step outside and discover where you are.",
-      image: placeholder("PILLAR_EXPLORE_IMAGE", "Explore", "landscape"),
+      id: "pillar-step-out",
+      title: "Step Out",
+      description: "A table for outdoor meals and a BBQ, with Hood Canal as the backdrop.",
+      image: realMedia("PILLAR_STEP_OUT_IMAGE", "Outdoor dining table and BBQ on the deck, overlooking Hood Canal", "wide", "/images/salt-haven/outdoor-dining-01.jpeg"),
     },
     {
       id: "pillar-unwind",
       title: "Unwind",
-      description: "The reason you came.",
-      image: placeholder("PILLAR_UNWIND_IMAGE", "Unwind", "landscape"),
+      description: "A private, covered hot tub at sunset — the reason you came.",
+      image: realMedia("PILLAR_UNWIND_IMAGE", "Hot tub at sunset, overlooking Hood Canal", "wide", "/images/salt-haven/hot-tub-02.jpeg"),
     },
   ],
   footer: {
