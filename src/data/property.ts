@@ -267,6 +267,102 @@ export const SALT_HAVEN: Property = {
     { id: "rental-agreement", title: "Rental agreement", description: "Electronic agreement required before check-in." },
   ],
 
+  storyMoments: [
+    {
+      id: "story-house",
+      eyebrow: "01 / 03",
+      title: "The House",
+      statement:
+        "An A-frame on Hood Canal, its vaulted wood ceilings drawing the eye up and out toward the water.",
+      cta: { label: "Step inside", href: "#the-house" },
+      image: fromGallery("exterior", 2),
+    },
+    {
+      id: "story-outside",
+      eyebrow: "02 / 03",
+      title: "Outside",
+      statement: "Hot tub after dark. Fire going. Dinner outside. Hood Canal in front of you.",
+      cta: { label: "See outside", href: "#experience" },
+      image: fromGallery("firePit", 0),
+    },
+    {
+      id: "story-view",
+      eyebrow: "03 / 03",
+      title: "The View",
+      statement: "Changing light, wildlife and long waterfront sunsets, from nearly every room.",
+      cta: { label: "Explore Hood Canal", href: "#hood-canal" },
+      image: fromGallery("hoodCanal", 0),
+    },
+  ],
+
+  experienceScenes: [
+    {
+      id: "scene-settle-in",
+      title: "Settle In",
+      description: "A king bedroom with its own workspace and a water view — the moment you first put your bags down.",
+      image: fromGallery("kingBedroom", 0),
+    },
+    {
+      id: "scene-gather",
+      title: "Gather",
+      description: "Vaulted ceilings over an open great room, made for the whole group to end up in one place.",
+      image: fromGallery("greatRoom", 0),
+    },
+    {
+      id: "scene-step-out",
+      title: "Step Out",
+      description: "A table for outdoor meals and a BBQ, with Hood Canal as the backdrop.",
+      image: fromGallery("outdoorDining", 0),
+    },
+    {
+      id: "scene-unwind",
+      title: "Unwind",
+      description: "A private, covered hot tub at sunset — the reason you came.",
+      image: fromGallery("hotTub", 1),
+    },
+  ],
+
+  featuredStatement: "Water outside.\nWarmth within.",
+  featuredGallery: [
+    fromGallery("greatRoom", 1),
+    fromGallery("queenBedroom", 0),
+    fromGallery("hotTub", 0),
+    fromGallery("sunsetAtmospheric", 0),
+  ],
+
+  hoodCanalMoments: [
+    {
+      id: "hood-canal-water",
+      name: "The Water",
+      region: "Hood Canal",
+      description: "Union sits on Hood Canal, with changing light and long waterfront sunsets across the water.",
+      heroImage: fromGallery("hoodCanal", 1),
+    },
+    {
+      id: "hood-canal-outdoors",
+      name: "The Outdoors",
+      region: "Union, Washington",
+      description: "A fenced yard, a covered hot tub and a deck built for being outside, whatever the season.",
+      heroImage: fromGallery("exterior", 1),
+    },
+    {
+      id: "hood-canal-quiet",
+      name: "The Quiet",
+      region: "Hood Canal",
+      description: "Dark roads, wildlife and a quiet after ten — the kind of quiet that's hard to find.",
+      heroImage: fromGallery("sunsetAtmospheric", 0),
+    },
+  ],
+
+  goodToKnow: [
+    { id: "gtk-arrival", title: "Contactless Arrival", description: "Skip the front desk. A smart lock gets you in the moment you arrive." },
+    { id: "gtk-dog", title: "Bring the Dog", description: "Dogs are welcome by prior approval, with a fenced yard of their own." },
+    { id: "gtk-guests", title: "Room for Eight", description: "Three bedrooms, a loft and a sofa bed — space for the whole group." },
+    { id: "gtk-levels", title: "Three Levels", description: "The A-frame unfolds across three levels, each with its own reason to linger." },
+    { id: "gtk-views", title: "Waterfront Views", description: "Hood Canal and the Olympic Mountains, framed from nearly every room." },
+    { id: "gtk-quiet", title: "Quiet After Ten", description: "Quiet hours run from 10 PM, so every stay stays peaceful." },
+  ],
+
   cancellationPolicy: [
     { id: "tier-1", window: "30+ days before check-in", refund: "Full refund" },
     { id: "tier-2", window: "7–30 days before check-in", refund: "50% refund" },

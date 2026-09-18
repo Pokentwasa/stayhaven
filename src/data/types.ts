@@ -116,6 +116,40 @@ export interface HouseRule {
   description: string;
 }
 
+/** One of the three "arriving / entering / seeing the water" story beats in the opening property sequence. */
+export interface StoryMoment {
+  id: string;
+  eyebrow: string;
+  title: string;
+  statement: string;
+  cta: { label: string; href: string };
+  image: Media;
+}
+
+/** One of the four scenes in the Settle In / Gather / Step Out / Unwind experience sequence. */
+export interface ExperienceScene {
+  id: string;
+  title: string;
+  description: string;
+  image: Media;
+}
+
+/** One of the three Hood Canal story beats (The Water / The Outdoors / The Quiet). */
+export interface HoodCanalMoment {
+  id: string;
+  name: string;
+  region: string;
+  description: string;
+  heroImage: Media;
+}
+
+/** A single rotating "Good to Know" fact — never a fabricated guest quote. */
+export interface GoodToKnowItem {
+  id: string;
+  title: string;
+  description: string;
+}
+
 export interface CancellationTier {
   id: string;
   window: string;
@@ -172,6 +206,19 @@ export interface Property {
 
   gallery: GalleryImage[];
 
+  /** The three-part opening story sequence: The House / Outside / The View. */
+  storyMoments: StoryMoment[];
+  /** The four-scene Settle In / Gather / Step Out / Unwind sequence. */
+  experienceScenes: ExperienceScene[];
+  /** Short two-line statement for the Featured Haven spread, e.g. "Water outside. / Warmth within." */
+  featuredStatement: string;
+  /** 3-4 images for the Featured Haven magazine layout. */
+  featuredGallery: Media[];
+  /** The three-part Hood Canal sequence: The Water / The Outdoors / The Quiet. */
+  hoodCanalMoments: HoodCanalMoment[];
+  /** Rotating practical facts for the "Good to Know" section — never invented guest reviews. */
+  goodToKnow: GoodToKnowItem[];
+
   houseRules: HouseRule[];
   cancellationPolicy: CancellationTier[];
 
@@ -203,9 +250,16 @@ export interface SiteContent {
     bookCta: NavLink;
   };
   hero: {
+    eyebrow: string;
+    headline: string;
+    supporting: string;
+    cta: string;
     scrollCue: string;
-    primaryCta: string;
-    secondaryCta: string;
+  };
+  manifesto: {
+    eyebrow: string;
+    heading: string;
+    lines: string[];
   };
   footer: {
     heading: string;

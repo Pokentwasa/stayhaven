@@ -1,11 +1,11 @@
 import { CinematicHero } from "@/components/sections/CinematicHero";
-import { TheHouse } from "@/components/sections/TheHouse";
-import { InsideOutside } from "@/components/sections/InsideOutside";
-import { Sleeping } from "@/components/sections/Sleeping";
-import { HoodCanal } from "@/components/sections/HoodCanal";
-import { Amenities } from "@/components/sections/Amenities";
-import { Gallery } from "@/components/sections/Gallery";
-import { Location } from "@/components/sections/Location";
+import { PropertyShowcase } from "@/components/sections/PropertyShowcase";
+import { BrandManifesto } from "@/components/sections/BrandManifesto";
+import { ExperienceSection } from "@/components/sections/ExperienceSection";
+import { FeaturedHaven } from "@/components/sections/FeaturedHaven";
+import { DestinationExplorer } from "@/components/sections/DestinationExplorer";
+import { EditorialGallery } from "@/components/sections/EditorialGallery";
+import { GuestNotes } from "@/components/sections/GuestNotes";
 import { BookingCTA } from "@/components/sections/BookingCTA";
 import { getPrimaryProperty } from "@/data/property";
 
@@ -14,15 +14,15 @@ export default function HomePage() {
 
   return (
     <>
-      <CinematicHero />
-      <TheHouse property={property} />
-      <InsideOutside property={property} />
-      <Sleeping property={property} />
-      <HoodCanal property={property} />
-      <Amenities property={property} />
-      <Gallery property={property} />
-      <Location property={property} />
-      <BookingCTA />
+      <CinematicHero property={property} />
+      <PropertyShowcase property={property} />
+      <BrandManifesto property={property} />
+      <ExperienceSection property={property} />
+      <FeaturedHaven property={property} />
+      <DestinationExplorer property={property} />
+      <EditorialGallery property={property} />
+      <GuestNotes property={property} />
+      <BookingCTA property={property} />
     </>
   );
 }

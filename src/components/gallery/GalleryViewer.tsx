@@ -1,137 +1,15 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect, useRef, useState } from "react";
 import { PlaceholderMedia } from "@/components/ui/PlaceholderMedia";
-import { GALLERY_CATEGORY_SECTIONS } from "@/data/types";
-import type { GalleryCategory, GalleryImage, Property } from "@/data/types";
-import { prefersReducedMotion } from "@/lib/motion";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
+import type { GalleryImage } from "@/data/types";
 
 /**
- * A fixed, deliberate composition — not a repeating strip or a chaotic
- * masonry — edited for rhythm (wide, close, wide, detail, portrait,
- * full-screen). Each entry names the category + index to pull from.
+ * Full grouped gallery + lightbox viewer, shared by any section that offers
+ * a "View all photos" entry point. Filter tabs group by category; the
+ * lightbox supports keyboard arrows/Escape and swipe on touch.
  */
-const PREVIEW_PICKS: { category: GalleryCategory; index: number; span: string }[] = [
-  { category: "exterior", index: 3, span: "col-span-4 row-span-2 aspect-[4/5] sm:aspect-auto" },
-  { category: "greatRoom", index: 1, span: "col-span-2 aspect-[4/3]" },
-  { category: "kitchenDining", index: 0, span: "col-span-2 aspect-[4/3]" },
-  { category: "hoodCanal", index: 1, span: "col-span-4 aspect-[21/9] sm:col-span-6" },
-  { category: "kingBedroom", index: 0, span: "col-span-2 aspect-[3/4]" },
-  { category: "firePit", index: 0, span: "col-span-2 aspect-[3/4]" },
-  { category: "sunsetAtmospheric", index: 0, span: "col-span-4 aspect-[16/9]" },
-  { category: "detailLifestyle", index: 1, span: "col-span-2 aspect-square" },
-  { category: "loft", index: 0, span: "col-span-2 aspect-[4/3]" },
-  { category: "queenBedroom", index: 0, span: "col-span-2 aspect-[4/3]" },
-  { category: "hotTub", index: 1, span: "col-span-3 aspect-[4/3]" },
-  { category: "outdoorDining", index: 0, span: "col-span-3 aspect-[4/3]" },
-  { category: "bathrooms", index: 1, span: "col-span-2 aspect-square" },
-  { category: "greatRoom", index: 6, span: "col-span-4 aspect-[21/9] sm:col-span-6" },
-];
-
-/**
- * 10 — Gallery. A curated, architectural composition (not a chaotic
- * masonry or an infinite drag strip) with a "View All Photos" trigger
- * opening the full grouped gallery + lightbox viewer.
- */
-export function Gallery({ property }: { property: Property }) {
-  const rootRef = useRef<HTMLDivElement>(null);
-  const [viewerOpen, setViewerOpen] = useState(false);
-
-  const groups = useMemo(
-    () =>
-      GALLERY_CATEGORY_SECTIONS.map((section) => ({
-        label: section.label,
-        images: property.gallery.filter((img) => section.categories.includes(img.category)),
-      })),
-    [property.gallery]
-  );
-
-  const flatGallery = useMemo(() => groups.flatMap((g) => g.images), [groups]);
-
-  const preview = useMemo(
-    () =>
-      PREVIEW_PICKS.map((pick) => ({
-        pick,
-        image: property.gallery.filter((img) => img.category === pick.category)[pick.index],
-      })).filter((entry): entry is { pick: (typeof PREVIEW_PICKS)[number]; image: NonNullable<typeof entry.image> } =>
-        Boolean(entry.image)
-      ),
-    [property.gallery]
-  );
-
-  useEffect(() => {
-    const root = rootRef.current;
-    if (!root || prefersReducedMotion()) return;
-    const ctx = gsap.context(() => {
-      gsap.from("[data-gallery-reveal]", {
-        opacity: 0,
-        y: 24,
-        duration: 1,
-        ease: "power3.out",
-        stagger: 0.1,
-        scrollTrigger: { trigger: root, start: "top 85%" },
-      });
-    }, root);
-    return () => ctx.revert();
-  }, []);
-
-  return (
-    <section
-      id="archive"
-      ref={rootRef}
-      data-header-theme="dark"
-      data-scene="8"
-      className="section-pad bg-ivory text-charcoal"
-    >
-      <div data-gallery-reveal className="container-edge mb-14 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <p className="text-eyebrow mb-6 flex items-center gap-3 text-charcoal/50">
-            <span>08</span>
-            <span className="h-px w-8 bg-current/50" />
-            <span>The Archive</span>
-          </p>
-          <h2 className="text-display-lg">{flatGallery.length} images.</h2>
-          <p className="text-eyebrow mt-2 text-charcoal/55">Salt+Haven / Union, WA</p>
-        </div>
-        <button
-          type="button"
-          onClick={() => setViewerOpen(true)}
-          className="text-eyebrow w-fit border-b border-charcoal pb-1 transition-opacity hover:opacity-60"
-        >
-          View All {flatGallery.length} →
-        </button>
-      </div>
-
-      <div data-gallery-reveal className="container-edge grid grid-cols-4 gap-3 sm:grid-cols-6">
-        {preview.map(({ pick, image }) => (
-          <button
-            type="button"
-            key={image.id}
-            onClick={() => setViewerOpen(true)}
-            className={`group relative overflow-hidden ${pick.span}`}
-          >
-            <PlaceholderMedia
-              media={image}
-              className="absolute inset-0 transition-transform duration-500 ease-out group-hover:scale-105"
-            />
-          </button>
-        ))}
-      </div>
-
-      {viewerOpen && (
-        <GalleryViewer groups={groups} flatGallery={flatGallery} onClose={() => setViewerOpen(false)} />
-      )}
-    </section>
-  );
-}
-
-function GalleryViewer({
+export function GalleryViewer({
   groups,
   flatGallery,
   onClose,
@@ -226,11 +104,7 @@ function GalleryViewer({
           )}
         </div>
       ) : (
-        <Lightbox
-          images={flatGallery}
-          index={lightboxIndex}
-          onIndexChange={setLightboxIndex}
-        />
+        <Lightbox images={flatGallery} index={lightboxIndex} onIndexChange={setLightboxIndex} />
       )}
     </div>
   );
@@ -309,11 +183,6 @@ function LightboxImage({ image }: { image: GalleryImage }) {
 
   return (
     // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={image.src}
-      alt={image.alt}
-      className="max-h-full max-w-full object-contain"
-      onError={() => setFailed(true)}
-    />
+    <img src={image.src} alt={image.alt} className="max-h-full max-w-full object-contain" onError={() => setFailed(true)} />
   );
 }
