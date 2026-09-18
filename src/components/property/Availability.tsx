@@ -8,7 +8,7 @@ export function Availability({ property }: { property: Property }) {
   const configured = isBookingEngineConfigured(property);
 
   return (
-    <section data-header-theme="dark" className="section-pad container-edge bg-ivory text-charcoal">
+    <section data-header-theme="dark" className="section-pad container-edge bg-white text-charcoal">
       <p className="text-eyebrow mb-8 text-charcoal/50">10 — Availability</p>
       <div className="flex flex-col items-start gap-6 border-t border-charcoal/10 pt-10">
         <p className="text-body-lg max-w-md text-charcoal/70">
@@ -18,7 +18,7 @@ export function Availability({ property }: { property: Property }) {
         </p>
         <BookingTrigger
           property={property}
-          className="border border-charcoal px-8 py-4 text-charcoal"
+          className="bg-brand-blue px-8 py-4 text-charcoal"
         >
           Check Availability
         </BookingTrigger>

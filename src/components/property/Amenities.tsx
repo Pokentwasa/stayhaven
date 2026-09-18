@@ -5,7 +5,7 @@ export function Amenities({ property }: { property: Property }) {
   const columns = [property.amenities.slice(0, mid), property.amenities.slice(mid)];
 
   return (
-    <section data-header-theme="dark" className="section-pad container-edge bg-ivory text-charcoal">
+    <section data-header-theme="dark" className="section-pad container-edge bg-white text-charcoal">
       <p className="text-eyebrow mb-12 text-charcoal/50">08 — Amenities</p>
 
       <div className="grid grid-cols-1 gap-x-16 gap-y-3 sm:grid-cols-2">

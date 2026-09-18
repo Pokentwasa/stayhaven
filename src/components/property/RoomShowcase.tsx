@@ -7,7 +7,7 @@ import type { Property } from "@/data/types";
 
 export function RoomShowcase({ property }: { property: Property }) {
   return (
-    <section data-header-theme="dark" className="section-pad bg-sand text-charcoal">
+    <section data-header-theme="dark" className="section-pad bg-brand-blue text-charcoal">
       <div className="container-edge mb-12">
         <p className="text-eyebrow mb-6 text-charcoal/50">04 — Rooms</p>
         <h2 className="text-display-lg">Spaces to settle into.</h2>

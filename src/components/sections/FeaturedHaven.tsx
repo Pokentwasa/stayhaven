@@ -7,7 +7,7 @@ export function FeaturedHaven() {
   const [imgA, imgB, imgC, imgD] = property.gallery;
 
   return (
-    <section data-header-theme="dark" className="section-pad container-edge bg-ivory text-charcoal">
+    <section data-header-theme="dark" className="section-pad container-edge bg-brand-blue text-charcoal">
       <div className="mb-16 flex flex-col gap-4">
         <p className="text-eyebrow text-charcoal/50">04 — Featured Haven</p>
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">

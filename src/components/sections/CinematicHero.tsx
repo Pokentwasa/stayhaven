@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { PlaceholderMedia } from "@/components/ui/PlaceholderMedia";
-import { BookingTrigger } from "@/components/booking/BookingTrigger";
+import { LuxuryButton } from "@/components/ui/LuxuryButton";
 import { TransitionLink } from "@/components/layout/TransitionLink";
 import { SITE } from "@/data/site";
 import { getFeaturedProperty } from "@/data/properties";
@@ -35,7 +35,7 @@ function HeroAvailabilityWidget() {
     <form
       data-hero-widget
       onSubmit={handleSubmit}
-      className="hidden w-full max-w-xs flex-col gap-5 bg-ivory/95 p-7 text-charcoal shadow-2xl backdrop-blur-sm md:flex"
+      className="hidden w-full max-w-xs flex-col gap-5 bg-brand-blue/95 p-7 text-charcoal shadow-2xl backdrop-blur-sm md:flex"
     >
       <p className="text-eyebrow text-charcoal/55">Check Availability</p>
 
@@ -178,9 +178,9 @@ export function CinematicHero() {
           </p>
 
           <div data-hero-cta>
-            <BookingTrigger className="mt-4 inline-block border-b border-ivory pb-1">
-              Discover the Collection
-            </BookingTrigger>
+            <LuxuryButton href={`/stays/${property.slug}`} variant="primary" className="mt-4">
+              Explore Property →
+            </LuxuryButton>
           </div>
         </div>
 

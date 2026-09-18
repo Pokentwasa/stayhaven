@@ -4,7 +4,7 @@ export function PropertyGuestNotes({ property }: { property: Property }) {
   if (property.testimonials.length === 0) return null;
 
   return (
-    <section data-header-theme="dark" className="section-pad container-edge bg-sand text-charcoal">
+    <section data-header-theme="dark" className="section-pad container-edge bg-brand-blue text-charcoal">
       <p className="text-eyebrow mb-12 text-charcoal/50">09 — Guest Notes</p>
 
       <div className="grid grid-cols-1 gap-16 md:grid-cols-2">

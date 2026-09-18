@@ -51,11 +51,11 @@ export function BrandManifesto() {
     <section
       ref={sectionRef}
       data-header-theme="dark"
-      className="relative flex h-[100svh] w-full items-center justify-center overflow-hidden bg-ivory text-charcoal"
+      className="relative flex h-[100svh] w-full items-center justify-center overflow-hidden bg-brand-blue text-charcoal"
     >
       <div className="absolute inset-0">
         <PlaceholderMedia media={manifesto.media} className="absolute inset-0" />
-        <div className="absolute inset-0 bg-ivory/90" />
+        <div className="absolute inset-0 bg-brand-blue/90" />
       </div>
 
       <div className="container-edge relative z-10 mx-auto flex max-w-4xl flex-col items-center gap-14 text-center">

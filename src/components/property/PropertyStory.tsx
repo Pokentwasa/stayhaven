@@ -3,7 +3,7 @@ import type { Property } from "@/data/types";
 
 export function PropertyIntro({ property }: { property: Property }) {
   return (
-    <section data-header-theme="dark" className="section-pad container-edge bg-ivory text-charcoal">
+    <section data-header-theme="dark" className="section-pad container-edge bg-brand-blue text-charcoal">
       <p className="text-eyebrow mb-8 text-charcoal/50">02 — Intro</p>
       <p className="text-display-md max-w-3xl">{property.positioningStatement}</p>
     </section>
@@ -14,7 +14,7 @@ export function PropertyStory({ property }: { property: Property }) {
   const [imgA, imgB, imgC] = property.gallery;
 
   return (
-    <section data-header-theme="dark" className="section-pad-b container-edge bg-ivory text-charcoal">
+    <section data-header-theme="dark" className="section-pad-b container-edge bg-white text-charcoal">
       <p className="text-eyebrow mb-12 text-charcoal/50">03 — Story</p>
 
       <div className="grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-20">

@@ -24,7 +24,7 @@ export function PropertyGallery({ property }: { property: Property }) {
   }, [openIndex, property.gallery.length]);
 
   return (
-    <section data-header-theme="dark" className="section-pad container-edge bg-ivory text-charcoal">
+    <section data-header-theme="dark" className="section-pad container-edge bg-white text-charcoal">
       <p className="text-eyebrow mb-12 text-charcoal/50">05 — Gallery</p>
 
       <div className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4">

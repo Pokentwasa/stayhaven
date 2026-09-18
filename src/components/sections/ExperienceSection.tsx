@@ -47,7 +47,7 @@ export function ExperienceSection() {
   }, [paused, pillars.length]);
 
   return (
-    <section id="experience" ref={rootRef} data-header-theme="dark" className="section-pad bg-ivory text-charcoal">
+    <section id="experience" ref={rootRef} data-header-theme="dark" className="section-pad bg-white text-charcoal">
       <div className="container-edge" data-experience-reveal>
         <SectionIntro index="03" label="The Experience" heading="Made for staying a little longer." />
       </div>

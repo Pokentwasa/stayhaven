@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function StaysIndexPage() {
   return (
-    <section data-header-theme="dark" className="section-pad container-edge bg-ivory text-charcoal">
+    <section data-header-theme="dark" className="section-pad container-edge bg-brand-blue text-charcoal">
       <SectionIntro index="01" label="The Collection" heading="Find your Haven." />
 
       <div className="mt-16 grid grid-cols-1 gap-16 md:grid-cols-2">

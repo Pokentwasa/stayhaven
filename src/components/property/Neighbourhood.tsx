@@ -3,7 +3,7 @@ import type { Property } from "@/data/types";
 
 export function Neighbourhood({ property }: { property: Property }) {
   return (
-    <section data-header-theme="dark" className="section-pad container-edge bg-ivory text-charcoal">
+    <section data-header-theme="dark" className="section-pad container-edge bg-brand-blue text-charcoal">
       <div className="mb-12 flex flex-col gap-4">
         <p className="text-eyebrow text-charcoal/50">06 — The Neighbourhood</p>
         <h2 className="text-display-lg">The city is outside.</h2>

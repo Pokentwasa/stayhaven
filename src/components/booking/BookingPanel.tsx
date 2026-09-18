@@ -64,7 +64,7 @@ export function BookingPanel() {
       />
       <div
         className={cx(
-          "absolute right-0 top-0 flex h-full w-full max-w-xl flex-col overflow-y-auto bg-ivory transition-transform duration-700 ease-out motion-reduce:transition-none",
+          "absolute right-0 top-0 flex h-full w-full max-w-xl flex-col overflow-y-auto bg-brand-blue transition-transform duration-700 ease-out motion-reduce:transition-none",
           animateIn ? "translate-x-0" : "translate-x-full"
         )}
       >

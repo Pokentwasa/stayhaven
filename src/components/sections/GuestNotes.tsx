@@ -28,7 +28,7 @@ export function GuestNotes() {
   if (!testimonial) return null;
 
   return (
-    <section data-header-theme="dark" className="section-pad container-edge bg-ivory text-charcoal">
+    <section data-header-theme="dark" className="section-pad container-edge bg-brand-blue text-charcoal">
       <h2 className="sr-only">Guest Notes</h2>
       <p aria-hidden="true" className="text-eyebrow mb-16 flex items-center justify-center gap-3 text-charcoal/50">
         <span>07</span>

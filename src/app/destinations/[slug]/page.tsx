@@ -41,7 +41,7 @@ export default async function DestinationPage({ params }: { params: Promise<{ sl
         </div>
       </section>
 
-      <section data-header-theme="dark" className="section-pad container-edge bg-ivory text-charcoal">
+      <section data-header-theme="dark" className="section-pad container-edge bg-brand-blue text-charcoal">
         <p className="text-body-lg max-w-2xl text-charcoal/70">{destination.description}</p>
 
         {properties.length > 0 && (

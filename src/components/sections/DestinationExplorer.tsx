@@ -7,8 +7,8 @@ import { PROPERTIES } from "@/data/properties";
 /** 05 — Destinations. Three real facets shown side by side; each image stays clear, with its text arriving on hover. */
 export function DestinationExplorer() {
   return (
-    <section data-header-theme="dark" className="section-pad container-edge bg-ivory text-charcoal">
-      <SectionIntro index="06" label="Destinations" heading="Where will you disappear to next?" />
+    <section data-header-theme="dark" className="section-pad container-edge bg-brand-blue text-charcoal">
+      <SectionIntro index="06" label="Hood Canal" heading="Beyond the A-frame." />
 
       <div className="mt-16 grid grid-cols-1 gap-4 sm:grid-cols-3">
         {DESTINATIONS.map((d) => {

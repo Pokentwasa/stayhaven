@@ -79,7 +79,7 @@ export function BookingCTA() {
 
           <button
             type="submit"
-            className="col-span-full mt-6 bg-ivory py-5 text-eyebrow text-forest transition-opacity duration-300 hover:opacity-90"
+            className="col-span-full mt-6 bg-brand-blue py-5 text-eyebrow text-charcoal transition-opacity duration-300 hover:opacity-90"
           >
             Find Your Haven
           </button>

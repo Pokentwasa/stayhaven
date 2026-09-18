@@ -16,8 +16,8 @@ export function EditorialGallery() {
   const moments = PROPERTIES.flatMap((p) => p.gallery).slice(0, 7);
 
   return (
-    <section data-header-theme="dark" className="section-pad container-edge bg-ivory text-charcoal">
-      <SectionIntro index="07" label="Moments" heading="Moments from the Collection." />
+    <section data-header-theme="dark" className="section-pad container-edge bg-white text-charcoal">
+      <SectionIntro index="07" label="Moments" heading="Moments from Salt+Haven." />
 
       <div className="mt-16 grid grid-cols-2 gap-4 md:auto-rows-[14rem] md:grid-cols-6">
         {moments.map((media, i) => (

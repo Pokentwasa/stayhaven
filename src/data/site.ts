@@ -18,9 +18,9 @@ export const SITE: SiteContent = {
   },
   hero: {
     eyebrow: "Stay Haven Collection",
-    headline: "Stay somewhere worth remembering.",
-    supporting: "A quieter way to travel.",
-    scrollCue: "Discover the Collection",
+    headline: "Stay Haven Collection",
+    supporting: "Waterfront A-Frame Cabin With Panoramic Views",
+    scrollCue: "Scroll to Explore",
     media: realMedia(
       "SITE_HERO_MEDIA",
       "Salt+Haven's vaulted great room, opening onto the deck and Hood Canal",
