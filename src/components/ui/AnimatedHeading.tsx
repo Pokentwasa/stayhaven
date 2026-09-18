@@ -1,14 +1,9 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/motion";
 import { cx } from "@/lib/utils";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 const SIZE_CLASS = {
   xl: "text-display-xl",

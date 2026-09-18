@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { gsap } from "gsap";
+import { gsap } from "@/lib/gsap";
 import { PlaceholderMedia } from "@/components/ui/PlaceholderMedia";
 import { prefersReducedMotion } from "@/lib/motion";
 import { SITE } from "@/data/site";

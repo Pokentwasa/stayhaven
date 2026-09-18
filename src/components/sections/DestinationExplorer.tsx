@@ -1,16 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap } from "@/lib/gsap";
 import { PlaceholderMedia } from "@/components/ui/PlaceholderMedia";
+import { WaterTransition } from "@/components/transitions/WaterTransition";
 import { cx } from "@/lib/utils";
 import { prefersReducedMotion } from "@/lib/motion";
 import type { Property } from "@/data/types";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 /**
  * 05 — Hood Canal. Story-moment names run huge and full-width; hovering
@@ -77,6 +73,7 @@ export function DestinationExplorer({ property }: { property: Property }) {
       className="relative overflow-hidden bg-ivory text-charcoal"
       onMouseLeave={release}
     >
+      <WaterTransition rootTarget={rootRef} />
       <div className="pointer-events-none absolute inset-0 z-0">
         {moments.map((moment, i) => (
           <div

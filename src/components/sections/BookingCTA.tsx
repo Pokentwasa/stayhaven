@@ -1,16 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap } from "@/lib/gsap";
 import { useBooking } from "@/components/booking/BookingContext";
 import { PlaceholderMedia } from "@/components/ui/PlaceholderMedia";
 import { prefersReducedMotion } from "@/lib/motion";
 import type { Property } from "@/data/types";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 /**
  * 08 — Booking finale. Near full-screen, photography behind the type, the

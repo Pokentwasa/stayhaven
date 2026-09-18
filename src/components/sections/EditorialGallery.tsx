@@ -1,18 +1,13 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap } from "@/lib/gsap";
 import { PlaceholderMedia } from "@/components/ui/PlaceholderMedia";
 import { GalleryViewer } from "@/components/gallery/GalleryViewer";
 import { GALLERY_CATEGORY_SECTIONS } from "@/data/types";
 import { cx } from "@/lib/utils";
 import { prefersReducedMotion } from "@/lib/motion";
 import type { Property } from "@/data/types";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 /**
  * A deliberately curated set (not a gallery dump) with irregular pacing,

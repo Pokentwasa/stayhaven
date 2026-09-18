@@ -1,15 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap } from "@/lib/gsap";
 import { PlaceholderMedia } from "@/components/ui/PlaceholderMedia";
 import type { Media } from "@/data/types";
 import { prefersReducedMotion } from "@/lib/motion";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 /**
  * The site's scene hand-off primitive: an image that starts at a modest

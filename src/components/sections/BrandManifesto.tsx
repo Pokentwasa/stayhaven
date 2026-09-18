@@ -1,16 +1,11 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap } from "@/lib/gsap";
 import { PlaceholderMedia } from "@/components/ui/PlaceholderMedia";
 import { SITE } from "@/data/site";
 import { prefersReducedMotion } from "@/lib/motion";
 import type { Property } from "@/data/types";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 /**
  * 02 — Brand Manifesto. A quiet, pinned breathing moment between the House

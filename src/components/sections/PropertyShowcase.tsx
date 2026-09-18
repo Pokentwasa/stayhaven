@@ -1,17 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap } from "@/lib/gsap";
 import { PlaceholderMedia } from "@/components/ui/PlaceholderMedia";
 import { LuxuryButton } from "@/components/ui/LuxuryButton";
 import { BookingTrigger } from "@/components/booking/BookingTrigger";
+import { A_FRAME_CLOSED, A_FRAME_OPEN } from "@/components/transitions/AFrameReveal";
+import { HeatShimmer } from "@/components/transitions/HeatShimmer";
 import { prefersReducedMotion } from "@/lib/motion";
 import type { Property } from "@/data/types";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 /**
  * 01 — The House / Outside / The View. The homepage's signature moment: a
@@ -58,7 +55,12 @@ export function PropertyShowcase({ property }: { property: Property }) {
 
     mm.add("(min-width: 768px)", () => {
       setInteractive(0);
-      gsap.set(frames.slice(1), { clipPath: "inset(0 0 0 100%)" });
+      // The House -> Outside beat is masked by a growing A-frame roofline
+      // instead of a plain wipe (architecture performing its own reveal);
+      // every later beat keeps the plain wipe.
+      frames.slice(1).forEach((frame, idx) => {
+        gsap.set(frame, { clipPath: idx === 0 ? A_FRAME_CLOSED : "inset(0 0 0 100%)" });
+      });
       gsap.set(numbers.slice(1), { opacity: 0, yPercent: 30, xPercent: 6 });
       gsap.set(texts.slice(1), { opacity: 0, y: 24 });
 
@@ -82,8 +84,9 @@ export function PropertyShowcase({ property }: { property: Property }) {
         const seg = i - 1;
         const outgoingMedia = frames[i - 1]!.querySelector("[data-frame-media]");
         const incomingMedia = frames[i]!.querySelector("[data-frame-media]");
+        const openClip = i === 1 ? A_FRAME_OPEN : "inset(0 0 0 0%)";
         tl.to(outgoingMedia, { scale: 1.14, xPercent: -4, ease: "power1.inOut", duration: 1.4 }, seg)
-          .to(frames[i]!, { clipPath: "inset(0 0 0 0%)", ease: "power2.inOut", duration: 1.3 }, seg)
+          .to(frames[i]!, { clipPath: openClip, ease: "power2.inOut", duration: 1.3 }, seg)
           .fromTo(incomingMedia, { scale: 1.1 }, { scale: 1, ease: "power2.out", duration: 1.3 }, seg)
           .to(numbers[i - 1]!, { opacity: 0, yPercent: -20, xPercent: -6, ease: "power1.in", duration: 0.6 }, seg)
           .to(numbers[i]!, { opacity: 1, yPercent: 0, xPercent: 0, ease: "power2.out", duration: 0.7 }, seg + 0.2)
@@ -160,6 +163,7 @@ export function PropertyShowcase({ property }: { property: Property }) {
                 <PlaceholderMedia media={moment.image} className="absolute inset-0" />
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-warm-black via-warm-black/5 to-warm-black/30" />
+              {i === 1 && <HeatShimmer />}
             </div>
           ))}
         </div>
@@ -202,12 +206,13 @@ export function PropertyShowcase({ property }: { property: Property }) {
 
       {/* Mobile: vertical cinematic stack */}
       <div className="flex flex-col md:hidden">
-        {moments.map((moment) => (
+        {moments.map((moment, i) => (
           <article key={moment.id} data-mobile-panel className="relative flex h-[92svh] w-full flex-col justify-end">
             <div data-frame-media className="absolute inset-0 h-full w-full">
               <PlaceholderMedia media={moment.image} className="absolute inset-0" />
             </div>
             <div className="absolute inset-0 bg-gradient-to-t from-warm-black via-warm-black/10 to-warm-black/40" />
+            {i === 1 && <HeatShimmer />}
 
             <div data-mobile-text className="container-edge relative z-10 flex flex-col gap-5 pb-16">
               <p>

@@ -1,15 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap } from "@/lib/gsap";
 import { PlaceholderMedia } from "@/components/ui/PlaceholderMedia";
 import type { Media } from "@/data/types";
 import { prefersReducedMotion } from "@/lib/motion";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 /** A photograph that drifts a few percent as the page scrolls past it — restrained, not a full parallax rig. */
 export function ParallaxImage({ media, className, amount = 8 }: { media: Media; className?: string; amount?: number }) {

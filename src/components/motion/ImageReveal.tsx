@@ -1,16 +1,11 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap } from "@/lib/gsap";
 import { PlaceholderMedia } from "@/components/ui/PlaceholderMedia";
 import type { Media } from "@/data/types";
 import { prefersReducedMotion } from "@/lib/motion";
 import { cx } from "@/lib/utils";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 /**
  * The site's one image-entrance primitive: a vertical mask wipe

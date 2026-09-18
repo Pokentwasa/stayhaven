@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { gsap } from "gsap";
+import { gsap } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/motion";
 import type { Property } from "@/data/types";
 
