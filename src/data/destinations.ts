@@ -17,9 +17,9 @@ export const DESTINATIONS: Destination[] = [
       "Union sits right on Hood Canal, with changing light, wildlife and long waterfront sunsets across the water.",
     heroImage: realMedia(
       "DESTINATION_WATER_HERO_IMAGE",
-      "The A-frame roofline seen across Hood Canal",
+      "Vaulted living room, full-height window over Hood Canal",
       "landscape",
-      "/images/salt-haven/hood-canal-01.jpeg"
+      "/images/salt-haven/great-room-02.jpeg"
     ),
     coordinates: { x: 28, y: 62 },
   },
@@ -45,9 +45,9 @@ export const DESTINATIONS: Destination[] = [
     description: "Dark roads, wildlife and a quiet after ten — the kind of quiet that's hard to find.",
     heroImage: realMedia(
       "DESTINATION_QUIET_HERO_IMAGE",
-      "Sunset over Hood Canal from the hot tub gazebo",
+      "The A-frame entrance at dusk, string lights lit",
       "wide",
-      "/images/salt-haven/sunset-01.jpeg"
+      "/images/salt-haven/exterior-01.jpeg"
     ),
     coordinates: { x: 76, y: 70 },
   },
