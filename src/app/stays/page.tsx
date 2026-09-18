@@ -5,14 +5,14 @@ import { SectionIntro } from "@/components/ui/SectionIntro";
 import { PROPERTIES } from "@/data/properties";
 
 export const metadata: Metadata = {
-  title: "The Collection",
-  description: "Every Haven in the Stay Haven Collection.",
+  title: "Salt+Haven",
+  description: "Salt+Haven, on Hood Canal in Union, Washington.",
 };
 
 export default function StaysIndexPage() {
   return (
     <section data-header-theme="dark" className="section-pad container-edge bg-brand-blue text-charcoal">
-      <SectionIntro index="01" label="The Collection" heading="Find your Haven." />
+      <SectionIntro index="01" label="Salt+Haven" heading="Your Haven." />
 
       <div className="mt-16 grid grid-cols-1 gap-16 md:grid-cols-2">
         {PROPERTIES.map((property) => (

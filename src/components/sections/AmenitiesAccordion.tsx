@@ -23,7 +23,7 @@ export function AmenitiesAccordion() {
   const [active, setActive] = useState(0);
 
   return (
-    <section data-header-theme="dark" className="section-pad bg-white text-charcoal">
+    <section id="amenities" data-header-theme="dark" className="section-pad bg-white text-charcoal">
       <div className="container-edge">
         <SectionIntro index="05" label="Amenities" heading="Everything you need is already here." />
       </div>

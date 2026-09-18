@@ -6,14 +6,13 @@ import { PROPERTIES } from "@/data/properties";
 
 export function BookingCTA() {
   const { open } = useBooking();
-  const [propertySlug, setPropertySlug] = useState(PROPERTIES[0]?.slug ?? "");
+  const property = PROPERTIES[0];
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [guests, setGuests] = useState(2);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const property = PROPERTIES.find((p) => p.slug === propertySlug);
     open(property);
   }
 
@@ -30,20 +29,10 @@ export function BookingCTA() {
           onSubmit={handleSubmit}
           className="grid w-full grid-cols-1 items-end gap-6 border-t border-ivory/20 pt-10 text-left sm:grid-cols-2 lg:grid-cols-4"
         >
-          <label className="flex flex-col gap-2">
-            <span className="text-eyebrow opacity-60">Destination</span>
-            <select
-              value={propertySlug}
-              onChange={(e) => setPropertySlug(e.target.value)}
-              className="border-b border-ivory/30 bg-transparent py-2 outline-none"
-            >
-              {PROPERTIES.map((p) => (
-                <option key={p.slug} value={p.slug} className="text-charcoal">
-                  {p.name}
-                </option>
-              ))}
-            </select>
-          </label>
+          <div className="flex flex-col gap-2">
+            <span className="text-eyebrow opacity-60">Property</span>
+            <p className="border-b border-ivory/30 py-2">{property?.name}</p>
+          </div>
 
           <label className="flex flex-col gap-2">
             <span className="text-eyebrow opacity-60">Check-in</span>
@@ -81,7 +70,7 @@ export function BookingCTA() {
             type="submit"
             className="col-span-full mt-6 bg-brand-blue py-5 text-eyebrow text-charcoal transition-opacity duration-300 hover:opacity-90"
           >
-            Find Your Haven
+            Check Availability
           </button>
         </form>
       </div>

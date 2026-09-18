@@ -74,11 +74,12 @@ export const SITE: SiteContent = {
   footer: {
     heading: "Stay Haven",
     nav: [
-      { label: "Collection", href: "/stays" },
-      { label: "Destinations", href: "/destinations" },
-      { label: "Experience", href: "/#experience" },
-      { label: "About", href: "/about" },
-      { label: "Journal", href: "/journal" },
+      { label: "Salt+Haven", href: "/stays/salt-haven" },
+      { label: "The House", href: "/#collection" },
+      { label: "Hood Canal", href: "/destinations/hood-canal" },
+      { label: "Amenities", href: "/#amenities" },
+      { label: "Gallery", href: "/stays/salt-haven#gallery" },
+      { label: "Stay Information", href: "/stays/salt-haven#availability" },
       { label: "Contact", href: "/contact" },
     ],
     social: [{ label: "Instagram", href: "https://instagram.com/" }],

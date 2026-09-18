@@ -81,7 +81,7 @@ function BookingPanelContent({
   initialProperty?: Property;
   onClose: () => void;
 }) {
-  const [propertySlug, setPropertySlug] = useState(initialProperty?.slug ?? PROPERTIES[0]?.slug ?? "");
+  const propertySlug = initialProperty?.slug ?? PROPERTIES[0]?.slug ?? "";
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [guests, setGuests] = useState(2);
@@ -127,20 +127,12 @@ function BookingPanelContent({
       )}
 
       <form onSubmit={handleSubmit} className="flex flex-1 flex-col gap-8 px-6 py-10 md:px-12">
-        <label className="flex flex-col gap-2">
-          <span className="text-eyebrow text-charcoal/55">Destination / Property</span>
-          <select
-            value={propertySlug}
-            onChange={(e) => setPropertySlug(e.target.value)}
-            className="border-b border-charcoal/20 bg-transparent py-3 text-body-lg outline-none"
-          >
-            {PROPERTIES.map((p) => (
-              <option key={p.slug} value={p.slug}>
-                {p.name} — {p.locationLabel}
-              </option>
-            ))}
-          </select>
-        </label>
+        <div className="flex flex-col gap-2">
+          <span className="text-eyebrow text-charcoal/55">Property</span>
+          <p className="border-b border-charcoal/20 py-3 text-body-lg">
+            {selected?.name} — {selected?.locationLabel}
+          </p>
+        </div>
 
         <div className="grid grid-cols-2 gap-6">
           <label className="flex flex-col gap-2">
@@ -188,7 +180,7 @@ function BookingPanelContent({
             disabled={!bookingUrl}
             className="w-full bg-charcoal py-5 text-eyebrow text-ivory transition-opacity duration-300 hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
           >
-            Find Your Haven
+            Check Availability
           </button>
         </div>
       </form>

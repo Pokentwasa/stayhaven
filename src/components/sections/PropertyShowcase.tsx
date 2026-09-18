@@ -73,7 +73,7 @@ export function PropertyShowcase() {
             <div className="container-edge relative z-10 flex flex-col gap-6 pb-20 md:pb-28">
               <p className="text-eyebrow opacity-70">
                 {String(i + 1).padStart(2, "0")} / {String(moments.length).padStart(2, "0")} —
-                The Collection
+                Salt+Haven
               </p>
               <h2 className="text-display-lg max-w-3xl">{moment.title}</h2>
               <p className="text-eyebrow opacity-70">{moment.eyebrow} · {property.locationLabel}</p>
