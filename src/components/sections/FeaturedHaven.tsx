@@ -20,7 +20,7 @@ export function FeaturedHaven() {
       </div>
 
       <div className="relative mb-6 aspect-[16/9] w-full overflow-hidden">
-        <PlaceholderMedia media={property.heroMedia} className="absolute inset-0" />
+        <PlaceholderMedia media={property.featuredImage} className="absolute inset-0" />
       </div>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-6 md:grid-rows-2">

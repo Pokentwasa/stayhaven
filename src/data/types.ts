@@ -84,6 +84,15 @@ export interface Destination {
   coordinates: { x: number; y: number } | null;
 }
 
+/** One facet of the property shown in the Collection slider — a different room/moment each time, never the hero image. */
+export interface PropertyMoment {
+  id: string;
+  eyebrow: string;
+  title: string;
+  statement: string;
+  image: Media;
+}
+
 export interface Property {
   id: string;
   slug: string;
@@ -95,7 +104,11 @@ export interface Property {
   longDescription: string;
   positioningStatement: string;
   heroMedia: Media;
+  /** The Collection slider — several real moments/rooms, each with its own image and text. */
+  moments: PropertyMoment[];
   featuredStatement: string;
+  /** The large Featured Haven spread image — kept distinct from heroMedia so the two sections never repeat the same photo. */
+  featuredImage: Media;
   gallery: Media[];
   rooms: Room[];
   amenities: Amenity[];

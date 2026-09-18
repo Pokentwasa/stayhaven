@@ -6,15 +6,17 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { PlaceholderMedia } from "@/components/ui/PlaceholderMedia";
 import { LuxuryButton } from "@/components/ui/LuxuryButton";
 import { BookingTrigger } from "@/components/booking/BookingTrigger";
-import { PROPERTIES } from "@/data/properties";
+import { getFeaturedProperty } from "@/data/properties";
 import { prefersReducedMotion } from "@/lib/motion";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-/** 01 — The Collection. Desktop pins the section and scrubs a horizontal chapter rail; mobile falls back to native swipe/snap. */
+/** 01 — The Collection. Desktop pins the section and scrubs a horizontal chapter rail through the property's moments; mobile falls back to native swipe/snap. */
 export function PropertyShowcase() {
+  const property = getFeaturedProperty();
+  const moments = property.moments;
   const sectionRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
@@ -59,27 +61,23 @@ export function PropertyShowcase() {
         ref={trackRef}
         className="no-scrollbar flex h-[100svh] w-full snap-x snap-mandatory flex-row overflow-x-auto md:h-[100svh] md:overflow-visible"
       >
-        {PROPERTIES.map((property, i) => (
+        {moments.map((moment, i) => (
           <article
-            key={property.id}
+            key={moment.id}
             data-panel
             className="relative flex h-full w-full shrink-0 snap-start flex-col justify-end"
           >
-            <PlaceholderMedia media={property.heroMedia} className="absolute inset-0" />
+            <PlaceholderMedia media={moment.image} className="absolute inset-0" />
             <div className="absolute inset-0 bg-gradient-to-t from-warm-black via-warm-black/10 to-warm-black/40" />
 
             <div className="container-edge relative z-10 flex flex-col gap-6 pb-20 md:pb-28">
               <p className="text-eyebrow opacity-70">
-                {String(i + 1).padStart(2, "0")} / {String(PROPERTIES.length).padStart(2, "0")} —
+                {String(i + 1).padStart(2, "0")} / {String(moments.length).padStart(2, "0")} —
                 The Collection
               </p>
-              <h2 className="text-display-lg max-w-3xl">{property.name}</h2>
-              <p className="text-eyebrow opacity-70">{property.locationLabel}</p>
-              <p className="text-body-lg max-w-xl opacity-85">{property.positioningStatement}</p>
-              <p className="text-sm uppercase tracking-widest opacity-60">
-                {property.metadata.guestsFrom}–{property.metadata.guestsTo} guests ·{" "}
-                {property.metadata.bedroomsFrom}–{property.metadata.bedroomsTo} bedrooms
-              </p>
+              <h2 className="text-display-lg max-w-3xl">{moment.title}</h2>
+              <p className="text-eyebrow opacity-70">{moment.eyebrow} · {property.locationLabel}</p>
+              <p className="text-body-lg max-w-xl opacity-85">{moment.statement}</p>
 
               <div className="mt-2 flex items-center gap-10">
                 <LuxuryButton href={`/stays/${property.slug}`} variant="primary">
@@ -93,7 +91,7 @@ export function PropertyShowcase() {
       </div>
 
       <div className="pointer-events-none absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 gap-3 md:flex">
-        {PROPERTIES.map((_, i) => (
+        {moments.map((_, i) => (
           <span
             key={i}
             className={`h-1 w-8 rounded-full transition-colors duration-500 ${
