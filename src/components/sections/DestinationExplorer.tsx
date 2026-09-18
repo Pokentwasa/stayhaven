@@ -8,7 +8,7 @@ import { PROPERTIES } from "@/data/properties";
 export function DestinationExplorer() {
   return (
     <section data-header-theme="dark" className="section-pad container-edge bg-ivory text-charcoal">
-      <SectionIntro index="05" label="Destinations" heading="Where will you disappear to next?" />
+      <SectionIntro index="06" label="Destinations" heading="Where will you disappear to next?" />
 
       <div className="mt-16 grid grid-cols-1 gap-4 sm:grid-cols-3">
         {DESTINATIONS.map((d) => {

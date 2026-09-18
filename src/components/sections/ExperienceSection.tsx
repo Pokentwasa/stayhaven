@@ -65,6 +65,8 @@ export function ExperienceSection() {
               <button
                 key={pillar.id}
                 type="button"
+                onMouseEnter={() => setActive(i)}
+                onFocus={() => setActive(i)}
                 onClick={() => setActive(i)}
                 className="flex flex-col items-start gap-3 text-left"
               >

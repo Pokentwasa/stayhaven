@@ -29,6 +29,8 @@ export interface Media {
 export interface Amenity {
   id: string;
   label: string;
+  /** Grouping used by the categorized amenities accordion, e.g. "Comfort & Connectivity". Omitted for small per-room amenity lists. */
+  category?: string;
 }
 
 export interface Room {
@@ -157,6 +159,8 @@ export interface SiteContent {
     eyebrow: string;
     heading: string;
     lines: string[];
+    /** Quiet background texture, sat under a strong cream overlay rather than shown at full strength. */
+    media: Media;
   };
   experiencePillars: Experience[];
   footer: {

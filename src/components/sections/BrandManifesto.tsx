@@ -1,14 +1,23 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { PlaceholderMedia } from "@/components/ui/PlaceholderMedia";
 import { SITE } from "@/data/site";
 import { prefersReducedMotion } from "@/lib/motion";
 
-const LINE_DURATION_MS = 2600;
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
-/** 02 — Brand Manifesto. Lines swap automatically on a timer, not on scroll — a continuous, quiet cycle. */
+/** Scroll distance given to each line, in viewport-heights — generous enough that a transition never feels rushed. */
+const VH_PER_LINE = 0.85;
+
+/** 02 — Brand Manifesto. Pinned on scroll; each line gets a full, unhurried beat before the next crossfades in. */
 export function BrandManifesto() {
   const { manifesto } = SITE;
+  const sectionRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const [reduced, setReduced] = useState(false);
 
@@ -18,16 +27,38 @@ export function BrandManifesto() {
   }, []);
 
   useEffect(() => {
-    if (reduced || manifesto.lines.length <= 1) return;
-    const interval = setInterval(() => {
-      setActive((i) => (i + 1) % manifesto.lines.length);
-    }, LINE_DURATION_MS);
-    return () => clearInterval(interval);
+    const section = sectionRef.current;
+    const lineCount = manifesto.lines.length;
+    if (!section || reduced || lineCount <= 1) return;
+
+    const steps = lineCount - 1;
+    const trigger = ScrollTrigger.create({
+      trigger: section,
+      start: "top top",
+      end: () => "+=" + window.innerHeight * VH_PER_LINE * steps,
+      pin: true,
+      scrub: 0.6,
+      snap: 1 / steps,
+      onUpdate: (self) => {
+        setActive(Math.min(steps, Math.round(self.progress * steps)));
+      },
+    });
+
+    return () => trigger.kill();
   }, [reduced, manifesto.lines.length]);
 
   return (
-    <section data-header-theme="dark" className="section-pad container-edge bg-ivory text-charcoal">
-      <div className="mx-auto flex max-w-4xl flex-col items-center gap-14 text-center">
+    <section
+      ref={sectionRef}
+      data-header-theme="dark"
+      className="relative flex h-[100svh] w-full items-center justify-center overflow-hidden bg-ivory text-charcoal"
+    >
+      <div className="absolute inset-0">
+        <PlaceholderMedia media={manifesto.media} className="absolute inset-0" />
+        <div className="absolute inset-0 bg-ivory/90" />
+      </div>
+
+      <div className="container-edge relative z-10 mx-auto flex max-w-4xl flex-col items-center gap-14 text-center">
         <p className="text-eyebrow text-charcoal/50">{manifesto.eyebrow}</p>
         <h2 className="text-display-md text-charcoal/40">{manifesto.heading}</h2>
 
@@ -45,7 +76,7 @@ export function BrandManifesto() {
               <p
                 key={line}
                 aria-hidden={i !== active}
-                className="text-display-md absolute inset-0 flex items-center justify-center text-charcoal transition-opacity duration-1000 ease-in-out"
+                className="text-display-md absolute inset-0 flex items-center justify-center text-charcoal transition-opacity duration-700 ease-in-out"
                 style={{ opacity: i === active ? 1 : 0 }}
               >
                 {line}

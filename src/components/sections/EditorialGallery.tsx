@@ -17,7 +17,7 @@ export function EditorialGallery() {
 
   return (
     <section data-header-theme="dark" className="section-pad container-edge bg-ivory text-charcoal">
-      <SectionIntro index="06" label="Moments" heading="Moments from the Collection." />
+      <SectionIntro index="07" label="Moments" heading="Moments from the Collection." />
 
       <div className="mt-16 grid grid-cols-2 gap-4 md:auto-rows-[14rem] md:grid-cols-6">
         {moments.map((media, i) => (

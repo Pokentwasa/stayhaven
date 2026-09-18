@@ -3,6 +3,7 @@ import { PropertyShowcase } from "@/components/sections/PropertyShowcase";
 import { BrandManifesto } from "@/components/sections/BrandManifesto";
 import { ExperienceSection } from "@/components/sections/ExperienceSection";
 import { FeaturedHaven } from "@/components/sections/FeaturedHaven";
+import { AmenitiesAccordion } from "@/components/sections/AmenitiesAccordion";
 import { DestinationExplorer } from "@/components/sections/DestinationExplorer";
 import { EditorialGallery } from "@/components/sections/EditorialGallery";
 import { GuestNotes } from "@/components/sections/GuestNotes";
@@ -16,6 +17,7 @@ export default function HomePage() {
       <BrandManifesto />
       <ExperienceSection />
       <FeaturedHaven />
+      <AmenitiesAccordion />
       <DestinationExplorer />
       <EditorialGallery />
       <GuestNotes />

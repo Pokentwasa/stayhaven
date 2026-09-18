@@ -38,6 +38,12 @@ export const SITE: SiteContent = {
       "Places worth discovering.",
       "Stays worth remembering.",
     ],
+    media: realMedia(
+      "SITE_MANIFESTO_MEDIA",
+      "Record player and vinyl collection in the great room",
+      "wide",
+      "/images/salt-haven/detail-02.jpeg"
+    ),
   },
   experiencePillars: [
     {
