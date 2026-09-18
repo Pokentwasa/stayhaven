@@ -145,19 +145,13 @@ export interface Property {
   heroMedia: Media;
   heroTagline: string;
 
-  introHeading: string;
-  introStatement: string;
-
   houseHeading: string;
   houseStatement: string;
   houseDescription: string;
   houseFacts: string[];
-  storyImages: Media[];
 
-  viewHeading: string;
   viewStatement: string;
   viewDescription: string;
-  viewImages: Media[];
 
   stayHeading: string;
   stayStatement: string;

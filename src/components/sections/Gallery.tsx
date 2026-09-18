@@ -13,9 +13,9 @@ if (typeof window !== "undefined") {
 }
 
 /**
- * A fixed, deliberate composition rather than a repeating strip: one large
- * image, two smaller ones, a wide landscape, a portrait detail, a wide
- * atmospheric shot. Each entry names the category + index to pull from.
+ * A fixed, deliberate composition — not a repeating strip or a chaotic
+ * masonry — edited for rhythm (wide, close, wide, detail, portrait,
+ * full-screen). Each entry names the category + index to pull from.
  */
 const PREVIEW_PICKS: { category: GalleryCategory; index: number; span: string }[] = [
   { category: "exterior", index: 3, span: "col-span-4 row-span-2 aspect-[4/5] sm:aspect-auto" },
@@ -23,7 +23,15 @@ const PREVIEW_PICKS: { category: GalleryCategory; index: number; span: string }[
   { category: "kitchenDining", index: 0, span: "col-span-2 aspect-[4/3]" },
   { category: "hoodCanal", index: 1, span: "col-span-4 aspect-[21/9] sm:col-span-6" },
   { category: "kingBedroom", index: 0, span: "col-span-2 aspect-[3/4]" },
+  { category: "firePit", index: 0, span: "col-span-2 aspect-[3/4]" },
   { category: "sunsetAtmospheric", index: 0, span: "col-span-4 aspect-[16/9]" },
+  { category: "detailLifestyle", index: 1, span: "col-span-2 aspect-square" },
+  { category: "loft", index: 0, span: "col-span-2 aspect-[4/3]" },
+  { category: "queenBedroom", index: 0, span: "col-span-2 aspect-[4/3]" },
+  { category: "hotTub", index: 1, span: "col-span-3 aspect-[4/3]" },
+  { category: "outdoorDining", index: 0, span: "col-span-3 aspect-[4/3]" },
+  { category: "bathrooms", index: 1, span: "col-span-2 aspect-square" },
+  { category: "greatRoom", index: 6, span: "col-span-4 aspect-[21/9] sm:col-span-6" },
 ];
 
 /**
@@ -75,27 +83,28 @@ export function Gallery({ property }: { property: Property }) {
 
   return (
     <section
-      id="gallery"
+      id="archive"
       ref={rootRef}
       data-header-theme="dark"
-      data-scene="10"
+      data-scene="8"
       className="section-pad bg-ivory text-charcoal"
     >
       <div data-gallery-reveal className="container-edge mb-14 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="text-eyebrow mb-6 flex items-center gap-3 text-charcoal/50">
-            <span>10</span>
+            <span>08</span>
             <span className="h-px w-8 bg-current/50" />
-            <span>Gallery</span>
+            <span>The Archive</span>
           </p>
-          <h2 className="text-display-lg">Every corner of Salt+Haven.</h2>
+          <h2 className="text-display-lg">{flatGallery.length} images.</h2>
+          <p className="text-eyebrow mt-2 text-charcoal/55">Salt+Haven / Union, WA</p>
         </div>
         <button
           type="button"
           onClick={() => setViewerOpen(true)}
           className="text-eyebrow w-fit border-b border-charcoal pb-1 transition-opacity hover:opacity-60"
         >
-          View All {flatGallery.length} Photos
+          View All {flatGallery.length} →
         </button>
       </div>
 
@@ -132,6 +141,9 @@ function GalleryViewer({
   onClose: () => void;
 }) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [activeFilter, setActiveFilter] = useState("All");
+  const filters = ["All", ...groups.map((g) => g.label)];
+  const visibleGroups = activeFilter === "All" ? groups : groups.filter((g) => g.label === activeFilter);
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -173,7 +185,20 @@ function GalleryViewer({
 
       {lightboxIndex === null ? (
         <div className="flex-1 overflow-y-auto px-6 py-10 md:px-12">
-          {groups.map(
+          <div className="mb-10 flex flex-wrap gap-x-6 gap-y-2">
+            {filters.map((label) => (
+              <button
+                key={label}
+                type="button"
+                onClick={() => setActiveFilter(label)}
+                className="text-eyebrow transition-opacity"
+                style={{ opacity: label === activeFilter ? 1 : 0.4 }}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+          {visibleGroups.map(
             (group) =>
               group.images.length > 0 && (
                 <div key={group.label} className="mb-16 last:mb-0">

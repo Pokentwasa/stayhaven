@@ -57,7 +57,7 @@ export function Header() {
         )}
       >
         <TransitionLink href="/" className="text-eyebrow font-medium">
-          {SITE.brand.shortName}
+          {SITE.brand.name}
         </TransitionLink>
 
         <nav className="hidden items-center gap-9 md:flex">

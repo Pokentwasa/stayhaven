@@ -101,7 +101,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
         <BookingProvider>
           <SmoothScrollProvider>
-            <LoadingScreen />
+            <LoadingScreen property={property} />
             <ScrollProgress />
             <Header />
             <main id="main-content">{children}</main>

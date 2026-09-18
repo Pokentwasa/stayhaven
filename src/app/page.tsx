@@ -1,14 +1,11 @@
 import { CinematicHero } from "@/components/sections/CinematicHero";
-import { Introduction } from "@/components/sections/Introduction";
 import { TheHouse } from "@/components/sections/TheHouse";
-import { TheView } from "@/components/sections/TheView";
-import { Stay } from "@/components/sections/Stay";
-import { Outside } from "@/components/sections/Outside";
+import { InsideOutside } from "@/components/sections/InsideOutside";
 import { Sleeping } from "@/components/sections/Sleeping";
-import { Amenities } from "@/components/sections/Amenities";
 import { HoodCanal } from "@/components/sections/HoodCanal";
+import { Amenities } from "@/components/sections/Amenities";
 import { Gallery } from "@/components/sections/Gallery";
-import { KnowBeforeYouStay } from "@/components/sections/KnowBeforeYouStay";
+import { Location } from "@/components/sections/Location";
 import { BookingCTA } from "@/components/sections/BookingCTA";
 import { getPrimaryProperty } from "@/data/property";
 
@@ -18,16 +15,13 @@ export default function HomePage() {
   return (
     <>
       <CinematicHero />
-      <Introduction property={property} />
       <TheHouse property={property} />
-      <TheView property={property} />
-      <Stay property={property} />
-      <Outside property={property} />
+      <InsideOutside property={property} />
       <Sleeping property={property} />
-      <Amenities property={property} />
       <HoodCanal property={property} />
+      <Amenities property={property} />
       <Gallery property={property} />
-      <KnowBeforeYouStay property={property} />
+      <Location property={property} />
       <BookingCTA />
     </>
   );

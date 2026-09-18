@@ -20,11 +20,10 @@ export const SITE: SiteContent = {
   },
   nav: {
     primary: [
-      { label: "Salt+Haven", href: "/" },
-      { label: "The House", href: "/#the-house" },
-      { label: "The View", href: "/#the-view" },
-      { label: "Amenities", href: "/#amenities" },
-      { label: "Gallery", href: "/#gallery" },
+      { label: "001 Salt+Haven", href: "/" },
+      { label: "House", href: "/#the-house" },
+      { label: "Hood Canal", href: "/#hood-canal" },
+      { label: "Archive", href: "/#archive" },
     ],
     bookCta: { label: "Book", href: "/#book" },
   },
@@ -36,10 +35,10 @@ export const SITE: SiteContent = {
   footer: {
     heading: "Stay Haven Collection",
     nav: [
-      { label: "The House", href: "/#the-house" },
-      { label: "Amenities", href: "/#amenities" },
-      { label: "Gallery", href: "/#gallery" },
-      { label: "Stay Info", href: "/#stay-info" },
+      { label: "House", href: "/#the-house" },
+      { label: "Hood Canal", href: "/#hood-canal" },
+      { label: "Archive", href: "/#archive" },
+      { label: "Location", href: "/#location" },
       { label: "Book", href: "/#book" },
       { label: "Contact", href: "/contact" },
     ],
